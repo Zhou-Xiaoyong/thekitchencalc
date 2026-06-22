@@ -1,0 +1,195 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AdSlot from "../components/AdSlot.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Ingredient Substitution Finder",
+  url: "https://thekitchencalc.com/ingredient-substitution-finder/",
+  description: "Find the best substitute for any missing ingredient. Covers baking, dairy, eggs, sweeteners, fats, spices, and more.",
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "Web",
+};
+
+const categories = [
+  {
+    name: "Dairy & Eggs",
+    icon: "🥛",
+    items: [
+      { ingredient: "Buttermilk", substitute: "1 cup milk + 1 tbsp lemon juice or white vinegar. Let sit 5 minutes until curdled." },
+      { ingredient: "Heavy Cream", substitute: "3/4 cup milk + 1/4 cup melted butter. Mix well. (For 1 cup needed)" },
+      { ingredient: "Sour Cream", substitute: "1 cup plain Greek yogurt (full-fat) or 1 cup cottage cheese blended with 1 tbsp lemon juice." },
+      { ingredient: "Egg (whole)", substitute: "1/4 cup unsweetened applesauce, 1 tbsp ground flaxseed + 3 tbsp water (vegan), or 1/2 mashed banana." },
+      { ingredient: "Milk (whole)", substitute: "1 cup water + 1.5 tbsp melted butter. Or use any plant-based milk (soy, oat, almond)." },
+      { ingredient: "Cream Cheese", substitute: "1 cup ricotta cheese blended until smooth, or 1 cup plain Greek yogurt strained overnight." },
+      { ingredient: "Yogurt (plain)", substitute: "Equal amount sour cream, buttermilk, or blended cottage cheese." },
+    ],
+  },
+  {
+    name: "Flours & Grains",
+    icon: "🌾",
+    items: [
+      { ingredient: "All-Purpose Flour", substitute: "1 cup cake flour + 2 tbsp = 1 cup all-purpose. Or 1 cup bread flour (will be slightly chewier)." },
+      { ingredient: "Cake Flour", substitute: "1 cup all-purpose flour minus 2 tbsp + 2 tbsp cornstarch. Sift 3 times." },
+      { ingredient: "Bread Flour", substitute: "1 cup all-purpose flour + 1 tsp vital wheat gluten." },
+      { ingredient: "Self-Rising Flour", substitute: "1 cup all-purpose flour + 1.5 tsp baking powder + 1/4 tsp salt." },
+      { ingredient: "Cornstarch", substitute: "2 tbsp all-purpose flour (for thickening). Or 1 tbsp arrowroot powder, potato starch, or tapioca starch." },
+      { ingredient: "Breadcrumbs", substitute: "Crushed crackers, crushed cornflakes, rolled oats (pulsed in food processor), or panko." },
+    ],
+  },
+  {
+    name: "Sweeteners",
+    icon: "🍯",
+    items: [
+      { ingredient: "Brown Sugar", substitute: "1 cup granulated sugar + 1-2 tbsp molasses. Mix until combined. Light brown = 1 tbsp; dark brown = 2 tbsp." },
+      { ingredient: "Powdered Sugar", substitute: "1 cup granulated sugar + 1 tbsp cornstarch. Blend in a food processor until fine powder." },
+      { ingredient: "Honey", substitute: "1 cup corn syrup, maple syrup, or agave nectar. Or 1.25 cups sugar + 1/4 cup liquid." },
+      { ingredient: "Maple Syrup", substitute: "Equal amount honey, agave nectar, or corn syrup. For baking: 1 cup sugar + 1/4 cup liquid." },
+      { ingredient: "Molasses", substitute: "1 cup dark corn syrup, honey, or maple syrup. Or 3/4 cup brown sugar + 1/4 cup water." },
+      { ingredient: "Corn Syrup (light)", substitute: "1 cup granulated sugar + 1/4 cup warm water. Or use honey or golden syrup." },
+    ],
+  },
+  {
+    name: "Fats & Oils",
+    icon: "🧈",
+    items: [
+      { ingredient: "Butter (baking)", substitute: "Equal amount margarine, vegetable shortening, or coconut oil. For flavor, use 7/8 cup vegetable oil + 1/2 tsp salt per cup of butter." },
+      { ingredient: "Vegetable Oil", substitute: "Equal amount melted butter, coconut oil, canola oil, or applesauce (for low-fat baking)." },
+      { ingredient: "Shortening", substitute: "Equal amount butter or margarine. Add 1-2 tbsp extra liquid for every cup if the recipe is sensitive to water content." },
+      { ingredient: "Mayonnaise", substitute: "Equal amount Greek yogurt or sour cream. For sandwiches: mashed avocado or hummus." },
+    ],
+  },
+  {
+    name: "Leavening & Seasonings",
+    icon: "🧂",
+    items: [
+      { ingredient: "Baking Powder", substitute: "1/4 tsp baking soda + 1/2 tsp cream of tartar. Or 1/4 tsp baking soda + 1/2 cup buttermilk (reduce other liquid)." },
+      { ingredient: "Baking Soda", substitute: "4x the amount in baking powder (but this may affect taste). Only works if the recipe has enough acid." },
+      { ingredient: "Vanilla Extract", substitute: "Equal amount maple syrup, almond extract, or bourbon/rum. Or scrape a vanilla bean pod." },
+      { ingredient: "Lemon Juice", substitute: "Equal amount white vinegar, lime juice, or white wine. 1/2 tsp citric acid + 2 tbsp water for 1 tbsp lemon juice." },
+      { ingredient: "Garlic (fresh)", substitute: "1 clove = 1/8 tsp garlic powder, 1/4 tsp jarred minced garlic, or 1/2 tsp garlic salt (reduce other salt)." },
+      { ingredient: "Fresh Herbs", substitute: "1 tbsp fresh = 1 tsp dried herbs. The ratio is 3:1 fresh-to-dried." },
+    ],
+  },
+  {
+    name: "Other Common Substitutes",
+    icon: "🔄",
+    items: [
+      { ingredient: "Tomato Sauce", substitute: "3/4 cup tomato paste + 1 cup water. Season with salt, garlic, and Italian herbs." },
+      { ingredient: "Worcestershire Sauce", substitute: "Equal amount soy sauce + a dash of vinegar and hot sauce. Or use fish sauce (half amount)." },
+      { ingredient: "Coconut Milk", substitute: "1 cup heavy cream + 1/2 tsp coconut extract. Or use evaporated milk." },
+      { ingredient: "Wine (cooking)", substitute: "Red wine → equal amount beef broth + splash vinegar. White wine → chicken broth + splash lemon juice." },
+      { ingredient: "Chocolate (unsweetened)", substitute: "3 tbsp cocoa powder + 1 tbsp butter or oil = 1 oz unsweetened chocolate." },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Ingredient Substitution Finder — What to Use When You're Out"
+  description="Find the best substitute for any missing ingredient. Covers dairy, eggs, flour, sweeteners, butter, spices, and pantry staples. Save your recipe without a trip to the store."
+  canonical="https://thekitchencalc.com/ingredient-substitution-finder/"
+  schema={schema}
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-secondary leading-tight mb-4">
+        Ingredient Substitution Finder
+      </h1>
+      <p class="text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
+        Missing an ingredient? Don't run to the store. Find tested, reliable substitutes for common baking and cooking ingredients right here.
+      </p>
+    </div>
+
+    <!-- Search -->
+    <div class="max-w-xl mx-auto mb-10">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search for an ingredient... (e.g., buttermilk, egg, brown sugar)"
+        class="w-full px-5 py-4 border-2 border-border rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-lg"
+        aria-label="Search ingredients"
+      />
+      <p class="text-xs text-text-light mt-2 text-center" id="resultCount"></p>
+    </div>
+
+    <AdSlot position="top" />
+
+    <!-- Categories -->
+    <div id="substitutionContainer">
+      {categories.map((cat) => (
+        <div class="mb-8 substitution-category">
+          <h2 class="text-xl font-bold text-secondary mb-4 flex items-center gap-2">
+            <span aria-hidden="true">{cat.icon}</span>
+            {cat.name}
+          </h2>
+          <div class="space-y-3">
+            {cat.items.map((item) => (
+              <div class="bg-white rounded-xl shadow-sm border border-border p-5 substitution-item">
+                <h3 class="font-semibold text-secondary text-lg mb-2">{item.ingredient}</h3>
+                <p class="text-sm text-text-light leading-relaxed">{item.substitute}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <AdSlot position="middle" />
+
+    <!-- Tips -->
+    <div class="bg-accent/10 border border-accent rounded-2xl p-6 sm:p-8 mb-8">
+      <h2 class="text-lg font-bold text-secondary mb-3">Substitution Tips</h2>
+      <ul class="text-sm text-text-light leading-relaxed space-y-2 list-disc pl-5">
+        <li><strong>Baking is chemistry.</strong> Flour, sugar, fat, and leavening substitutions can change texture and rise. Test small batches first when making multiple swaps.</li>
+        <li><strong>Liquid adjustments:</strong> When substituting dry for wet ingredients or vice versa, you may need to adjust the overall liquid in your recipe by 1-2 tablespoons.</li>
+        <li><strong>Flavor changes:</strong> Some substitutes (like applesauce for eggs) will subtly alter flavor. Choose substitutes that complement your dish.</li>
+        <li><strong>When to go to the store:</strong> If a recipe calls for a highly specific ingredient as the star (like certain cheeses or specialty flours), a substitute may not deliver the same result.</li>
+      </ul>
+    </div>
+
+    <AdSlot position="bottom" />
+  </div>
+</BaseLayout>
+
+<script>
+  const searchInput = document.getElementById("searchInput") as HTMLInputElement;
+  const resultCount = document.getElementById("resultCount")!;
+  const categories = document.querySelectorAll(".substitution-category");
+  const items = document.querySelectorAll(".substitution-item");
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase().trim();
+    let visibleCount = 0;
+
+    items.forEach((item) => {
+      const ingredient = (item.querySelector("h3")?.textContent || "").toLowerCase();
+      const text = (item.querySelector("p")?.textContent || "").toLowerCase();
+      const matches = !query || ingredient.includes(query) || text.includes(query);
+
+      (item as HTMLElement).style.display = matches ? "" : "none";
+      if (matches) visibleCount++;
+    });
+
+    // Show/hide empty categories
+    categories.forEach((cat) => {
+      const visibleItems = cat.querySelectorAll(".substitution-item[style='']").length;
+      const hiddenItems = cat.querySelectorAll('.substitution-item[style*="display: none"]').length;
+      const totalItems = cat.querySelectorAll(".substitution-item").length;
+      // Count visible items
+      let count = 0;
+      cat.querySelectorAll(".substitution-item").forEach((el) => {
+        if ((el as HTMLElement).style.display !== "none") count++;
+      });
+      (cat as HTMLElement).style.display = count > 0 ? "" : "none";
+    });
+
+    if (query) {
+      resultCount.textContent = `${visibleCount} substitution${visibleCount !== 1 ? "s" : ""} found for "${query}"`;
+    } else {
+      resultCount.textContent = "";
+    }
+  });
+</script>

@@ -1,0 +1,390 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AdSlot from "../components/AdSlot.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Kitchen Measurement Converter",
+  url: "https://thekitchencalc.com/kitchen-measurement-converter/",
+  description: "Convert between cups, tablespoons, teaspoons, fluid ounces, milliliters, and grams for common baking and cooking ingredients.",
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "Web",
+};
+---
+
+<BaseLayout
+  title="Kitchen Measurement Converter — Cups to Grams, Ounces, mL"
+  description="Convert cooking measurements instantly. Cups to grams, tablespoons to milliliters, ounces to cups, and more. Includes ingredient-specific density for flour, sugar, butter, and other common items."
+  canonical="https://thekitchencalc.com/kitchen-measurement-converter/"
+  schema={schema}
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-secondary leading-tight mb-4">
+        Kitchen Measurement Converter
+      </h1>
+      <p class="text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
+        Convert between cups, tablespoons, teaspoons, fluid ounces, milliliters, and grams. We factor in ingredient density so your flour, sugar, butter, and more convert accurately.
+      </p>
+    </div>
+
+    <AdSlot position="top" />
+
+    <!-- Calculator -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-6 sm:p-8 mb-8">
+      <!-- Convert From -->
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-secondary mb-2">Convert</label>
+        <div class="flex flex-wrap gap-3 items-end">
+          <div class="flex-1 min-w-[120px]">
+            <input
+              type="number"
+              id="fromValue"
+              value="1"
+              step="any"
+              min="0"
+              class="w-full px-4 py-3 border border-border rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none font-medium text-lg"
+              aria-label="Value to convert"
+            />
+          </div>
+          <div class="flex-1 min-w-[140px]">
+            <select
+              id="fromUnit"
+              class="w-full px-4 py-3 border border-border rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none bg-white font-medium text-lg"
+              aria-label="From unit"
+            >
+              <option value="cup">Cup (US)</option>
+              <option value="tbsp">Tablespoon (tbsp)</option>
+              <option value="tsp">Teaspoon (tsp)</option>
+              <option value="floz">Fluid Ounce (fl oz)</option>
+              <option value="ml">Milliliter (mL)</option>
+              <option value="g">Gram (g)</option>
+              <option value="oz">Ounce (oz)</option>
+              <option value="lb">Pound (lb)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Convert To -->
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-secondary mb-2">To</label>
+        <div class="flex-1 min-w-[140px]">
+          <select
+            id="toUnit"
+            class="w-full max-w-[200px] px-4 py-3 border border-border rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none bg-white font-medium text-lg"
+            aria-label="To unit"
+          >
+            <option value="cup">Cup (US)</option>
+            <option value="tbsp">Tablespoon (tbsp)</option>
+            <option value="tsp">Teaspoon (tsp)</option>
+            <option value="floz">Fluid Ounce (fl oz)</option>
+            <option value="ml">Milliliter (mL)</option>
+            <option value="g" selected>Gram (g)</option>
+            <option value="oz">Ounce (oz)</option>
+            <option value="lb">Pound (lb)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Ingredient Selection (only relevant for weight <-> volume) -->
+      <div class="mb-6" id="ingredientGroup">
+        <label class="block text-sm font-semibold text-secondary mb-2">
+          Ingredient <span class="text-text-light font-normal">(for accurate weight-to-volume conversion)</span>
+        </label>
+        <select
+          id="ingredient"
+          class="w-full sm:w-auto px-4 py-3 border border-border rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none bg-white font-medium text-lg"
+          aria-label="Select ingredient"
+        >
+          <option value="water">Water / Milk / Broth</option>
+          <option value="flour">All-Purpose Flour</option>
+          <option value="sugar-granulated">Granulated Sugar</option>
+          <option value="sugar-brown">Brown Sugar (packed)</option>
+          <option value="sugar-powdered">Powdered Sugar</option>
+          <option value="butter">Butter</option>
+          <option value="oil">Vegetable Oil</option>
+          <option value="honey">Honey / Maple Syrup</option>
+          <option value="rice">Rice (uncooked, long-grain)</option>
+          <option value="salt">Table Salt</option>
+          <option value="baking-powder">Baking Powder</option>
+          <option value="cocoa">Cocoa Powder</option>
+          <option value="cheese-shredded">Shredded Cheese (cheddar)</option>
+          <option value="nuts-chopped">Chopped Nuts (almonds, walnuts)</option>
+          <option value="chocolate-chips">Chocolate Chips</option>
+          <option value="oats">Rolled Oats</option>
+        </select>
+      </div>
+
+      <!-- Result -->
+      <div class="bg-cream rounded-xl p-6 text-center" id="resultBox">
+        <p class="text-sm text-text-light mb-1">Result</p>
+        <p class="text-3xl sm:text-4xl font-extrabold text-secondary" id="resultValue">—</p>
+        <p class="text-sm text-text-light mt-2" id="resultFormula"></p>
+      </div>
+    </div>
+
+    <AdSlot position="middle" />
+
+    <!-- Quick Reference Table -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-6 sm:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-4">Quick Reference: Cups to Grams</h2>
+      <p class="text-sm text-text-light mb-4">Common US baking conversions for 1 cup of each ingredient.</p>
+      <div class="overflow-x-auto -mx-4 sm:mx-0">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b-2 border-border">
+              <th class="text-left py-2 px-3 font-semibold text-secondary">Ingredient</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">1 Cup =</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">1 Tbsp</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">1 Tsp</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">All-Purpose Flour</td>
+              <td class="text-right py-2.5 px-3">120 g</td>
+              <td class="text-right py-2.5 px-3">7.5 g</td>
+              <td class="text-right py-2.5 px-3">2.5 g</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">Granulated Sugar</td>
+              <td class="text-right py-2.5 px-3">200 g</td>
+              <td class="text-right py-2.5 px-3">12.5 g</td>
+              <td class="text-right py-2.5 px-3">4.2 g</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">Brown Sugar (packed)</td>
+              <td class="text-right py-2.5 px-3">220 g</td>
+              <td class="text-right py-2.5 px-3">13.75 g</td>
+              <td class="text-right py-2.5 px-3">4.6 g</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">Butter</td>
+              <td class="text-right py-2.5 px-3">227 g</td>
+              <td class="text-right py-2.5 px-3">14.2 g</td>
+              <td class="text-right py-2.5 px-3">4.7 g</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">Vegetable Oil</td>
+              <td class="text-right py-2.5 px-3">218 g</td>
+              <td class="text-right py-2.5 px-3">13.6 g</td>
+              <td class="text-right py-2.5 px-3">4.5 g</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">Honey</td>
+              <td class="text-right py-2.5 px-3">340 g</td>
+              <td class="text-right py-2.5 px-3">21.25 g</td>
+              <td class="text-right py-2.5 px-3">7.1 g</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3 font-medium">Water / Milk</td>
+              <td class="text-right py-2.5 px-3">240 g</td>
+              <td class="text-right py-2.5 px-3">15 g</td>
+              <td class="text-right py-2.5 px-3">5 g</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- US Volume Equivalents -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-6 sm:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-4">US Volume Equivalents</h2>
+      <div class="overflow-x-auto -mx-4 sm:mx-0">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b-2 border-border">
+              <th class="text-left py-2 px-3 font-semibold text-secondary">Unit</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Cups</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Tablespoons</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Teaspoons</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Fluid Ounces</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Milliliters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">1 cup</td>
+              <td class="text-right py-2.5 px-3">1</td>
+              <td class="text-right py-2.5 px-3">16</td>
+              <td class="text-right py-2.5 px-3">48</td>
+              <td class="text-right py-2.5 px-3">8</td>
+              <td class="text-right py-2.5 px-3">237</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">1 tbsp</td>
+              <td class="text-right py-2.5 px-3">1/16</td>
+              <td class="text-right py-2.5 px-3">1</td>
+              <td class="text-right py-2.5 px-3">3</td>
+              <td class="text-right py-2.5 px-3">1/2</td>
+              <td class="text-right py-2.5 px-3">15</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">1 tsp</td>
+              <td class="text-right py-2.5 px-3">1/48</td>
+              <td class="text-right py-2.5 px-3">1/3</td>
+              <td class="text-right py-2.5 px-3">1</td>
+              <td class="text-right py-2.5 px-3">1/6</td>
+              <td class="text-right py-2.5 px-3">5</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">1 fl oz</td>
+              <td class="text-right py-2.5 px-3">1/8</td>
+              <td class="text-right py-2.5 px-3">2</td>
+              <td class="text-right py-2.5 px-3">6</td>
+              <td class="text-right py-2.5 px-3">1</td>
+              <td class="text-right py-2.5 px-3">30</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">1 quart</td>
+              <td class="text-right py-2.5 px-3">4</td>
+              <td class="text-right py-2.5 px-3">64</td>
+              <td class="text-right py-2.5 px-3">192</td>
+              <td class="text-right py-2.5 px-3">32</td>
+              <td class="text-right py-2.5 px-3">946</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3 font-medium">1 gallon</td>
+              <td class="text-right py-2.5 px-3">16</td>
+              <td class="text-right py-2.5 px-3">256</td>
+              <td class="text-right py-2.5 px-3">768</td>
+              <td class="text-right py-2.5 px-3">128</td>
+              <td class="text-right py-2.5 px-3">3785</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <AdSlot position="bottom" />
+  </div>
+</BaseLayout>
+
+<script>
+  // Ingredient density: grams per cup (US)
+  const densities: Record<string, number> = {
+    water: 240,
+    flour: 120,
+    "sugar-granulated": 200,
+    "sugar-brown": 220,
+    "sugar-powdered": 120,
+    butter: 227,
+    oil: 218,
+    honey: 340,
+    rice: 185,
+    salt: 292,
+    "baking-powder": 192,
+    cocoa: 100,
+    "cheese-shredded": 113,
+    "nuts-chopped": 120,
+    "chocolate-chips": 170,
+    oats: 90,
+  };
+
+  // Conversion factors to cups
+  const toCups: Record<string, number> = {
+    cup: 1,
+    tbsp: 1 / 16,
+    tsp: 1 / 48,
+    floz: 1 / 8,
+    ml: 1 / 240,
+    g: null!, // depends on ingredient
+    oz: null!, // depends on ingredient
+    lb: null!, // depends on ingredient
+  };
+
+  // Conversion from cups
+  const fromCups: Record<string, number> = {
+    cup: 1,
+    tbsp: 16,
+    tsp: 48,
+    floz: 8,
+    ml: 240,
+    g: null!, // depends on ingredient
+    oz: null!,
+    lb: null!,
+  };
+
+  const unitNames: Record<string, string> = {
+    cup: "cups",
+    tbsp: "tbsp",
+    tsp: "tsp",
+    floz: "fl oz",
+    ml: "mL",
+    g: "g",
+    oz: "oz",
+    lb: "lb",
+  };
+
+  function isWeight(u: string): boolean {
+    return u === "g" || u === "oz" || u === "lb";
+  }
+
+  function convert() {
+    const fromVal = parseFloat((document.getElementById("fromValue") as HTMLInputElement).value);
+    const fromUnit = (document.getElementById("fromUnit") as HTMLSelectElement).value;
+    const toUnit = (document.getElementById("toUnit") as HTMLSelectElement).value;
+    const ingredient = (document.getElementById("ingredient") as HTMLSelectElement).value;
+    const density = densities[ingredient];
+
+    const resultValue = document.getElementById("resultValue")!;
+    const resultFormula = document.getElementById("resultFormula")!;
+
+    if (isNaN(fromVal) || fromVal < 0) {
+      resultValue.textContent = "Enter a valid number";
+      resultFormula.textContent = "";
+      return;
+    }
+
+    let inCups: number;
+    if (isWeight(fromUnit)) {
+      // Convert weight → cups via ingredient density
+      let grams = fromVal;
+      if (fromUnit === "oz") grams = fromVal * 28.3495;
+      else if (fromUnit === "lb") grams = fromVal * 453.592;
+      inCups = grams / density;
+    } else {
+      inCups = fromVal * toCups[fromUnit];
+    }
+
+    let result: number;
+    if (isWeight(toUnit)) {
+      const grams = inCups * density;
+      if (toUnit === "oz") result = grams / 28.3495;
+      else if (toUnit === "lb") result = grams / 453.592;
+      else result = grams;
+    } else {
+      result = inCups * fromCups[toUnit];
+    }
+
+    const rounded = parseFloat(result.toPrecision(4));
+    resultValue.textContent = `${rounded} ${unitNames[toUnit]}`;
+
+    // Build formula text
+    const ingredientName = (document.getElementById("ingredient") as HTMLSelectElement).selectedOptions[0].text;
+    resultFormula.textContent = `Based on ${ingredientName.toLowerCase()} (${density} g per cup)`;
+  }
+
+  function updateIngredientVisibility() {
+    const from = (document.getElementById("fromUnit") as HTMLSelectElement).value;
+    const to = (document.getElementById("toUnit") as HTMLSelectElement).value;
+    const group = document.getElementById("ingredientGroup")!;
+    if (isWeight(from) !== isWeight(to)) {
+      group.style.display = "";
+    } else {
+      group.style.display = "none";
+    }
+    convert();
+  }
+
+  document.getElementById("fromValue")!.addEventListener("input", convert);
+  document.getElementById("fromUnit")!.addEventListener("change", updateIngredientVisibility);
+  document.getElementById("toUnit")!.addEventListener("change", updateIngredientVisibility);
+  document.getElementById("ingredient")!.addEventListener("change", convert);
+
+  // Initial
+  updateIngredientVisibility();
+</script>

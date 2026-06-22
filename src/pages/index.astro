@@ -7,7 +7,7 @@ const siteSchema = {
   name: "The Kitchen Calc",
   url: "https://thekitchencalc.com",
   description:
-    "Free kitchen calculators for home cooks. Scale recipes, convert cooking times, and plan holiday meals. No sign-up required.",
+    "Free kitchen calculators for home cooks. Scale recipes, convert measurements, adjust cooking times, plan holiday meals, substitute ingredients, and more. No sign-up required.",
   potentialAction: {
     "@type": "SearchAction",
     target: "https://thekitchencalc.com/search?q={search_term_string}",
@@ -40,12 +40,44 @@ const tools = [
     href: "/holiday-meal-planner/",
     keywords: "thanksgiving calculator, christmas dinner planner, holiday food planner, turkey servings",
   },
+  {
+    icon: "⚖️",
+    title: "Kitchen Measurement Converter",
+    description:
+      "Convert cups to grams, tablespoons to milliliters, ounces to cups. Includes ingredient-specific density for flour, sugar, butter, and more.",
+    href: "/kitchen-measurement-converter/",
+    keywords: "cups to grams, measurement converter, tbsp to ml, kitchen conversion, ounce to cup",
+  },
+  {
+    icon: "🍰",
+    title: "Baking Pan Size Converter",
+    description:
+      "Convert recipes between different pan sizes and shapes. Round to square, 8-inch to 9-inch — get the exact ingredient multiplier.",
+    href: "/baking-pan-converter/",
+    keywords: "baking pan converter, cake pan size, pan substitution, adjust recipe for pan size",
+  },
+  {
+    icon: "🔥",
+    title: "Oven Temperature Converter",
+    description:
+      "Convert between Fahrenheit, Celsius, and gas marks instantly. Includes a cooking temperature guide for roasting, baking, and broiling.",
+    href: "/oven-temperature-converter/",
+    keywords: "oven temperature conversion, F to C, gas mark, baking temperature, celsius to fahrenheit",
+  },
+  {
+    icon: "🔄",
+    title: "Ingredient Substitution Finder",
+    description:
+      "Missing an ingredient? Find tested substitutes for buttermilk, eggs, flour, brown sugar, butter, and dozens of other pantry staples.",
+    href: "/ingredient-substitution-finder/",
+    keywords: "ingredient substitute, baking substitution, egg substitute, buttermilk substitute, cooking substitute",
+  },
 ];
 ---
 
 <BaseLayout
-  title="Free Kitchen Calculators — Scale Recipes, Convert Times, Plan Meals"
-  description="The Kitchen Calc offers free, easy-to-use calculators for home cooks. Scale recipes, adjust cooking times for altitude and method, and plan holiday meals. No sign-up, no ads annoyance — just helpful tools."
+  title="Free Kitchen Calculators — Scale Recipes, Convert Measurements, Plan Meals"
+  description="The Kitchen Calc offers 7 free, easy-to-use calculators for home cooks. Scale recipes, convert measurements, adjust cooking times, plan holiday meals, find ingredient substitutes, and more. No sign-up required."
   schema={siteSchema}
 >
   <!-- Hero Section -->
@@ -80,7 +112,7 @@ const tools = [
     <h2 class="text-2xl sm:text-3xl font-extrabold text-secondary text-center mb-12">
       Our Free Kitchen Calculators
     </h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {tools.map((tool) => (
         <a
           href={tool.href}

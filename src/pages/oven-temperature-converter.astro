@@ -1,0 +1,242 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AdSlot from "../components/AdSlot.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Oven Temperature Converter",
+  url: "https://thekitchencalc.com/oven-temperature-converter/",
+  description: "Convert oven temperatures between Fahrenheit, Celsius, and gas marks. Includes a cooking temperature guide for roasting, baking, broiling, and more.",
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "Web",
+};
+
+const tempGuide = [
+  { label: "Warm / Keep Warm", f: "150–170", c: "65–75", gas: "1/4", desc: "Holding food, warming plates, slow defrosting" },
+  { label: "Very Slow / Cool", f: "200–250", c: "95–120", gas: "1/2–1", desc: "Meringues, drying fruit, slow-roasting tough meats" },
+  { label: "Slow / Low", f: "275–300", c: "135–150", gas: "1–2", desc: "Slow-roasted pork shoulder, braised dishes, cheesecake" },
+  { label: "Moderate", f: "325–350", c: "160–175", gas: "3–4", desc: "Most cookies & bars, quick breads (banana bread, cornbread), casseroles" },
+  { label: "Moderate-Hot", f: "375–400", c: "190–205", gas: "5–6", desc: "Cupcakes, muffins, layer cakes, roasted vegetables, chicken pieces" },
+  { label: "Hot", f: "425–450", c: "220–230", gas: "7–8", desc: "Pizza, bread (crusty loaves), roasted potatoes, pastry (puff, pie crust)" },
+  { label: "Very Hot", f: "475–500", c: "245–260", gas: "9–10", desc: "Pizza (Neapolitan style), searing roasts, naan bread" },
+  { label: "Broil / Grill", f: "500–550", c: "260–290", gas: "Max", desc: "Broiling steaks, browning toppings, charring vegetables" },
+];
+---
+
+<BaseLayout
+  title="Oven Temperature Converter — Fahrenheit, Celsius, Gas Mark"
+  description="Convert oven temperatures instantly between Fahrenheit, Celsius, and gas marks. Includes a temperature guide for roasting, baking, broiling, and more."
+  canonical="https://thekitchencalc.com/oven-temperature-converter/"
+  schema={schema}
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-secondary leading-tight mb-4">
+        Oven Temperature Converter
+      </h1>
+      <p class="text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
+        Instantly convert between Fahrenheit, Celsius, and gas marks. Especially useful when following recipes from the UK, Europe, or Australia that use different temperature scales.
+      </p>
+    </div>
+
+    <AdSlot position="top" />
+
+    <!-- Converter -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-6 sm:p-8 mb-8">
+      <div class="flex flex-wrap items-end gap-4 mb-6">
+        <div class="flex-1 min-w-[160px]">
+          <label class="block text-sm font-semibold text-secondary mb-2" for="tempInput">Temperature</label>
+          <input
+            type="number"
+            id="tempInput"
+            value="350"
+            min="0"
+            max="600"
+            class="w-full px-4 py-3 border border-border rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none font-medium text-lg"
+            aria-label="Enter temperature"
+          />
+        </div>
+        <div class="flex-1 min-w-[140px]">
+          <label class="block text-sm font-semibold text-secondary mb-2" for="tempUnit">From</label>
+          <select
+            id="tempUnit"
+            class="w-full px-4 py-3 border border-border rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none bg-white font-medium text-lg"
+            aria-label="Temperature unit"
+          >
+            <option value="f">Fahrenheit (°F)</option>
+            <option value="c">Celsius (°C)</option>
+            <option value="gas">Gas Mark</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Results Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div class="bg-cream rounded-xl p-5 text-center" id="resultF">
+          <p class="text-xs text-text-light uppercase tracking-wider mb-1">Fahrenheit</p>
+          <p class="text-2xl sm:text-3xl font-extrabold text-secondary" id="valF">350°F</p>
+        </div>
+        <div class="bg-cream rounded-xl p-5 text-center" id="resultC">
+          <p class="text-xs text-text-light uppercase tracking-wider mb-1">Celsius</p>
+          <p class="text-2xl sm:text-3xl font-extrabold text-secondary" id="valC">175°C</p>
+        </div>
+        <div class="bg-cream rounded-xl p-5 text-center" id="resultGas">
+          <p class="text-xs text-text-light uppercase tracking-wider mb-1">Gas Mark</p>
+          <p class="text-2xl sm:text-3xl font-extrabold text-secondary" id="valGas">4</p>
+        </div>
+      </div>
+
+      <!-- Common Presets -->
+      <div class="border-t border-border pt-4">
+        <p class="text-xs text-text-light mb-3 font-semibold">Common Oven Temperatures</p>
+        <div class="flex flex-wrap gap-2" id="presetButtons">
+        </div>
+      </div>
+    </div>
+
+    <AdSlot position="middle" />
+
+    <!-- Temperature Guide -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-6 sm:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-4">Oven Temperature Guide</h2>
+      <p class="text-sm text-text-light mb-4">
+        Use this reference to know what temperature to set your oven for different cooking tasks.
+      </p>
+      <div class="overflow-x-auto -mx-4 sm:mx-0">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b-2 border-border">
+              <th class="text-left py-2 px-3 font-semibold text-secondary">Setting</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">°F</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">°C</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Gas</th>
+              <th class="text-left py-2 px-3 font-semibold text-secondary">Best For</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tempGuide.map((row, i) => (
+              <tr class={i < tempGuide.length - 1 ? "border-b border-border" : ""}>
+                <td class="py-2.5 px-3 font-medium">{row.label}</td>
+                <td class="text-right py-2.5 px-3 font-medium">{row.f}°F</td>
+                <td class="text-right py-2.5 px-3 font-medium">{row.c}°C</td>
+                <td class="text-right py-2.5 px-3 font-medium">{row.gas}</td>
+                <td class="py-2.5 px-3 text-text-light">{row.desc}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div class="bg-cream rounded-2xl p-6 sm:p-8 mb-8 border border-border">
+      <h2 class="text-lg font-bold text-secondary mb-3">Oven Temperature Tips</h2>
+      <ul class="text-sm text-text-light leading-relaxed space-y-2 list-disc pl-5">
+        <li><strong>Convection/fan ovens:</strong> Reduce the temperature by 25°F (about 15°C) when using a convection setting. Check food 5-10 minutes earlier than a standard recipe suggests.</li>
+        <li><strong>Oven thermometers:</strong> Most home ovens are off by 25-50°F. A $5 oven thermometer is the best investment for accurate baking.</li>
+        <li><strong>Preheating:</strong> Always fully preheat your oven. Most ovens beep before they've actually stabilized at temperature — wait an extra 5-10 minutes after the beep.</li>
+        <li><strong>Gas Mark scale:</strong> Used primarily in the UK and Ireland. Gas Mark 1 is roughly 275°F (135°C) and each step up adds about 25°F.</li>
+      </ul>
+    </div>
+
+    <!-- Conversion Formulas -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-6 sm:p-8">
+      <h2 class="text-xl font-bold text-secondary mb-4">Conversion Formulas</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+        <div class="bg-cream rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">°F to °C</p>
+          <p class="text-text-light">(°F − 32) × 5/9 = °C</p>
+        </div>
+        <div class="bg-cream rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">°C to °F</p>
+          <p class="text-text-light">(°C × 9/5) + 32 = °F</p>
+        </div>
+      </div>
+    </div>
+
+    <AdSlot position="bottom" />
+  </div>
+</BaseLayout>
+
+<script>
+  const gasToF: Record<number, number> = {
+    1: 280, 2: 300, 3: 325, 4: 350, 5: 375, 6: 400, 7: 425, 8: 450, 9: 475, 10: 500,
+  };
+  const fToGas: [number, number][] = [
+    [225, 0.5], [250, 0.5], [275, 1], [300, 2], [325, 3], [350, 4], [375, 5], [400, 6], [425, 7], [450, 8], [475, 9], [500, 10],
+  ];
+
+  function fToC(f: number): number { return (f - 32) * 5 / 9; }
+  function cToF(c: number): number { return (c * 9 / 5) + 32; }
+
+  function fToGasMark(f: number): string {
+    if (f < 250) return "1/4";
+    if (f < 275) return "1/2";
+    let closest = fToGas[0];
+    let minDiff = Math.abs(f - closest[0]);
+    for (const [ff, gas] of fToGas) {
+      const diff = Math.abs(f - ff);
+      if (diff < minDiff) { minDiff = diff; closest = [ff, gas]; }
+    }
+    if (minDiff > 20) return "~" + closest[1].toString();
+    return closest[1].toString();
+  }
+
+  function update() {
+    const input = parseFloat((document.getElementById("tempInput") as HTMLInputElement).value);
+    const unit = (document.getElementById("tempUnit") as HTMLSelectElement).value;
+
+    if (isNaN(input) || input < 0) return;
+
+    let f: number;
+    if (unit === "f") f = input;
+    else if (unit === "c") f = cToF(input);
+    else {
+      // Gas mark
+      const gm = Math.round(input);
+      f = gasToF[gm] || 0;
+      if (!f) return;
+    }
+
+    const c = fToC(f);
+    const gas = fToGasMark(f);
+
+    document.getElementById("valF")!.textContent = `${Math.round(f)}°F`;
+    document.getElementById("valC")!.textContent = `${Math.round(c)}°C`;
+    document.getElementById("valGas")!.textContent = gas;
+  }
+
+  // Common presets buttons
+  const presets = [
+    { label: "200°F", f: 200 },
+    { label: "250°F", f: 250 },
+    { label: "300°F", f: 300 },
+    { label: "325°F", f: 325 },
+    { label: "350°F", f: 350 },
+    { label: "375°F", f: 375 },
+    { label: "400°F", f: 400 },
+    { label: "425°F", f: 425 },
+    { label: "450°F", f: 450 },
+    { label: "500°F", f: 500 },
+  ];
+
+  const presetContainer = document.getElementById("presetButtons")!;
+  presets.forEach((p) => {
+    const btn = document.createElement("button");
+    btn.textContent = p.label;
+    btn.className = "px-3 py-1.5 bg-cream hover:bg-primary-light/30 border border-border rounded-lg text-sm font-medium text-secondary transition-colors";
+    btn.addEventListener("click", () => {
+      (document.getElementById("tempInput") as HTMLInputElement).value = p.f.toString();
+      (document.getElementById("tempUnit") as HTMLSelectElement).value = "f";
+      update();
+    });
+    presetContainer.appendChild(btn);
+  });
+
+  document.getElementById("tempInput")!.addEventListener("input", update);
+  document.getElementById("tempUnit")!.addEventListener("change", update);
+
+  update();
+</script>

@@ -1,0 +1,367 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AdSlot from "../components/AdSlot.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Baking Pan Size Converter",
+  url: "https://thekitchencalc.com/baking-pan-converter/",
+  description: "Convert any baking recipe between different pan sizes and shapes. Round, square, rectangular, loaf — we calculate the area ratio and adjust ingredient quantities.",
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "Web",
+};
+
+const panPresets = [
+  { label: "6-inch round", area: Math.PI * 9, w: 6, h: 6, shape: "round" },
+  { label: "8-inch round", area: Math.PI * 16, w: 8, h: 8, shape: "round" },
+  { label: '9-inch round', area: Math.PI * 20.25, w: 9, h: 9, shape: "round" },
+  { label: "10-inch round", area: Math.PI * 25, w: 10, h: 10, shape: "round" },
+  { label: "8-inch square", area: 64, w: 8, h: 8, shape: "square" },
+  { label: "9-inch square", area: 81, w: 9, h: 9, shape: "square" },
+  { label: "9×13 rectangular", area: 117, w: 9, h: 13, shape: "rectangle" },
+  { label: "9×5 loaf pan", area: 45, w: 9, h: 5, shape: "rectangle" },
+  { label: "Standard muffin", area: Math.PI * 1.44, w: 2.4, h: 2.4, shape: "round", note: "per cup (12-cup pan = 12×)" },
+  { label: "Half sheet pan", area: 13 * 18, w: 13, h: 18, shape: "rectangle" },
+  { label: "Bundt (10-cup)", area: Math.PI * 25, w: 10, h: 10, shape: "round", note: "approximate area" },
+  { label: "Springform 9-inch", area: Math.PI * 20.25, w: 9, h: 9, shape: "round" },
+];
+---
+
+<BaseLayout
+  title="Baking Pan Size Converter — Adjust Recipes for Any Pan"
+  description="Convert baking recipes between different pan sizes. Round to square, 8-inch to 9-inch, loaf to sheet pan. Get exact ingredient multiplier for perfect results every time."
+  canonical="https://thekitchencalc.com/baking-pan-converter/"
+  schema={schema}
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-secondary leading-tight mb-4">
+        Baking Pan Size Converter
+      </h1>
+      <p class="text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
+        Recipe calls for a 9-inch round but you only have an 8-inch square? Convert between any pan shapes and sizes. We calculate the area ratio and tell you exactly how to adjust your ingredients.
+      </p>
+    </div>
+
+    <AdSlot position="top" />
+
+    <!-- Calculator -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-6 sm:p-8 mb-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Original Pan -->
+        <div>
+          <h3 class="font-bold text-secondary mb-4 text-sm uppercase tracking-wider">Original Pan (Recipe Calls For)</h3>
+
+          <div class="mb-4">
+            <label class="block text-xs font-semibold text-text-light mb-1">Quick Select</label>
+            <select
+              id="fromPreset"
+              class="w-full px-3 py-2.5 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none bg-white text-sm"
+              aria-label="Select original pan"
+            >
+              <option value="">— Choose a common pan —</option>
+              {panPresets.map((p) => (
+                <option value={p.area.toString()}>{p.label}</option>
+              ))}
+              <option value="custom">Custom dimensions...</option>
+            </select>
+          </div>
+
+          <div id="fromCustom" style="display:none;">
+            <div class="mb-3">
+              <label class="block text-xs font-semibold text-text-light mb-1">Shape</label>
+              <select id="fromShape" class="w-full px-3 py-2.5 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none bg-white text-sm">
+                <option value="round">Round</option>
+                <option value="square">Square / Rectangular</option>
+              </select>
+            </div>
+            <div class="flex gap-3 mb-3">
+              <div class="flex-1">
+                <label class="block text-xs font-semibold text-text-light mb-1" id="fromDim1Label">Width / Diameter (in)</label>
+                <input type="number" id="fromDim1" value="9" step="0.25" min="1" max="30" class="w-full px-3 py-2.5 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm" />
+              </div>
+              <div class="flex-1" id="fromDim2Group">
+                <label class="block text-xs font-semibold text-text-light mb-1">Length (in)</label>
+                <input type="number" id="fromDim2" value="13" step="0.25" min="1" max="30" class="w-full px-3 py-2.5 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm" />
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-cream rounded-lg p-3 text-center mt-4">
+            <p class="text-xs text-text-light">Area</p>
+            <p class="text-xl font-extrabold text-secondary" id="fromArea">63.6 in²</p>
+          </div>
+        </div>
+
+        <!-- New Pan -->
+        <div>
+          <h3 class="font-bold text-secondary mb-4 text-sm uppercase tracking-wider">Your Pan (What You Have)</h3>
+
+          <div class="mb-4">
+            <label class="block text-xs font-semibold text-text-light mb-1">Quick Select</label>
+            <select
+              id="toPreset"
+              class="w-full px-3 py-2.5 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none bg-white text-sm"
+              aria-label="Select your pan"
+            >
+              <option value="">— Choose a common pan —</option>
+              {panPresets.map((p) => (
+                <option value={p.area.toString()}>{p.label}</option>
+              ))}
+              <option value="custom">Custom dimensions...</option>
+            </select>
+          </div>
+
+          <div id="toCustom" style="display:none;">
+            <div class="mb-3">
+              <label class="block text-xs font-semibold text-text-light mb-1">Shape</label>
+              <select id="toShape" class="w-full px-3 py-2.5 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none bg-white text-sm">
+                <option value="round">Round</option>
+                <option value="square">Square / Rectangular</option>
+              </select>
+            </div>
+            <div class="flex gap-3 mb-3">
+              <div class="flex-1">
+                <label class="block text-xs font-semibold text-text-light mb-1" id="toDim1Label">Width / Diameter (in)</label>
+                <input type="number" id="toDim1" value="8" step="0.25" min="1" max="30" class="w-full px-3 py-2.5 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm" />
+              </div>
+              <div class="flex-1" id="toDim2Group">
+                <label class="block text-xs font-semibold text-text-light mb-1">Length (in)</label>
+                <input type="number" id="toDim2" value="8" step="0.25" min="1" max="30" class="w-full px-3 py-2.5 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm" />
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-cream rounded-lg p-3 text-center mt-4">
+            <p class="text-xs text-text-light">Area</p>
+            <p class="text-xl font-extrabold text-secondary" id="toArea">50.3 in²</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="mt-8 p-6 bg-cream rounded-xl text-center border-2 border-dashed border-accent" id="resultsPanel">
+        <p class="text-sm text-text-light mb-2">Adjustment Multiplier</p>
+        <p class="text-4xl sm:text-5xl font-extrabold" id="multiplier" style="color: var(--color-secondary);">0.79×</p>
+        <p class="text-sm text-text-light mt-2" id="multiplierText">Scale all ingredients by 0.79</p>
+      </div>
+
+      <!-- Quick Examples -->
+      <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm" id="quickExamples">
+        <div class="bg-white border border-border rounded-lg p-3 text-center">
+          <p class="text-text-light text-xs mb-1">Example: 1 cup flour</p>
+          <p class="font-bold text-secondary" id="exFlour">0.79 cups</p>
+        </div>
+        <div class="bg-white border border-border rounded-lg p-3 text-center">
+          <p class="text-text-light text-xs mb-1">Example: 2 eggs</p>
+          <p class="font-bold text-secondary" id="exEggs">1.6 eggs</p>
+        </div>
+        <div class="bg-white border border-border rounded-lg p-3 text-center">
+          <p class="text-text-light text-xs mb-1">Baking time</p>
+          <p class="font-bold text-secondary" id="exTime">Adjust &darr;</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reference Table -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-6 sm:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-4">Common Pan Conversions</h2>
+      <div class="overflow-x-auto -mx-4 sm:mx-0">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b-2 border-border">
+              <th class="text-left py-2 px-3 font-semibold text-secondary">Recipe Pan</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Substitute With</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Multiplier</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">9-inch round</td>
+              <td class="text-right py-2.5 px-3">8-inch square</td>
+              <td class="text-right py-2.5 px-3">1.01× (nearly identical)</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">9-inch round</td>
+              <td class="text-right py-2.5 px-3">8-inch round</td>
+              <td class="text-right py-2.5 px-3">0.79× (reduce by ~20%)</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">9×13 rectangle</td>
+              <td class="text-right py-2.5 px-3">Two 9-inch rounds</td>
+              <td class="text-right py-2.5 px-3">0.92× per pan</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">9×13 rectangle</td>
+              <td class="text-right py-2.5 px-3">Three 8-inch rounds</td>
+              <td class="text-right py-2.5 px-3">0.62× per pan</td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="py-2.5 px-3 font-medium">10-inch round</td>
+              <td class="text-right py-2.5 px-3">9-inch square</td>
+              <td class="text-right py-2.5 px-3">1.03× (nearly identical)</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3 font-medium">12-cup muffin</td>
+              <td class="text-right py-2.5 px-3">9×13 rectangle</td>
+              <td class="text-right py-2.5 px-3">0.54× per muffin</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <AdSlot position="bottom" />
+  </div>
+</BaseLayout>
+
+<script>
+  function calcArea(shape: string, d1: number, d2: number): number {
+    if (shape === "round") {
+      return Math.PI * (d1 / 2) ** 2;
+    }
+    return d1 * d2;
+  }
+
+  function updateShapeUI(prefix: "from" | "to") {
+    const shape = (document.getElementById(`${prefix}Shape`) as HTMLSelectElement)?.value;
+    const dim2Group = document.getElementById(`${prefix}Dim2Group`)!;
+    const dim1Label = document.getElementById(`${prefix}Dim1Label`)!;
+
+    if (shape === "round") {
+      dim2Group.style.display = "none";
+      dim1Label.textContent = "Diameter (in)";
+    } else {
+      dim2Group.style.display = "";
+      dim1Label.textContent = "Width (in)";
+    }
+  }
+
+  function getArea(prefix: "from" | "to"): number {
+    const preset = (document.getElementById(`${prefix}Preset`) as HTMLSelectElement).value;
+    if (preset && preset !== "custom") {
+      return parseFloat(preset);
+    }
+    const shape = (document.getElementById(`${prefix}Shape`) as HTMLSelectElement).value;
+    const d1 = parseFloat((document.getElementById(`${prefix}Dim1`) as HTMLInputElement).value);
+    const d2 = parseFloat((document.getElementById(`${prefix}Dim2`) as HTMLInputElement).value);
+    if (isNaN(d1)) return 0;
+    return calcArea(shape, d1, isNaN(d2) ? d1 : d2);
+  }
+
+  function updateDisplay(prefix: "from" | "to") {
+    const area = getArea(prefix);
+    const areaEl = document.getElementById(`${prefix}Area`)!;
+    if (area <= 0) {
+      areaEl.textContent = "— in²";
+    } else {
+      areaEl.textContent = `${parseFloat(area.toPrecision(3))} in²`;
+    }
+  }
+
+  function toggleCustom(prefix: "from" | "to") {
+    const preset = (document.getElementById(`${prefix}Preset`) as HTMLSelectElement).value;
+    const custom = document.getElementById(`${prefix}Custom`)!;
+    custom.style.display = preset === "custom" ? "" : "none";
+    updateDisplay(prefix);
+    recalc();
+  }
+
+  function recalc() {
+    const fromArea = getArea("from");
+    const toArea = getArea("to");
+
+    const multEl = document.getElementById("multiplier")!;
+    const multText = document.getElementById("multiplierText")!;
+    const resultsPanel = document.getElementById("resultsPanel")!;
+    const flour = document.getElementById("exFlour")!;
+    const eggs = document.getElementById("exEggs")!;
+    const exTime = document.getElementById("exTime")!;
+
+    if (fromArea <= 0 || toArea <= 0 || isNaN(fromArea) || isNaN(toArea)) {
+      multEl.textContent = "—";
+      multText.textContent = "Select both pans to see the multiplier";
+      flour.textContent = "—";
+      eggs.textContent = "—";
+      exTime.textContent = "—";
+      return;
+    }
+
+    const mult = toArea / fromArea;
+    const mStr = parseFloat(mult.toPrecision(3)).toString();
+
+    multEl.textContent = `${mStr}×`;
+
+    if (Math.abs(mult - 1) < 0.02) {
+      multText.textContent = "No scaling needed — these pans are nearly identical in area.";
+      multEl.style.color = "var(--color-accent)";
+    } else if (mult < 1) {
+      multText.textContent = `Scale all ingredients by ${mStr} (reduce by ${Math.round((1 - mult) * 100)}%)`;
+      multEl.style.color = "var(--color-primary)";
+    } else {
+      multText.textContent = `Scale all ingredients by ${mStr} (increase by ${Math.round((mult - 1) * 100)}%)`;
+      multEl.style.color = "var(--color-secondary)";
+    }
+
+    // Quick examples
+    const cups = parseFloat((mult * 1).toPrecision(2));
+    const fraction = toFraction(cups);
+    flour.textContent = fraction + " cups";
+
+    const eggCount = mult * 2;
+    if (eggCount < 0.5) {
+      eggs.textContent = "Use yolk only";
+    } else {
+      eggs.textContent = parseFloat(eggCount.toPrecision(2)) + " eggs";
+    }
+
+    if (mult > 1.1) {
+      exTime.innerHTML = "Add 5&ndash;10 min";
+    } else if (mult < 0.8) {
+      exTime.innerHTML = "Reduce 5&ndash;10 min";
+    } else {
+      exTime.textContent = "Similar";
+    }
+  }
+
+  function toFraction(n: number): string {
+    const fractions: [number, string][] = [
+      [0.25, "1/4"], [0.33, "1/3"], [0.5, "1/2"], [0.67, "2/3"], [0.75, "3/4"],
+    ];
+    const whole = Math.floor(n);
+    const frac = n - whole;
+
+    if (frac < 0.05) return whole.toString();
+    if (frac > 0.95) return (whole + 1).toString();
+
+    let best = "";
+    let bestDiff = Infinity;
+    for (const [val, label] of fractions) {
+      const diff = Math.abs(frac - val);
+      if (diff < bestDiff) {
+        bestDiff = diff;
+        best = label;
+      }
+    }
+    return whole > 0 ? `${whole} ${best}` : best;
+  }
+
+  // Wire up events
+  for (const p of ["from", "to"] as const) {
+    document.getElementById(`${p}Preset`)!.addEventListener("change", () => toggleCustom(p));
+    document.getElementById(`${p}Shape`)!.addEventListener("change", () => { updateShapeUI(p); updateDisplay(p); recalc(); });
+    document.getElementById(`${p}Dim1`)!.addEventListener("input", () => { updateDisplay(p); recalc(); });
+    document.getElementById(`${p}Dim2`)!.addEventListener("input", () => { updateDisplay(p); recalc(); });
+  }
+
+  // Init
+  updateShapeUI("from");
+  updateShapeUI("to");
+  toggleCustom("from");
+  toggleCustom("to");
+  updateDisplay("from");
+  updateDisplay("to");
+  recalc();
+</script>
