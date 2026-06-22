@@ -1,0 +1,454 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AdSlot from "../components/AdSlot.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Cooking Time Calculator",
+  url: "https://thekitchencalc.com/cooking-time-calculator/",
+  description:
+    "Adjust cooking times for altitude, different cooking methods, and ingredient weight. Free tool for home cooks — works in Fahrenheit and pounds.",
+  applicationCategory: "CookingApplication",
+  operatingSystem: "Web",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+---
+
+<BaseLayout
+  title="Cooking Time Calculator — Adjust for Altitude & Method"
+  description="Convert cooking times for altitude adjustments, different cooking methods (roasting, grilling, slow cooking), and meat doneness. Free calculator for American home cooks."
+  canonical="https://thekitchencalc.com/cooking-time-calculator/"
+  schema={schema}
+>
+  <!-- Hero -->
+  <section class="bg-white border-b border-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 text-center">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-secondary leading-tight mb-4">
+        Cooking Time <span class="text-primary">Calculator</span>
+      </h1>
+      <p class="text-base sm:text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
+        Living at high altitude? Switching from oven to grill? Enter your original
+        cooking time and we'll adjust it for your situation.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <AdSlot position="top" />
+
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
+      <!-- Calculator Type Selector -->
+      <div class="mb-8">
+        <label class="block text-sm font-semibold text-secondary mb-3">I want to adjust for:</label>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="calc-type-buttons">
+          <button
+            data-type="altitude"
+            class="calc-type-btn px-3 py-3 rounded-xl text-sm font-semibold border-2 border-primary bg-primary/5 text-primary transition-all tap-target active"
+          >
+            🌄 Altitude
+          </button>
+          <button
+            data-type="method"
+            class="calc-type-btn px-3 py-3 rounded-xl text-sm font-semibold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+          >
+            🔥 Cooking Method
+          </button>
+          <button
+            data-type="meat"
+            class="calc-type-btn px-3 py-3 rounded-xl text-sm font-semibold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+          >
+            🥩 Meat Doneness
+          </button>
+          <button
+            data-type="weight"
+            class="calc-type-btn px-3 py-3 rounded-xl text-sm font-semibold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+          >
+            ⚖️ Weight
+          </button>
+        </div>
+      </div>
+
+      <!-- Common Inputs -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div>
+          <label for="cook-hours" class="block text-sm font-semibold text-secondary mb-2">
+            Hours
+          </label>
+          <input
+            type="number"
+            id="cook-hours"
+            min="0"
+            max="48"
+            value="0"
+            class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+            inputmode="numeric"
+          />
+        </div>
+        <div>
+          <label for="cook-minutes" class="block text-sm font-semibold text-secondary mb-2">
+            Minutes
+          </label>
+          <input
+            type="number"
+            id="cook-minutes"
+            min="0"
+            max="59"
+            value="45"
+            class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+            inputmode="numeric"
+          />
+        </div>
+        <div>
+          <label for="oven-temp" class="block text-sm font-semibold text-secondary mb-2">
+            Oven Temp (&deg;F)
+          </label>
+          <input
+            type="number"
+            id="oven-temp"
+            min="150"
+            max="550"
+            value="350"
+            class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+            inputmode="numeric"
+          />
+        </div>
+      </div>
+
+      <!-- Dynamic Panel: Altitude -->
+      <div id="panel-altitude" class="calc-panel">
+        <label for="altitude-select" class="block text-sm font-semibold text-secondary mb-2">
+          Your Altitude
+        </label>
+        <select
+          id="altitude-select"
+          class="w-full sm:w-auto px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+        >
+          <option value="0">Sea level (0 — 3,000 ft)</option>
+          <option value="3000" selected>3,000 — 5,000 ft (e.g., Denver, Salt Lake City)</option>
+          <option value="5000">5,000 — 7,000 ft (e.g., Santa Fe, Flagstaff)</option>
+          <option value="7000">7,000 — 10,000 ft (e.g., Aspen, Breckenridge)</option>
+          <option value="10000">10,000+ ft (e.g., Leadville, high Rockies)</option>
+        </select>
+        <p class="text-xs text-text-light mt-2">
+          At higher altitudes, water boils at lower temperatures. Most recipes need
+          5—25% more time. Baked goods may also need adjusted leavening and liquid.
+        </p>
+      </div>
+
+      <!-- Dynamic Panel: Cooking Method -->
+      <div id="panel-method" class="calc-panel hidden">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="from-method" class="block text-sm font-semibold text-secondary mb-2">
+              Original Method
+            </label>
+            <select
+              id="from-method"
+              class="w-full px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+            >
+              <option value="oven">Conventional Oven (350°F)</option>
+              <option value="convection">Convection Oven</option>
+              <option value="grill">Outdoor Grill</option>
+              <option value="slow_cooker_low">Slow Cooker (Low)</option>
+              <option value="slow_cooker_high">Slow Cooker (High)</option>
+              <option value="pressure">Pressure Cooker / Instant Pot</option>
+              <option value="air_fryer">Air Fryer</option>
+            </select>
+          </div>
+          <div>
+            <label for="to-method" class="block text-sm font-semibold text-secondary mb-2">
+              New Method
+            </label>
+            <select
+              id="to-method"
+              class="w-full px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+            >
+              <option value="oven">Conventional Oven (350°F)</option>
+              <option value="convection">Convection Oven</option>
+              <option value="grill">Outdoor Grill</option>
+              <option value="slow_cooker_low">Slow Cooker (Low)</option>
+              <option value="slow_cooker_high">Slow Cooker (High)</option>
+              <option value="pressure">Pressure Cooker / Instant Pot</option>
+              <option value="air_fryer">Air Fryer</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Panel: Meat Doneness -->
+      <div id="panel-meat" class="calc-panel hidden">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="meat-type" class="block text-sm font-semibold text-secondary mb-2">
+              Type of Meat
+            </label>
+            <select
+              id="meat-type"
+              class="w-full px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+            >
+              <option value="beef_roast">Beef Roast</option>
+              <option value="steak">Steak (1.5" thick)</option>
+              <option value="pork_roast">Pork Roast</option>
+              <option value="pork_chops">Pork Chops</option>
+              <option value="chicken_whole">Whole Chicken</option>
+              <option value="chicken_breast">Chicken Breast</option>
+            </select>
+          </div>
+          <div>
+            <label for="doneness" class="block text-sm font-semibold text-secondary mb-2">
+              Desired Doneness
+            </label>
+            <select
+              id="doneness"
+              class="w-full px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+            >
+              <option value="rare">Rare (125°F)</option>
+              <option value="medium_rare" selected>Medium Rare (135°F)</option>
+              <option value="medium">Medium (145°F)</option>
+              <option value="medium_well">Medium Well (155°F)</option>
+              <option value="well_done">Well Done (165°F)</option>
+            </select>
+          </div>
+        </div>
+        <p class="text-xs text-text-light mt-2">
+          Poultry must reach 165°F internal temperature per USDA guidelines.
+        </p>
+      </div>
+
+      <!-- Dynamic Panel: Weight -->
+      <div id="panel-weight" class="calc-panel hidden">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="original-weight" class="block text-sm font-semibold text-secondary mb-2">
+              Original Weight
+            </label>
+            <input
+              type="number"
+              id="original-weight"
+              min="0.1"
+              step="0.1"
+              value="4"
+              class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="decimal"
+            />
+          </div>
+          <div>
+            <label for="weight-unit" class="block text-sm font-semibold text-secondary mb-2">
+              Unit
+            </label>
+            <select
+              id="weight-unit"
+              class="w-full px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+            >
+              <option value="lb" selected>Pounds (lb)</option>
+              <option value="oz">Ounces (oz)</option>
+            </select>
+          </div>
+        </div>
+        <div class="mt-4">
+          <label for="target-weight" class="block text-sm font-semibold text-secondary mb-2">
+            Target Weight
+          </label>
+          <input
+            type="number"
+            id="target-weight"
+            min="0.1"
+            step="0.1"
+            value="6"
+            class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+            inputmode="decimal"
+          />
+        </div>
+      </div>
+
+      <!-- Calculate -->
+      <button
+        id="cook-calc-btn"
+        class="mt-8 w-full py-4 bg-primary hover:bg-primary-dark text-white font-bold text-lg rounded-xl transition-colors shadow-sm tap-target"
+      >
+        Calculate Adjusted Time
+      </button>
+    </div>
+
+    <AdSlot position="middle" />
+
+    <!-- Results -->
+    <div id="cook-results-section" class="hidden">
+      <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mt-6">
+        <h2 class="text-xl font-bold text-secondary mb-4">Adjusted Cooking Time</h2>
+        <div class="flex items-baseline gap-3 mb-2">
+          <span class="text-sm text-text-light">Original:</span>
+          <span id="result-original" class="text-lg font-medium text-text"></span>
+        </div>
+        <div class="flex items-baseline gap-3">
+          <span class="text-sm text-text-light">Adjusted:</span>
+          <span id="result-adjusted" class="text-2xl font-extrabold text-primary"></span>
+        </div>
+        <p id="result-note" class="text-xs text-text-light mt-4 leading-relaxed"></p>
+      </div>
+    </div>
+
+    <AdSlot position="bottom" />
+
+    <!-- Content -->
+    <article class="mt-8 bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 prose prose-slate max-w-none">
+      <h2>Why Cooking Times Change</h2>
+
+      <h3>High Altitude Cooking</h3>
+      <p>
+        At elevations above 3,000 feet, water boils at a lower temperature
+        (about 1°F less for every 500 feet). This means:
+      </p>
+      <ul>
+        <li><strong>Roasting &amp; braising</strong> — Add 2—4 minutes per 30 minutes of cook time per 1,000 ft.</li>
+        <li><strong>Baking</strong> — Increase oven temperature by 15—25°F; reduce baking time slightly for cookies and quick breads.</li>
+        <li><strong>Boiling</strong> — Pasta, rice, and boiled eggs will take longer at high altitude.</li>
+      </ul>
+
+      <h3>Method Conversion</h3>
+      <p>
+        Converting from oven to slow cooker? Slow cooker (Low) ≈ 8 hours =
+        oven 1.5—2 hours. Air fryers cook roughly 20—30% faster than
+        conventional ovens. Pressure cookers reduce time by 60—70%.
+      </p>
+
+      <h3>Meat Safety</h3>
+      <p>
+        Always use a meat thermometer. The USDA recommends minimum internal
+        temperatures: poultry 165°F, ground meats 160°F, beef/pork/lamb 145°F
+        with a 3-minute rest.
+      </p>
+    </article>
+  </section>
+</BaseLayout>
+
+<script>
+  let activeType = "altitude";
+
+  function switchType(type: string) {
+    activeType = type;
+    document.querySelectorAll(".calc-type-btn").forEach((btn) => {
+      const el = btn as HTMLElement;
+      if (el.dataset.type === type) {
+        el.className =
+          "calc-type-btn px-3 py-3 rounded-xl text-sm font-semibold border-2 border-primary bg-primary/5 text-primary transition-all tap-target active";
+      } else {
+        el.className =
+          "calc-type-btn px-3 py-3 rounded-xl text-sm font-semibold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target";
+      }
+    });
+    document.querySelectorAll(".calc-panel").forEach((p) => p.classList.add("hidden"));
+    const panel = document.getElementById(`panel-${type}`);
+    if (panel) panel.classList.remove("hidden");
+  }
+
+  function getTotalMinutes(): number {
+    const h = parseInt((document.getElementById("cook-hours") as HTMLInputElement).value) || 0;
+    const m = parseInt((document.getElementById("cook-minutes") as HTMLInputElement).value) || 0;
+    return h * 60 + m;
+  }
+
+  function formatTime(minutes: number): string {
+    if (minutes <= 0) return "0 min";
+    const h = Math.floor(minutes / 60);
+    const m = Math.round(minutes % 60);
+    if (h === 0) return `${m} min`;
+    if (m === 0) return `${h} hr`;
+    return `${h} hr ${m} min`;
+  }
+
+  function calculate() {
+    const totalMin = getTotalMinutes();
+    if (totalMin === 0) {
+      showResult(totalMin, totalMin, "Please enter a valid cooking time.");
+      return;
+    }
+
+    const temp = parseInt((document.getElementById("oven-temp") as HTMLInputElement).value) || 350;
+    let adjusted = totalMin;
+    let note = "";
+
+    switch (activeType) {
+      case "altitude": {
+        const alt = parseInt((document.getElementById("altitude-select") as HTMLSelectElement).value);
+        if (alt > 0) {
+          const factor = 1 + alt / 1000 * 0.08;
+          adjusted = totalMin * factor;
+          note = `At ${alt.toLocaleString()} ft, water boils at approximately ${Math.round(212 - alt * 0.0018)}°F. Cooking time increased by ~${Math.round((factor - 1) * 100)}%. For baking, consider increasing oven temp by 15—25°F.`;
+        } else {
+          note = "At sea level, no altitude adjustment is needed.";
+        }
+        break;
+      }
+      case "method": {
+        const from = (document.getElementById("from-method") as HTMLSelectElement).value;
+        const to = (document.getElementById("to-method") as HTMLSelectElement).value;
+        const factors: Record<string, number> = {
+          oven: 1,
+          convection: 0.75,
+          grill: 0.85,
+          slow_cooker_low: 4,
+          slow_cooker_high: 2,
+          pressure: 0.35,
+          air_fryer: 0.7,
+        };
+        const fromFactor = factors[from] || 1;
+        const toFactor = factors[to] || 1;
+        adjusted = totalMin / fromFactor * toFactor;
+        const fromName = (document.getElementById("from-method") as HTMLSelectElement).selectedOptions[0].text;
+        const toName = (document.getElementById("to-method") as HTMLSelectElement).selectedOptions[0].text;
+        const pct = Math.round(Math.abs((toFactor / fromFactor - 1) * 100));
+        note = `Converting from ${fromName} to ${toName}. Time is ${toFactor > fromFactor ? "increased" : "reduced"} by about ${pct}%.`;
+        break;
+      }
+      case "meat": {
+        const meat = (document.getElementById("meat-type") as HTMLSelectElement).value;
+        const doneness = (document.getElementById("doneness") as HTMLSelectElement).value;
+        const meatTimes: Record<string, { base: number; perLb: number }> = {
+          beef_roast: { base: 20, perLb: 20 },
+          steak: { base: 4, perLb: 0 },
+          pork_roast: { base: 25, perLb: 25 },
+          pork_chops: { base: 7, perLb: 0 },
+          chicken_whole: { base: 20, perLb: 20 },
+          chicken_breast: { base: 20, perLb: 0 },
+        };
+        const donenessFactor: Record<string, number> = {
+          rare: 0.85, medium_rare: 1, medium: 1.1, medium_well: 1.2, well_done: 1.35,
+        };
+        const mt = meatTimes[meat] || { base: 20, perLb: 20 };
+        const weight = 4;
+        adjusted = (mt.base + mt.perLb * weight) * (donenessFactor[doneness] || 1);
+        note = `Based on a ${weight} lb ${meat.replace("_", " ")} cooked to ${doneness.replace("_", " ")}. Always verify with a meat thermometer.`;
+        break;
+      }
+      case "weight": {
+        const origW = parseFloat((document.getElementById("original-weight") as HTMLInputElement).value) || 1;
+        const targW = parseFloat((document.getElementById("target-weight") as HTMLInputElement).value) || 1;
+        const unit = (document.getElementById("weight-unit") as HTMLSelectElement).value;
+        adjusted = totalMin * (targW / origW);
+        note = `Scaling from ${origW} ${unit} to ${targW} ${unit}. Larger items generally need proportionally more time — but very large items may need slightly less than a linear scale.`;
+        break;
+      }
+    }
+
+    showResult(totalMin, adjusted, note);
+  }
+
+  function showResult(original: number, adjusted: number, note: string) {
+    const section = document.getElementById("cook-results-section")!;
+    section.classList.remove("hidden");
+    document.getElementById("result-original")!.textContent = formatTime(original);
+    document.getElementById("result-adjusted")!.textContent = formatTime(adjusted);
+    document.getElementById("result-note")!.textContent = note;
+    section.scrollIntoView({ behavior: "smooth" });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".calc-type-btn").forEach((btn) => {
+      btn.addEventListener("click", () => switchType((btn as HTMLElement).dataset.type!));
+    });
+    document.getElementById("cook-calc-btn")!.addEventListener("click", calculate);
+    (window as any).switchType = switchType;
+  });
+</script>

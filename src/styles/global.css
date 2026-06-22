@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #E07A5F;
+  --color-primary-dark: #C96A52;
+  --color-primary-light: #F4D0C4;
+  --color-secondary: #3D405B;
+  --color-accent: #81B29A;
+  --color-accent-dark: #6A9A84;
+  --color-cream: #F4F1DE;
+  --color-warm-white: #FFFAF5;
+  --color-text: #2D2D2D;
+  --color-text-light: #6B6B6B;
+  --color-border: #E8E2D9;
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-warm-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Touch-friendly larger interactive elements */
+input, select, button, textarea {
+  font-size: 16px !important;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+  height: 2rem;
+}
+
+/* Ad slot styling — currently hidden (no AdSense yet).
+   When approved, remove 'display: none' to show slots. */
+.ad-slot {
+  display: none;
+  background: var(--color-cream);
+  border: 1px dashed var(--color-border);
+  border-radius: 0.5rem;
+  min-height: 100px;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-light);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Mobile tap target minimum */
+.tap-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Fraction display */
+.fraction-input {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+/* Smooth transitions */
+.calc-result {
+  transition: all 0.3s ease;
+}
+
+/* Print styles */
+@media print {
+  header, footer, .ad-slot, .no-print {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+}

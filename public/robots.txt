@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thekitchencalc.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 5
+
+# Disallow admin paths (none currently)
+Disallow: /api/

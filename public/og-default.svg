@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#3D405B"/>
+  <text x="600" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#E07A5F">The Kitchen Calc</text>
+  <text x="600" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="36" fill="#F4F1DE">Free kitchen calculators for home cooks</text>
+  <text x="600" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#81B29A">thekitchencalc.com</text>
+</svg>
