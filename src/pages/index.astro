@@ -8,11 +8,45 @@ const siteSchema = {
   url: "https://thekitchencalc.com",
   description:
     "Free kitchen calculators for home cooks. Scale recipes, convert measurements, adjust cooking times, plan holiday meals, substitute ingredients, and more. No sign-up required.",
-  potentialAction: {
-    "@type": "SearchAction",
-    target: "https://thekitchencalc.com/search?q={search_term_string}",
-    "query-input": "required name=search_term_string",
-  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Is this website really free?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, 100% free. We support the site with advertising. No paywalls, no \"pro\" subscriptions, no sign-ups required. Just free calculators for home cooks.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do you save my recipes or meal plans?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. Everything runs in your browser. We don't store, save, or even see the recipes and meal plans you create. Your data stays on your device.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Are the calculations accurate?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Our calculators use standard culinary ratios and USDA guidelines. They provide reliable estimates, but always use your own judgment and a food thermometer when cooking. Baking, in particular, can be sensitive to scaling — test large batch changes cautiously.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do you support units used outside the US?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Most of our calculators support both US customary units (cups, pounds, Fahrenheit) and metric units (grams, milliliters, Celsius). We default to US units because our audience is primarily American home cooks.",
+      },
+    },
+  ],
 };
 
 const tools = [
@@ -78,7 +112,7 @@ const tools = [
 <BaseLayout
   title="Free Kitchen Calculators — Scale Recipes, Convert Measurements, Plan Meals"
   description="The Kitchen Calc offers 7 free, easy-to-use calculators for home cooks. Scale recipes, convert measurements, adjust cooking times, plan holiday meals, find ingredient substitutes, and more. No sign-up required."
-  schema={siteSchema}
+  schema={[siteSchema, faqSchema]}
 >
   <!-- Hero Section -->
   <section class="bg-white border-b border-border">

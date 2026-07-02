@@ -17,7 +17,7 @@ export function generateMeta(page: SEOMeta) {
       : `${page.title} | ${siteName}`,
     description: page.description,
     canonical: page.canonical || siteUrl,
-    ogImage: page.ogImage || `${siteUrl}/og-default.png`,
+    ogImage: page.ogImage || `${siteUrl}/og-default.svg`,
     ogType: page.ogType || "website",
     schema: page.schema || null,
   };
