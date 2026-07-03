@@ -14,7 +14,7 @@ const schema = {
 
 const tempGuide = [
   { label: "Warm / Keep Warm", f: "150–170", c: "65–75", gas: "1/4", desc: "Holding food, warming plates, slow defrosting" },
-  { label: "Very Slow / Cool", f: "200–250", c: "95–120", gas: "1/2–1", desc: "Meringues, drying fruit, slow-roasting tough meats" },
+  { label: "Very Slow / Cool", f: "250–275", c: "120–135", gas: "1/2–1", desc: "Meringues, drying fruit, slow-roasting tough meats" },
   { label: "Slow / Low", f: "275–300", c: "135–150", gas: "1–2", desc: "Slow-roasted pork shoulder, braised dishes, cheesecake" },
   { label: "Moderate", f: "325–350", c: "160–175", gas: "3–4", desc: "Most cookies & bars, quick breads (banana bread, cornbread), casseroles" },
   { label: "Moderate-Hot", f: "375–400", c: "190–205", gas: "5–6", desc: "Cupcakes, muffins, layer cakes, roasted vegetables, chicken pieces" },
@@ -162,7 +162,7 @@ const tempGuide = [
 
 <script>
   const gasToF: Record<number, number> = {
-    1: 280, 2: 300, 3: 325, 4: 350, 5: 375, 6: 400, 7: 425, 8: 450, 9: 475, 10: 500,
+    1: 275, 2: 300, 3: 325, 4: 350, 5: 375, 6: 400, 7: 425, 8: 450, 9: 475, 10: 500,
   };
   const fToGas: [number, number][] = [
     [225, 0.5], [250, 0.5], [275, 1], [300, 2], [325, 3], [350, 4], [375, 5], [400, 6], [425, 7], [450, 8], [475, 9], [500, 10],
