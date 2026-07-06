@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import AdSlot from "../components/AdSlot.astro";
+import AmazonProducts from "../components/AmazonProducts.astro";
 
 const schema = {
   "@context": "https://schema.org",
@@ -260,6 +261,8 @@ const schema = {
     </div>
 
     <AdSlot position="bottom" />
+
+    <AmazonProducts category="measuring" title="Measurement Essentials" />
   </div>
 </BaseLayout>
 

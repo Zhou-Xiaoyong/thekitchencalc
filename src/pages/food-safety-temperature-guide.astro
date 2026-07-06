@@ -1,0 +1,264 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AdSlot from "../components/AdSlot.astro";
+import AmazonProducts from "../components/AmazonProducts.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Food Safety Temperature Guide",
+  url: "https://thekitchencalc.com/food-safety-temperature-guide/",
+  description: "Safe cooking temperatures for meat, poultry, seafood, and more. USDA recommended internal temperatures with doneness guide for beef, pork, chicken, and fish.",
+  applicationCategory: "CookingApplication",
+  operatingSystem: "Web",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+---
+
+<BaseLayout
+  title="Food Safety Temperature Guide — USDA Safe Cooking Temps"
+  description="USDA recommended safe internal temperatures for all foods. Beef, pork, chicken, turkey, seafood, leftovers — find the exact safe temperature with our complete guide."
+  canonical="https://thekitchencalc.com/food-safety-temperature-guide/"
+  schema={schema}
+>
+  <section class="bg-white border-b border-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 text-center">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-secondary leading-tight mb-4">
+        Food Safety <span class="text-primary">Temperature Guide</span>
+      </h1>
+      <p class="text-base sm:text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
+        USDA recommended safe internal temperatures for every food. Beef, pork, chicken, turkey, seafood — know the exact temperature to keep your family safe.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <AdSlot position="top" />
+
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-4">Quick Temperature Converter</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label for="fahrenheit-input" class="block text-sm font-semibold text-secondary mb-2">
+            Fahrenheit (°F)
+          </label>
+          <input
+            type="number"
+            id="fahrenheit-input"
+            value="165"
+            class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+            inputmode="numeric"
+          />
+        </div>
+        <div>
+          <label for="celsius-input" class="block text-sm font-semibold text-secondary mb-2">
+            Celsius (°C)
+          </label>
+          <input
+            type="number"
+            id="celsius-input"
+            value="73.9"
+            class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+            inputmode="numeric"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-6">Safe Minimum Internal Temperatures</h2>
+
+      <div class="space-y-3">
+        {[
+          { food: "🐔 Poultry (chicken, turkey, duck)", temp: "165°F", celsius: "74°C", note: "All poultry — whole bird, pieces, ground, stuffing" },
+          { food: "🥩 Ground Meat (beef, pork, lamb, veal)", temp: "160°F", celsius: "71°C", note: "All ground meats including hamburgers, meatloaf, sausage" },
+          { food: "🐖 Pork (fresh cuts, chops, roasts)", temp: "145°F", celsius: "63°C", note: "Rest 3 minutes after cooking; medium-rare to medium" },
+          { food: "🥩 Beef, Veal, Lamb (steaks, chops, roasts)", temp: "145°F", celsius: "63°C", note: "Rest 3 minutes; adjust for doneness preference" },
+          { food: "🐟 Fish & Shellfish (most types)", temp: "145°F", celsius: "63°C", note: "Flesh is opaque and flaks easily with a fork" },
+          { food: "🦐 Shrimp, Lobster, Crab", temp: "145°F", celsius: "63°C", note: "Pearl white color, flesh opaque; shrimp curl into C-shape" },
+          { food: "🍳 Eggs & Egg Dishes", temp: "160°F", celsius: "71°C", note: "Yolks and whites firm; casseroles reach 160°F" },
+          { food: "🥘 Leftovers & Casseroles", temp: "165°F", celsius: "74°C", note: "Reheat all leftovers to 165°F throughout" },
+          { food: "🧀 Hot Dogs, Sausages (pre-cooked)", temp: "165°F", celsius: "74°C", note: "Reheat pre-cooked processed meats to 165°F" },
+        ].map((item, i) => (
+          <div class={`flex flex-col sm:flex-row sm:items-center justify-between py-3 px-4 rounded-xl ${i % 2 === 0 ? "bg-cream/40" : ""}`}>
+            <div class="flex-1 mb-2 sm:mb-0">
+              <p class="font-semibold text-secondary text-sm">{item.food}</p>
+              <p class="text-xs text-text-light">{item.note}</p>
+            </div>
+            <div class="flex gap-3 items-center">
+              <span class="px-3 py-1.5 bg-primary/10 text-primary font-bold text-sm rounded-lg">
+                {item.temp}
+              </span>
+              <span class="px-3 py-1.5 bg-accent/10 text-accent-dark font-bold text-sm rounded-lg">
+                {item.celsius}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-6">Beef Doneness Guide</h2>
+      <p class="text-sm text-text-light mb-4">
+        USDA safe minimum is 145°F. Use these as a guide for your preferred doneness.
+        Always use a meat thermometer for accuracy.
+      </p>
+      <div class="space-y-3">
+        {[
+          { level: "Rare", temp: "120-130°F", celsius: "49-54°C", color: "bg-red-600", desc: "Cool red center, very soft texture" },
+          { level: "Medium-Rare", temp: "130-140°F", celsius: "54-60°C", color: "bg-red-500", desc: "Warm red center, tender and juicy (most popular)" },
+          { level: "Medium", temp: "140-150°F", celsius: "60-66°C", color: "bg-pink-500", desc: "Pink center, slightly firm, still juicy" },
+          { level: "Medium-Well", temp: "150-160°F", celsius: "66-71°C", color: "bg-pink-400", desc: "Slightly pink center, firmer texture" },
+          { level: "Well Done", temp: "160°F+", celsius: "71°C+", color: "bg-amber-700", desc: "No pink, brown throughout, firm texture" },
+        ].map((item, i) => (
+          <div class={`flex flex-col sm:flex-row sm:items-center justify-between py-3 px-4 rounded-xl ${i % 2 === 0 ? "bg-cream/40" : ""}`}>
+            <div class="flex items-center gap-3 flex-1 mb-2 sm:mb-0">
+              <div class={`w-5 h-5 rounded-full ${item.color} border-2 border-white shadow-sm`}></div>
+              <div>
+                <p class="font-semibold text-secondary text-sm">{item.level}</p>
+                <p class="text-xs text-text-light">{item.desc}</p>
+              </div>
+            </div>
+            <div class="flex gap-3 items-center">
+              <span class="px-3 py-1.5 bg-primary/10 text-primary font-bold text-sm rounded-lg">
+                {item.temp}
+              </span>
+              <span class="px-3 py-1.5 bg-accent/10 text-accent-dark font-bold text-sm rounded-lg">
+                {item.celsius}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-6">Danger Zone & Storage Times</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+          <h3 class="font-bold text-red-700 mb-2">⚠️ The Danger Zone</h3>
+          <p class="text-sm text-red-600 mb-2"><strong>40°F - 140°F (4°C - 60°C)</strong></p>
+          <p class="text-xs text-red-500">
+            Bacteria multiply rapidly in this range. Never leave food out for more than 2 hours (1 hour if above 90°F).
+          </p>
+        </div>
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+          <h3 class="font-bold text-blue-700 mb-2">❄️ Fridge & Freezer Temps</h3>
+          <p class="text-sm text-blue-600 mb-1"><strong>Refrigerator:</strong> 40°F (4°C) or below</p>
+          <p class="text-sm text-blue-600"><strong>Freezer:</strong> 0°F (-18°C) or below</p>
+        </div>
+      </div>
+      <h3 class="font-bold text-secondary mb-3">Cold Food Storage Guidelines</h3>
+      <div class="overflow-x-auto -mx-4 sm:mx-0">
+        <table class="w-full text-sm min-w-[400px]">
+          <thead>
+            <tr class="border-b-2 border-border">
+              <th class="text-left py-2 px-3 font-semibold text-secondary">Food</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Fridge</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Freezer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-border/50">
+              <td class="py-2.5 px-3">Raw ground meat</td>
+              <td class="text-right py-2.5 px-3">1-2 days</td>
+              <td class="text-right py-2.5 px-3">3-4 months</td>
+            </tr>
+            <tr class="border-b border-border/50">
+              <td class="py-2.5 px-3">Raw steaks / roasts</td>
+              <td class="text-right py-2.5 px-3">3-5 days</td>
+              <td class="text-right py-2.5 px-3">4-12 months</td>
+            </tr>
+            <tr class="border-b border-border/50">
+              <td class="py-2.5 px-3">Raw poultry</td>
+              <td class="text-right py-2.5 px-3">1-2 days</td>
+              <td class="text-right py-2.5 px-3">9 months</td>
+            </tr>
+            <tr class="border-b border-border/50">
+              <td class="py-2.5 px-3">Leftover cooked meat</td>
+              <td class="text-right py-2.5 px-3">3-4 days</td>
+              <td class="text-right py-2.5 px-3">2-3 months</td>
+            </tr>
+            <tr class="border-b border-border/50">
+              <td class="py-2.5 px-3">Eggs (in shell)</td>
+              <td class="text-right py-2.5 px-3">3-5 weeks</td>
+              <td class="text-right py-2.5 px-3">Not recommended</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3">Fresh fish / shellfish</td>
+              <td class="text-right py-2.5 px-3">1-2 days</td>
+              <td class="text-right py-2.5 px-3">6-9 months</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <AmazonProducts category="safety" title="Food Safety Essentials" />
+
+    <AdSlot position="bottom" />
+
+    <article class="mt-8 bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 prose prose-slate max-w-none">
+      <h2>How to Use a Meat Thermometer Correctly</h2>
+      <ol>
+        <li><strong>Choose the right thermometer:</strong> Instant-read thermometers are best for quick checks. Leave-in probe thermometers are great for roasts and smokers.</li>
+        <li><strong>Find the thickest part:</strong> Insert the probe into the thickest part of the meat, away from bone, fat, and gristle.</li>
+        <li><strong>Wait for the reading:</strong> Instant-read thermometers take 10-20 seconds. Don't remove until the reading stabilizes.</li>
+        <li><strong>Check multiple spots:</strong> For large cuts like turkey, check the innermost part of the thigh, the wing, and the thickest part of the breast.</li>
+        <li><strong>Rest your meat:</strong> Most meats benefit from a 3-10 minute rest after cooking. Carry-over cooking can raise the temperature 5-10°F.</li>
+      </ol>
+
+      <h2>Carry-Over Cooking Explained</h2>
+      <p>
+        When you remove meat from heat, its internal temperature continues to rise for several minutes
+        — this is called "carry-over cooking." For large roasts, this can be 5-15°F.
+        That's why recipes often tell you to remove meat a few degrees before your target temperature.
+      </p>
+
+      <h2>Common Food Safety Myths</h2>
+      <h3>Myth: "If it's pink, it's not safe."</h3>
+      <p>
+        Color is not a reliable indicator of safety. A steak can be pink at 145°F and perfectly safe.
+        Ground meat should reach 160°F and typically has no pink. Always use a thermometer.
+      </p>
+      <h3>Myth: "Microwaves kill all bacteria."</h3>
+      <p>
+        Microwaves can have cold spots. Always stir and rotate food, and check temperature in multiple places.
+        Leftovers should reach 165°F throughout.
+      </p>
+      <h3>Myth: "You can thaw meat on the counter."</h3>
+      <p>
+        Never thaw meat at room temperature. The outside enters the danger zone while the inside is still frozen.
+        Use the fridge (slowest), cold water (faster), or microwave (fastest) instead.
+      </p>
+    </article>
+  </section>
+</BaseLayout>
+
+<script>
+  const fahrInput = document.getElementById("fahrenheit-input") as HTMLInputElement;
+  const celsInput = document.getElementById("celsius-input") as HTMLInputElement;
+
+  function fahrToCels(f: number): number {
+    return (f - 32) * 5 / 9;
+  }
+
+  function celsToFahr(c: number): number {
+    return c * 9 / 5 + 32;
+  }
+
+  fahrInput.addEventListener("input", () => {
+    const f = parseFloat(fahrInput.value);
+    if (!isNaN(f)) {
+      celsInput.value = fahrToCels(f).toFixed(1);
+    }
+  });
+
+  celsInput.addEventListener("input", () => {
+    const c = parseFloat(celsInput.value);
+    if (!isNaN(c)) {
+      fahrInput.value = celsToFahr(c).toFixed(1);
+    }
+  });
+</script>

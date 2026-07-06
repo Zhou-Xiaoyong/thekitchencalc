@@ -7,7 +7,7 @@ const siteSchema = {
   name: "The Kitchen Calc",
   url: "https://thekitchencalc.com",
   description:
-    "Free kitchen calculators for home cooks. Scale recipes, convert measurements, adjust cooking times, plan holiday meals, substitute ingredients, and more. No sign-up required.",
+    "Free kitchen calculators for home cooks. Scale recipes, convert measurements, adjust cooking times, plan holiday meals, substitute ingredients, calculate yeast and dough hydration, and more. No sign-up required.",
 };
 
 const faqSchema = {
@@ -19,15 +19,15 @@ const faqSchema = {
       name: "Is this website really free?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes, 100% free. We support the site with advertising. No paywalls, no \"pro\" subscriptions, no sign-ups required. Just free calculators for home cooks.",
+        text: "Yes, 100% free. We support the site with advertising and affiliate commissions. No paywalls, no \"pro\" subscriptions, no sign-ups required. Just free calculators for home cooks.",
       },
     },
     {
       "@type": "Question",
-      name: "Do you save my recipes or meal plans?",
+      name: "How many calculators do you have?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "No. Everything runs in your browser. We don't store, save, or even see the recipes and meal plans you create. Your data stays on your device.",
+        text: "We have 15+ free kitchen calculators covering recipe scaling, measurement conversion, baking math, brining, food safety, holiday meal planning, and more. We're always adding new tools!",
       },
     },
     {
@@ -59,20 +59,12 @@ const tools = [
     keywords: "recipe scaling, servings converter, ingredient calculator, double recipe, half recipe",
   },
   {
-    icon: "⏱️",
-    title: "Cooking Time Calculator",
-    description:
-      "Adjust cooking times for altitude, different cooking methods, meat doneness, and weight. Works with Fahrenheit and pounds.",
-    href: "/cooking-time-calculator/",
-    keywords: "cooking time converter, altitude cooking, method conversion, meat cooking time",
-  },
-  {
     icon: "🦃",
     title: "Holiday Meal Planner",
     description:
-      "Plan the perfect Thanksgiving, Christmas, or Easter dinner. Get exact amounts for turkey, ham, sides, desserts, and drinks.",
+      "Plan the perfect holiday meal or party. Thanksgiving, Christmas, Easter, Super Bowl, 4th of July BBQ — get exact food amounts for any guest count.",
     href: "/holiday-meal-planner/",
-    keywords: "thanksgiving calculator, christmas dinner planner, holiday food planner, turkey servings",
+    keywords: "thanksgiving calculator, christmas dinner planner, holiday food planner, turkey servings, super bowl party, bbq calculator",
   },
   {
     icon: "⚖️",
@@ -81,6 +73,70 @@ const tools = [
       "Convert cups to grams, tablespoons to milliliters, ounces to cups. Includes ingredient-specific density for flour, sugar, butter, and more.",
     href: "/kitchen-measurement-converter/",
     keywords: "cups to grams, measurement converter, tbsp to ml, kitchen conversion, ounce to cup",
+  },
+  {
+    icon: "🍞",
+    title: "Yeast Calculator",
+    description:
+      "Calculate exact yeast amounts for bread, pizza, and more. Convert between active dry, instant, rapid-rise, and fresh yeast with baker's percentages.",
+    href: "/yeast-calculator/",
+    keywords: "yeast calculator, bread yeast, pizza dough yeast, instant yeast conversion, active dry yeast",
+  },
+  {
+    icon: "💧",
+    title: "Dough Hydration Calculator",
+    description:
+      "Calculate dough hydration percentage for bread, pizza, and sourdough. Or work backwards to hit your target hydration ratio perfectly.",
+    href: "/dough-hydration-calculator/",
+    keywords: "dough hydration, baker's percentage, bread hydration, pizza dough, sourdough calculator",
+  },
+  {
+    icon: "🧂",
+    title: "Brine Calculator",
+    description:
+      "Perfect brine every time. Calculate exact salt, sugar, and water amounts for turkey, chicken, pork chops, and more. Adjustable strength.",
+    href: "/brine-calculator/",
+    keywords: "brine calculator, turkey brine, chicken brine, pork brine, salt brine recipe",
+  },
+  {
+    icon: "🍬",
+    title: "Sugar & Salt Concentration",
+    description:
+      "Calculate sugar percentage, salt content, and Brix for syrups, brines, jams, and fermentations. Perfect for homebrewing and candy making.",
+    href: "/sugar-salt-calculator/",
+    keywords: "brix calculator, sugar percentage, brine percentage, syrup concentration, homebrewing",
+  },
+  {
+    icon: "🌡️",
+    title: "Food Safety Temperature Guide",
+    description:
+      "USDA safe internal temperatures for every food. Beef, pork, chicken, turkey, seafood — plus doneness guide and danger zone info.",
+    href: "/food-safety-temperature-guide/",
+    keywords: "food safety temperature, USDA safe temps, chicken temperature, beef doneness, meat thermometer guide",
+  },
+  {
+    icon: "🍺",
+    title: "BAC Calculator",
+    description:
+      "Estimate your Blood Alcohol Content based on drinks, weight, and time. Educational tool for understanding alcohol metabolism.",
+    href: "/bac-calculator/",
+    keywords: "BAC calculator, blood alcohol content, drink calculator, alcohol estimator, Widmark formula",
+  },
+  {
+    icon: "💰",
+    title: "Recipe Cost Calculator",
+    description:
+      "Calculate total cost and per-serving cost of any recipe. Perfect for meal planning, home bakers, and small food businesses.",
+    href: "/recipe-cost-calculator/",
+    keywords: "recipe cost, food cost calculator, cost per serving, baking cost, menu pricing",
+  },
+  {
+    icon: "⏱️",
+    title: "Cooking Time Calculator",
+    description:
+      "Adjust cooking times for altitude, different cooking methods, meat doneness, and weight. Works with Fahrenheit and pounds.",
+    href: "/cooking-time-calculator/",
+    keywords: "cooking time converter, altitude cooking, method conversion, meat cooking time",
   },
   {
     icon: "🍰",
@@ -106,12 +162,20 @@ const tools = [
     href: "/ingredient-substitution-finder/",
     keywords: "ingredient substitute, baking substitution, egg substitute, buttermilk substitute, cooking substitute",
   },
+  {
+    icon: "📊",
+    title: "Printable Conversion Chart",
+    description:
+      "Free printable kitchen conversion charts. Cups to grams, volume equivalents, oven temps, pan sizes, butter, eggs — print and stick on your fridge.",
+    href: "/conversion-chart/",
+    keywords: "printable conversion chart, kitchen cheat sheet, cups to grams printable, cooking measurements",
+  },
 ];
 ---
 
 <BaseLayout
-  title="Free Kitchen Calculators — Scale Recipes, Convert Measurements, Plan Meals"
-  description="The Kitchen Calc offers 7 free, easy-to-use calculators for home cooks. Scale recipes, convert measurements, adjust cooking times, plan holiday meals, find ingredient substitutes, and more. No sign-up required."
+  title="15+ Free Kitchen Calculators — Scale Recipes, Convert Measurements, Plan Meals"
+  description="The Kitchen Calc offers 15+ free, easy-to-use calculators for home cooks. Scale recipes, convert measurements, calculate yeast & dough hydration, plan holiday meals, find ingredient substitutes, and more. No sign-up required."
   schema={[siteSchema, faqSchema]}
 >
   <!-- Hero Section -->
@@ -121,8 +185,8 @@ const tools = [
         Kitchen Math Made <span class="text-primary">Simple</span>
       </h1>
       <p class="text-lg sm:text-xl text-text-light max-w-2xl mx-auto leading-relaxed mb-8">
-        Free calculators for home cooks. Scale recipes, convert cooking times for
-        altitude, and plan your holiday dinners. No sign-up. No clutter. Just answers.
+        15+ free calculators for home cooks. Scale recipes, calculate yeast and dough hydration,
+        plan holiday meals, and convert measurements. No sign-up. No clutter. Just answers.
       </p>
       <div class="flex flex-wrap gap-4 justify-center">
         <a

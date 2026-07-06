@@ -1,0 +1,415 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AdSlot from "../components/AdSlot.astro";
+import AmazonProducts from "../components/AmazonProducts.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Kitchen Conversion Chart — Printable Cups to Grams Reference",
+  url: "https://thekitchencalc.com/conversion-chart/",
+  description: "Free printable kitchen conversion chart. Cups to grams, tablespoons to teaspoons, Fahrenheit to Celsius, and more. Download or print for your kitchen.",
+};
+---
+
+<BaseLayout
+  title="Kitchen Conversion Chart — Printable Cups to Grams Reference"
+  description="Free printable kitchen conversion charts. Cups to grams, volume equivalents, oven temperatures, pan sizes, and more. Perfect for your fridge or cookbook."
+  canonical="https://thekitchencalc.com/conversion-chart/"
+  schema={schema}
+>
+  <section class="bg-white border-b border-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 text-center">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-secondary leading-tight mb-4">
+        Kitchen Conversion <span class="text-primary">Chart</span>
+      </h1>
+      <p class="text-base sm:text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
+        Printable reference charts for every kitchen. Cups to grams, volume equivalents, oven temperatures, pan sizes, and more. Free, no sign-up required.
+      </p>
+      <button
+        onclick="window.print()"
+        class="mt-6 px-8 py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-xl transition-colors shadow-sm tap-target inline-flex items-center gap-2 no-print"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        Print This Page
+      </button>
+    </div>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <AdSlot position="top" />
+
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-4">Quick Jump</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
+        <a href="#cups-to-grams" class="p-3 bg-cream/50 rounded-lg text-center text-secondary font-medium hover:bg-primary/10 hover:text-primary transition-colors no-print">
+          🏋️ Cups to Grams
+        </a>
+        <a href="#volume" class="p-3 bg-cream/50 rounded-lg text-center text-secondary font-medium hover:bg-primary/10 hover:text-primary transition-colors no-print">
+          🥄 Volume Equivalents
+        </a>
+        <a href="#oven-temp" class="p-3 bg-cream/50 rounded-lg text-center text-secondary font-medium hover:bg-primary/10 hover:text-primary transition-colors no-print">
+          🔥 Oven Temperature
+        </a>
+        <a href="#pan-sizes" class="p-3 bg-cream/50 rounded-lg text-center text-secondary font-medium hover:bg-primary/10 hover:text-primary transition-colors no-print">
+          🍰 Pan Sizes
+        </a>
+      </div>
+    </div>
+
+    <div id="cups-to-grams" class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-2">Cups to Grams Reference</h2>
+      <p class="text-sm text-text-light mb-4">Weights for 1 cup of common baking ingredients (US cup, spooned & leveled).</p>
+      <div class="overflow-x-auto -mx-4 sm:mx-0">
+        <table class="w-full text-sm min-w-[400px]">
+          <thead>
+            <tr class="border-b-2 border-border">
+              <th class="text-left py-2 px-3 font-semibold text-secondary">Ingredient</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">1 Cup</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">½ Cup</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">¼ Cup</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">1 Tbsp</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["All-Purpose Flour", 120, 60, 30, 7.5],
+              ["Bread Flour", 127, 64, 32, 8],
+              ["Cake Flour", 114, 57, 29, 7],
+              ["Whole Wheat Flour", 128, 64, 32, 8],
+              ["Granulated Sugar", 200, 100, 50, 12.5],
+              ["Brown Sugar (packed)", 220, 110, 55, 14],
+              ["Powdered Sugar", 120, 60, 30, 7.5],
+              ["Butter", 227, 114, 57, 14],
+              ["Vegetable Oil", 218, 109, 55, 14],
+              ["Honey / Maple Syrup", 340, 170, 85, 21],
+              ["Water / Milk", 240, 120, 60, 15],
+              ["Rolled Oats", 90, 45, 23, 6],
+              ["Cocoa Powder", 100, 50, 25, 6],
+              ["Table Salt", 292, 146, 73, 18],
+              ["Baking Powder", 192, 96, 48, 12],
+              ["Shredded Cheese (cheddar)", 113, 57, 28, 7],
+              ["Chocolate Chips", 170, 85, 43, 11],
+              ["Chopped Nuts", 120, 60, 30, 8],
+              ["Rice (uncooked)", 185, 93, 46, 12],
+            ].map((row, i) => (
+              <tr class={i % 2 === 0 ? "bg-cream/30" : ""}>
+                <td class="py-2 px-3 font-medium">{row[0]}</td>
+                <td class="py-2 px-3 text-right tabular-nums">{row[1]} g</td>
+                <td class="py-2 px-3 text-right text-text-light tabular-nums">{row[2]} g</td>
+                <td class="py-2 px-3 text-right text-text-light tabular-nums">{row[3]} g</td>
+                <td class="py-2 px-3 text-right text-text-light tabular-nums">{row[4]} g</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="volume" class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-2">US Volume Equivalents</h2>
+      <p class="text-sm text-text-light mb-4">Common kitchen measurement conversions.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-semibold text-secondary mb-3 text-sm uppercase tracking-wider">Dry & Liquid Volume</h3>
+          <div class="overflow-x-auto -mx-4 sm:mx-0">
+            <table class="w-full text-sm min-w-[280px]">
+              <thead>
+                <tr class="border-b-2 border-border">
+                  <th class="text-left py-2 px-3 font-semibold text-secondary">Unit</th>
+                  <th class="text-right py-2 px-3 font-semibold text-secondary">Cups</th>
+                  <th class="text-right py-2 px-3 font-semibold text-secondary">Tbsp</th>
+                  <th class="text-right py-2 px-3 font-semibold text-secondary">Tsp</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["1 cup", 1, 16, 48],
+                  ["¾ cup", 0.75, 12, 36],
+                  ["⅔ cup", "⅔", "10 ⅔", 32],
+                  ["½ cup", 0.5, 8, 24],
+                  ["⅓ cup", "⅓", "5 ⅓", 16],
+                  ["¼ cup", 0.25, 4, 12],
+                  ["⅛ cup", "⅛", 2, 6],
+                  ["1 tbsp", "1/16", 1, 3],
+                  ["1 tsp", "1/48", "⅓", 1],
+                ].map((row, i) => (
+                  <tr class={i % 2 === 0 ? "bg-cream/30" : ""}>
+                    <td class="py-2 px-3 font-medium">{row[0]}</td>
+                    <td class="py-2 px-3 text-right tabular-nums">{row[1]}</td>
+                    <td class="py-2 px-3 text-right text-text-light tabular-nums">{row[2]}</td>
+                    <td class="py-2 px-3 text-right text-text-light tabular-nums">{row[3]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <h3 class="font-semibold text-secondary mb-3 text-sm uppercase tracking-wider">Fluid Ounces & Metric</h3>
+          <div class="overflow-x-auto -mx-4 sm:mx-0">
+            <table class="w-full text-sm min-w-[280px]">
+              <thead>
+                <tr class="border-b-2 border-border">
+                  <th class="text-left py-2 px-3 font-semibold text-secondary">US Unit</th>
+                  <th class="text-right py-2 px-3 font-semibold text-secondary">fl oz</th>
+                  <th class="text-right py-2 px-3 font-semibold text-secondary">mL</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["1 gallon", 128, 3840],
+                  ["1 quart", 32, 960],
+                  ["1 pint", 16, 480],
+                  ["1 cup", 8, 240],
+                  ["1 tbsp", 0.5, 15],
+                  ["1 tsp", "1/6", 5],
+                  ["1 fl oz", 1, 30],
+                  ["1 liter", 33.8, 1000],
+                ].map((row, i) => (
+                  <tr class={i % 2 === 0 ? "bg-cream/30" : ""}>
+                    <td class="py-2 px-3 font-medium">{row[0]}</td>
+                    <td class="py-2 px-3 text-right tabular-nums">{row[1]}</td>
+                    <td class="py-2 px-3 text-right text-text-light tabular-nums">{row[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="oven-temp" class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-2">Oven Temperature Conversion</h2>
+      <p class="text-sm text-text-light mb-4">Fahrenheit, Celsius, and gas mark equivalents.</p>
+      <div class="overflow-x-auto -mx-4 sm:mx-0">
+        <table class="w-full text-sm min-w-[400px]">
+          <thead>
+            <tr class="border-b-2 border-border">
+              <th class="text-left py-2 px-3 font-semibold text-secondary">Description</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Fahrenheit</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Celsius</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Gas Mark</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["Very Slow / Low", "225°F", "107°C", "¼"],
+              ["Very Slow / Low", "250°F", "120°C", "½"],
+              ["Slow / Low", "275°F", "135°C", "1"],
+              ["Slow / Low", "300°F", "150°C", "2"],
+              ["Moderately Slow", "325°F", "160°C", "3"],
+              ["Moderate", "350°F", "175°C", "4"],
+              ["Moderate", "375°F", "190°C", "5"],
+              ["Moderately Hot", "400°F", "200°C", "6"],
+              ["Hot", "425°F", "220°C", "7"],
+              ["Hot", "450°F", "230°C", "8"],
+              ["Very Hot", "475°F", "245°C", "9"],
+              ["Very Hot / Broil", "500°F", "260°C", "10"],
+            ].map((row, i) => (
+              <tr class={i % 2 === 0 ? "bg-cream/30" : ""}>
+                <td class="py-2 px-3 font-medium text-text-light">{row[0]}</td>
+                <td class="py-2 px-3 text-right font-bold text-secondary tabular-nums">{row[1]}</td>
+                <td class="py-2 px-3 text-right text-accent-dark tabular-nums">{row[2]}</td>
+                <td class="py-2 px-3 text-right text-text-light tabular-nums">{row[3]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="pan-sizes" class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-2">Baking Pan Size Guide</h2>
+      <p class="text-sm text-text-light mb-4">Common pan sizes and their approximate areas.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-semibold text-secondary mb-3 text-sm uppercase tracking-wider">Round Pans</h3>
+          <div class="overflow-x-auto -mx-4 sm:mx-0">
+            <table class="w-full text-sm min-w-[280px]">
+              <thead>
+                <tr class="border-b-2 border-border">
+                  <th class="text-left py-2 px-3 font-semibold text-secondary">Size</th>
+                  <th class="text-right py-2 px-3 font-semibold text-secondary">Area</th>
+                  <th class="text-right py-2 px-3 font-semibold text-secondary">Volume</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["6 inch", "28 in²", "4 cups"],
+                  ["8 inch", "50 in²", "6 cups"],
+                  ["9 inch", "64 in²", "8 cups"],
+                  ["10 inch", "79 in²", "10 cups"],
+                  ["12 inch", "113 in²", "14 cups"],
+                  ["2× 8 inch", "101 in²", "12 cups"],
+                  ["2× 9 inch", "127 in²", "16 cups"],
+                ].map((row, i) => (
+                  <tr class={i % 2 === 0 ? "bg-cream/30" : ""}>
+                    <td class="py-2 px-3 font-medium">{row[0]}</td>
+                    <td class="py-2 px-3 text-right tabular-nums">{row[1]}</td>
+                    <td class="py-2 px-3 text-right text-text-light tabular-nums">{row[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <h3 class="font-semibold text-secondary mb-3 text-sm uppercase tracking-wider">Square & Rectangular</h3>
+          <div class="overflow-x-auto -mx-4 sm:mx-0">
+            <table class="w-full text-sm min-w-[280px]">
+              <thead>
+                <tr class="border-b-2 border-border">
+                  <th class="text-left py-2 px-3 font-semibold text-secondary">Size</th>
+                  <th class="text-right py-2 px-3 font-semibold text-secondary">Area</th>
+                  <th class="text-right py-2 px-3 font-semibold text-secondary">Volume</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["8×8 inch", "64 in²", "8 cups"],
+                  ["9×9 inch", "81 in²", "10 cups"],
+                  ["9×13 inch", "117 in²", "14 cups"],
+                  ["10×15 jelly roll", "150 in²", "10 cups"],
+                  ["13×18 half sheet", "234 in²", "16 cups"],
+                  ["Bundt (10 cup)", "—", "10-12 cups"],
+                  ["Loaf (9×5)", "—", "8 cups"],
+                ].map((row, i) => (
+                  <tr class={i % 2 === 0 ? "bg-cream/30" : ""}>
+                    <td class="py-2 px-3 font-medium">{row[0]}</td>
+                    <td class="py-2 px-3 text-right tabular-nums">{row[1]}</td>
+                    <td class="py-2 px-3 text-right text-text-light tabular-nums">{row[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-2">Butter Conversion</h2>
+      <p class="text-sm text-text-light mb-4">Butter stick equivalents (US butter = 4 sticks per pound).</p>
+      <div class="overflow-x-auto -mx-4 sm:mx-0">
+        <table class="w-full text-sm min-w-[400px]">
+          <thead>
+            <tr class="border-b-2 border-border">
+              <th class="text-left py-2 px-3 font-semibold text-secondary">Sticks</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Cups</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Tbsp</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Grams</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Ounces</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["¼ stick", "⅛", 2, 28, 1],
+              ["½ stick", "¼", 4, 57, 2],
+              ["¾ stick", "⅜", 6, 85, 3],
+              ["1 stick", "½", 8, 113, 4],
+              ["1½ sticks", "¾", 12, 170, 6],
+              ["2 sticks", 1, 16, 227, 8],
+              ["3 sticks", "1½", 24, 341, 12],
+              ["4 sticks (1 lb)", 2, 32, 454, 16],
+            ].map((row, i) => (
+              <tr class={i % 2 === 0 ? "bg-cream/30" : ""}>
+                <td class="py-2 px-3 font-medium">{row[0]}</td>
+                <td class="py-2 px-3 text-right tabular-nums">{row[1]}</td>
+                <td class="py-2 px-3 text-right text-text-light tabular-nums">{row[2]}</td>
+                <td class="py-2 px-3 text-right text-accent-dark tabular-nums">{row[3]}</td>
+                <td class="py-2 px-3 text-right text-text-light tabular-nums">{row[4]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mb-8">
+      <h2 class="text-xl font-bold text-secondary mb-2">Egg Size Equivalents</h2>
+      <p class="text-sm text-text-light mb-4">US egg sizes and approximate weights (per egg, without shell).</p>
+      <div class="overflow-x-auto -mx-4 sm:mx-0">
+        <table class="w-full text-sm min-w-[400px]">
+          <thead>
+            <tr class="border-b-2 border-border">
+              <th class="text-left py-2 px-3 font-semibold text-secondary">Size</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Per Egg</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Per Dozen</th>
+              <th class="text-right py-2 px-3 font-semibold text-secondary">Volume</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["Peewee", "35 g / 1.25 oz", "420 g / 15 oz", "~2 tbsp"],
+              ["Small", "38 g / 1.3 oz", "454 g / 16 oz", "~2.5 tbsp"],
+              ["Medium", "44 g / 1.55 oz", "524 g / 18.5 oz", "~3 tbsp"],
+              ["Large", "50 g / 1.75 oz", "595 g / 21 oz", "~3.25 tbsp"],
+              ["Extra Large", "56 g / 2 oz", "673 g / 24 oz", "~3.75 tbsp"],
+              ["Jumbo", "62 g / 2.2 oz", "743 g / 26.5 oz", "~4 tbsp"],
+            ].map((row, i) => (
+              <tr class={i % 2 === 0 ? "bg-cream/30" : ""}>
+                <td class="py-2 px-3 font-medium">{row[0]}</td>
+                <td class="py-2 px-3 text-right tabular-nums">{row[1]}</td>
+                <td class="py-2 px-3 text-right text-text-light tabular-nums">{row[2]}</td>
+                <td class="py-2 px-3 text-right text-text-light tabular-nums">{row[3]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <AmazonProducts category="measuring" title="Kitchen Measuring Tools" />
+
+    <AdSlot position="bottom" />
+
+    <div class="mt-8 text-center no-print">
+      <button
+        onclick="window.print()"
+        class="px-8 py-4 bg-primary hover:bg-primary-dark text-white font-bold text-lg rounded-xl transition-colors shadow-sm tap-target inline-flex items-center gap-2"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        Print Conversion Chart
+      </button>
+      <p class="text-xs text-text-light mt-3">
+        Tip: Print and tape inside a kitchen cabinet door for quick reference!
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  @media print {
+    @page {
+      size: letter;
+      margin: 0.5in;
+    }
+    .no-print {
+      display: none !important;
+    }
+    h2 {
+      font-size: 14pt !important;
+      margin-top: 12pt !important;
+    }
+    table {
+      font-size: 10pt !important;
+    }
+    section > div {
+      box-shadow: none !important;
+      border: none !important;
+      padding: 0 !important;
+      margin-bottom: 16pt !important;
+      break-inside: avoid;
+    }
+  }
+</style>

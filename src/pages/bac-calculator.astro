@@ -1,0 +1,398 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AdSlot from "../components/AdSlot.astro";
+import AmazonProducts from "../components/AmazonProducts.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "BAC Calculator",
+  url: "https://thekitchencalc.com/bac-calculator/",
+  description: "Estimate your Blood Alcohol Content (BAC) based on drinks consumed, body weight, and time. Educational tool for understanding alcohol metabolism.",
+  applicationCategory: "HealthApplication",
+  operatingSystem: "Web",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+---
+
+<BaseLayout
+  title="BAC Calculator — Blood Alcohol Content Estimator"
+  description="Estimate your Blood Alcohol Content (BAC) with our free calculator. Based on body weight, drinks consumed, and time since drinking. Educational tool for understanding alcohol effects."
+  canonical="https://thekitchencalc.com/bac-calculator/"
+  schema={schema}
+>
+  <section class="bg-white border-b border-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 text-center">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-secondary leading-tight mb-4">
+        BAC <span class="text-primary">Calculator</span>
+      </h1>
+      <p class="text-base sm:text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
+        Estimate your Blood Alcohol Content based on what you've had to drink, your weight, and time. Educational tool — never drink and drive.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <AdSlot position="top" />
+
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
+      <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6">
+        <div class="flex gap-3">
+          <span class="text-2xl">⚠️</span>
+          <div>
+            <p class="font-bold text-yellow-800 text-sm">Important Disclaimer</p>
+            <p class="text-xs text-yellow-700 mt-1">
+              This calculator provides an <strong>educational estimate only</strong>. Individual BAC varies based on metabolism, food intake, medications, health conditions, and other factors.
+              <strong>Never drink and drive.</strong> If in doubt, don't drive.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label for="weight" class="block text-sm font-semibold text-secondary mb-2">
+            Body Weight
+          </label>
+          <div class="flex gap-2">
+            <input
+              type="number"
+              id="weight"
+              min="50"
+              max="500"
+              value="160"
+              class="flex-1 px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="numeric"
+            />
+            <select
+              id="weight-unit"
+              class="px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-white"
+            >
+              <option value="lb" selected>pounds (lb)</option>
+              <option value="kg">kilograms (kg)</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="sex" class="block text-sm font-semibold text-secondary mb-2">
+            Sex (affects water distribution)
+          </label>
+          <select
+            id="sex"
+            class="w-full px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-white"
+          >
+            <option value="male" selected>Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-secondary mb-3">
+          Drinks Consumed
+        </label>
+        <p class="text-xs text-text-light mb-3">
+          1 standard drink = 0.6 fl oz (14g) of pure alcohol (approx. 12oz beer, 5oz wine, 1.5oz spirits)
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+          <div class="bg-cream/50 rounded-xl p-3">
+            <div class="text-2xl mb-1">🍺</div>
+            <p class="text-xs font-medium text-secondary mb-2">Beer (12oz)</p>
+            <div class="flex items-center gap-2">
+              <button onclick="adjustDrink('beer', -1)" class="w-8 h-8 rounded-lg bg-white border border-border text-secondary font-bold hover:bg-primary/10 transition-colors tap-target">−</button>
+              <span id="beer-count" class="flex-1 text-center font-bold text-secondary">0</span>
+              <button onclick="adjustDrink('beer', 1)" class="w-8 h-8 rounded-lg bg-white border border-border text-secondary font-bold hover:bg-primary/10 transition-colors tap-target">+</button>
+            </div>
+          </div>
+          <div class="bg-cream/50 rounded-xl p-3">
+            <div class="text-2xl mb-1">🍷</div>
+            <p class="text-xs font-medium text-secondary mb-2">Wine (5oz)</p>
+            <div class="flex items-center gap-2">
+              <button onclick="adjustDrink('wine', -1)" class="w-8 h-8 rounded-lg bg-white border border-border text-secondary font-bold hover:bg-primary/10 transition-colors tap-target">−</button>
+              <span id="wine-count" class="flex-1 text-center font-bold text-secondary">0</span>
+              <button onclick="adjustDrink('wine', 1)" class="w-8 h-8 rounded-lg bg-white border border-border text-secondary font-bold hover:bg-primary/10 transition-colors tap-target">+</button>
+            </div>
+          </div>
+          <div class="bg-cream/50 rounded-xl p-3">
+            <div class="text-2xl mb-1">🥃</div>
+            <p class="text-xs font-medium text-secondary mb-2">Shot (1.5oz)</p>
+            <div class="flex items-center gap-2">
+              <button onclick="adjustDrink('shot', -1)" class="w-8 h-8 rounded-lg bg-white border border-border text-secondary font-bold hover:bg-primary/10 transition-colors tap-target">−</button>
+              <span id="shot-count" class="flex-1 text-center font-bold text-secondary">0</span>
+              <button onclick="adjustDrink('shot', 1)" class="w-8 h-8 rounded-lg bg-white border border-border text-secondary font-bold hover:bg-primary/10 transition-colors tap-target">+</button>
+            </div>
+          </div>
+          <div class="bg-cream/50 rounded-xl p-3">
+            <div class="text-2xl mb-1">🍸</div>
+            <p class="text-xs font-medium text-secondary mb-2">Cocktail</p>
+            <div class="flex items-center gap-2">
+              <button onclick="adjustDrink('cocktail', -1)" class="w-8 h-8 rounded-lg bg-white border border-border text-secondary font-bold hover:bg-primary/10 transition-colors tap-target">−</button>
+              <span id="cocktail-count" class="flex-1 text-center font-bold text-secondary">0</span>
+              <button onclick="adjustDrink('cocktail', 1)" class="w-8 h-8 rounded-lg bg-white border border-border text-secondary font-bold hover:bg-primary/10 transition-colors tap-target">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="text-right">
+          <span class="text-sm text-text-light">Total standard drinks: </span>
+          <span id="total-drinks" class="font-bold text-primary">0</span>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <label for="hours" class="block text-sm font-semibold text-secondary mb-2">
+          Hours Since First Drink
+        </label>
+        <div class="flex gap-2 items-center">
+          <input
+            type="range"
+            id="hours"
+            min="0"
+            max="12"
+            step="0.5"
+            value="2"
+            class="flex-1 h-2 bg-cream rounded-lg appearance-none cursor-pointer accent-primary"
+          />
+          <span id="hours-display" class="text-lg font-bold text-secondary w-16 text-right">2 hrs</span>
+        </div>
+      </div>
+
+      <button
+        id="calculate-btn"
+        class="w-full py-4 bg-primary hover:bg-primary-dark text-white font-bold text-lg rounded-xl transition-colors shadow-sm tap-target"
+      >
+        Calculate BAC
+      </button>
+    </div>
+
+    <AdSlot position="middle" />
+
+    <div id="results-section" class="hidden">
+      <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
+        <div id="bac-result"></div>
+        <div class="mt-6 pt-6 border-t border-border">
+          <h3 class="font-semibold text-secondary mb-4">BAC Reference Scale</h3>
+          <div class="space-y-2">
+            {[
+              { level: "0.00 - 0.02%", label: "Sober / Minimal Effects", color: "bg-green-500", desc: "Feelings of relaxation" },
+              { level: "0.02 - 0.05%", label: "Mild Impairment", color: "bg-yellow-400", desc: "Relaxation, mild euphoria" },
+              { level: "0.05 - 0.08%", label: "Increased Impairment", color: "bg-orange-400", desc: "Reduced coordination, slower reflexes" },
+              { level: "0.08 - 0.15%", label: "Significant Impairment", color: "bg-red-500", desc: "Blurred vision, poor judgment. LEGAL LIMIT IN US = 0.08%" },
+              { level: "0.15 - 0.30%", label: "Severe Impairment", color: "bg-red-700", desc: "Vomiting, confusion, loss of coordination" },
+              { level: "0.30%+", label: "Life Threatening", color: "bg-purple-900", desc: "Loss of consciousness, risk of death. SEEK MEDICAL HELP!" },
+            ].map((item) => (
+              <div class="flex items-center gap-3">
+                <div class={`w-4 h-4 rounded-full ${item.color} flex-shrink-0`}></div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-semibold text-secondary">{item.level} — {item.label}</p>
+                  <p class="text-xs text-text-light truncate">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <AmazonProducts category="general" title="Kitchen & Bar Essentials" />
+
+    <AdSlot position="bottom" />
+
+    <article class="mt-8 bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 prose prose-slate max-w-none">
+      <h2>About This BAC Calculator</h2>
+      <p>
+        This calculator uses a simplified Widmark formula to estimate Blood Alcohol Content.
+        It's intended for <strong>educational purposes only</strong> and should not be used
+        to determine whether you are safe to drive or operate machinery.
+      </p>
+
+      <h2>How BAC Is Calculated</h2>
+      <p>The basic Widmark formula:</p>
+      <p><strong>BAC = (Alcohol in Grams ÷ (Body Weight in Grams × R)) × 100 - (Elimination Rate × Hours)</strong></p>
+      <p>Where:</p>
+      <ul>
+        <li><strong>R (Widmark factor):</strong> ~0.68 for men, ~0.55 for women (water distribution ratio)</li>
+        <li><strong>Elimination rate:</strong> ~0.015% per hour (average; varies by individual)</li>
+        <li><strong>1 standard drink:</strong> ~14 grams (0.6 fl oz) of pure alcohol</li>
+      </ul>
+
+      <h2>Standard Drink Sizes</h2>
+      <p>Not all drinks contain the same amount of alcohol. A "standard drink" contains about 0.6 fluid ounces (14 grams) of pure alcohol:</p>
+      <ul>
+        <li><strong>Beer:</strong> 12 fl oz (5% ABV)</li>
+        <li><strong>Wine:</strong> 5 fl oz (12% ABV)</li>
+        <li><strong>Distilled spirits:</strong> 1.5 fl oz (40% ABV / 80 proof)</li>
+        <li><strong>Malt liquor:</strong> 8-9 fl oz (7% ABV)</li>
+        <li><strong>Fortified wine (sherry, port):</strong> 3-4 fl oz (17% ABV)</li>
+      </ul>
+
+      <h2>Factors That Affect BAC</h2>
+      <h3>Body Weight & Composition</h3>
+      <p>
+        Heavier people have more body water, which dilutes alcohol more, resulting in lower BAC
+        for the same number of drinks. Muscle tissue contains more water than fat tissue.
+      </p>
+      <h3>Sex</h3>
+      <p>
+        Women typically have a higher percentage of body fat and lower body water than men of the same weight.
+        Women also generally have lower levels of alcohol dehydrogenase (the enzyme that breaks down alcohol).
+      </p>
+      <h3>Food</h3>
+      <p>
+        Drinking on an empty stomach results in faster absorption and higher peak BAC.
+        Food — especially high-protein, high-fat meals — slows alcohol absorption significantly.
+      </p>
+      <h3>Rate of Consumption</h3>
+      <p>
+        The faster you drink, the higher your BAC rises. The liver can only metabolize
+        about one standard drink per hour. Drinking faster than that causes BAC to climb.
+      </p>
+
+      <h2>Legal BAC Limits in the US</h2>
+      <ul>
+        <li><strong>Drivers 21+:</strong> 0.08% BAC (all 50 states)</li>
+        <li><strong>Drivers under 21:</strong> 0.00-0.02% (zero tolerance laws vary by state)</li>
+        <li><strong>Commercial drivers:</strong> 0.04% BAC</li>
+      </ul>
+      <p>
+        Even at BAC levels below 0.08%, driving ability is impaired. The safest choice is always:
+        <strong>if you drink, don't drive.</strong>
+      </p>
+
+      <h2>Warning Signs of Alcohol Poisoning</h2>
+      <p>If someone has been drinking heavily and shows these signs, call 911 immediately:</p>
+      <ul>
+        <li>Confusion or inability to wake up</li>
+        <li>Vomiting while passed out</li>
+        <li>Seizures</li>
+        <li>Slow or irregular breathing (fewer than 8 breaths per minute)</li>
+        <li>Pale or blue-tinged skin</li>
+        <li>Low body temperature (hypothermia)</li>
+      </ul>
+      <p>
+        <strong>Don't leave an intoxicated person alone to "sleep it off."</strong>
+        Alcohol poisoning can be fatal. Stay with them and call for help.
+      </p>
+    </article>
+  </section>
+</BaseLayout>
+
+<script>
+  const drinks: Record<string, number> = {
+    beer: 0,
+    wine: 0,
+    shot: 0,
+    cocktail: 0,
+  };
+
+  const drinkAlcoholGrams: Record<string, number> = {
+    beer: 14,
+    wine: 14,
+    shot: 14,
+    cocktail: 21,
+  };
+
+  function adjustDrink(type: string, delta: number) {
+    drinks[type] = Math.max(0, drinks[type] + delta);
+    document.getElementById(`${type}-count`)!.textContent = String(drinks[type]);
+    updateTotal();
+  }
+
+  function updateTotal() {
+    const total = Object.entries(drinks).reduce((sum, [type, count]) => {
+      return sum + count;
+    }, 0);
+    document.getElementById("total-drinks")!.textContent = String(total);
+  }
+
+  function updateHoursDisplay() {
+    const hours = parseFloat((document.getElementById("hours") as HTMLInputElement).value);
+    document.getElementById("hours-display")!.textContent = `${hours} hr${hours === 1 ? "" : "s"}`;
+  }
+
+  function getBACLevel(bac: number): { label: string; color: string; bgColor: string; desc: string } {
+    if (bac < 0.02) return { label: "Minimal / No Effect", color: "text-green-700", bgColor: "bg-green-100", desc: "Feeling relaxed, subtle effects" };
+    if (bac < 0.05) return { label: "Mild Impairment", color: "text-yellow-700", bgColor: "bg-yellow-100", desc: "Feeling of warmth, relaxation, lowered inhibitions" };
+    if (bac < 0.08) return { label: "Moderate Impairment", color: "text-orange-700", bgColor: "bg-orange-100", desc: "Reduced coordination, slower reaction time. Do NOT drive." };
+    if (bac < 0.15) return { label: "Significant Impairment", color: "text-red-700", bgColor: "bg-red-100", desc: "Blurred vision, poor judgment, slurred speech. LEGALLY INTOXICATED." };
+    if (bac < 0.30) return { label: "Severe Impairment", color: "text-red-800", bgColor: "bg-red-200", desc: "Confusion, vomiting, loss of motor control. DANGEROUS LEVEL." };
+    return { label: "CRITICAL — EMERGENCY", color: "text-purple-900", bgColor: "bg-purple-200", desc: "Loss of consciousness, possible respiratory failure. CALL 911!" };
+  }
+
+  function calculate() {
+    const weight = parseFloat((document.getElementById("weight") as HTMLInputElement).value) || 0;
+    const weightUnit = (document.getElementById("weight-unit") as HTMLSelectElement).value;
+    const sex = (document.getElementById("sex") as HTMLSelectElement).value;
+    const hours = parseFloat((document.getElementById("hours") as HTMLInputElement).value);
+
+    const weightLbs = weightUnit === "kg" ? weight * 2.20462 : weight;
+    const weightG = weightLbs * 453.592;
+
+    const rFactor = sex === "male" ? 0.68 : 0.55;
+
+    const totalAlcoholG = Object.entries(drinks).reduce((sum, [type, count]) => {
+      return sum + count * drinkAlcoholGrams[type];
+    }, 0);
+
+    if (weight <= 0) {
+      alert("Please enter a valid weight.");
+      return;
+    }
+
+    if (totalAlcoholG === 0) {
+      alert("Please add at least one drink.");
+      return;
+    }
+
+    const rawBAC = (totalAlcoholG / (weightG * rFactor)) * 100;
+    const elimination = 0.015 * hours;
+    const estimatedBAC = Math.max(0, rawBAC - elimination);
+
+    const level = getBACLevel(estimatedBAC);
+
+    const resultDiv = document.getElementById("bac-result")!;
+    resultDiv.innerHTML = `
+      <div class="text-center mb-6">
+        <p class="text-sm text-text-light mb-1">Estimated BAC</p>
+        <p class="text-6xl font-extrabold ${level.color} mb-2">${estimatedBAC.toFixed(3)}%</p>
+        <div class="${level.bgColor} inline-block px-4 py-2 rounded-xl">
+          <p class="font-bold ${level.color}">${level.label}</p>
+        </div>
+        <p class="text-sm text-text-light mt-3">${level.desc}</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="bg-cream/50 rounded-xl p-3 text-center">
+          <p class="text-xs text-text-light uppercase tracking-wider mb-1">Total Drinks</p>
+          <p class="text-lg font-bold text-secondary">${Object.values(drinks).reduce((a, b) => a + b, 0)}</p>
+        </div>
+        <div class="bg-cream/50 rounded-xl p-3 text-center">
+          <p class="text-xs text-text-light uppercase tracking-wider mb-1">Weight</p>
+          <p class="text-lg font-bold text-secondary">${weightLbs.toFixed(0)} lb</p>
+        </div>
+        <div class="bg-cream/50 rounded-xl p-3 text-center">
+          <p class="text-xs text-text-light uppercase tracking-wider mb-1">Sex</p>
+          <p class="text-lg font-bold text-secondary capitalize">${sex}</p>
+        </div>
+        <div class="bg-cream/50 rounded-xl p-3 text-center">
+          <p class="text-xs text-text-light uppercase tracking-wider mb-1">Hours</p>
+          <p class="text-lg font-bold text-secondary">${hours}</p>
+        </div>
+      </div>
+      <div class="mt-4 p-3 bg-red-50 border border-red-200 rounded-xl">
+        <p class="text-xs font-semibold text-red-700">🚫 NEVER DRINK AND DRIVE</p>
+        <p class="text-xs text-red-600 mt-1">
+          This is an <strong>estimate only</strong>. Actual BAC varies based on food, metabolism, medications, and other factors.
+          If you've been drinking, find a sober ride.
+        </p>
+      </div>
+    `;
+
+    document.getElementById("results-section")!.classList.remove("hidden");
+    document.getElementById("results-section")!.scrollIntoView({ behavior: "smooth" });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("hours")!.addEventListener("input", updateHoursDisplay);
+    document.getElementById("calculate-btn")!.addEventListener("click", calculate);
+    (window as any).adjustDrink = adjustDrink;
+  });
+</script>

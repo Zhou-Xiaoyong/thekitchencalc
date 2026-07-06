@@ -1,0 +1,423 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AdSlot from "../components/AdSlot.astro";
+import AmazonProducts from "../components/AmazonProducts.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Dough Hydration Calculator",
+  url: "https://thekitchencalc.com/dough-hydration-calculator/",
+  description: "Calculate dough hydration percentage for bread, pizza, and more. Adjust water and flour amounts to hit your target hydration ratio.",
+  applicationCategory: "CookingApplication",
+  operatingSystem: "Web",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+---
+
+<BaseLayout
+  title="Dough Hydration Calculator — Bread & Pizza Dough Ratio"
+  description="Calculate your dough's hydration percentage. Perfect for bread baking, pizza dough, and sourdough. Adjust flour and water to hit your target hydration ratio."
+  canonical="https://thekitchencalc.com/dough-hydration-calculator/"
+  schema={schema}
+>
+  <section class="bg-white border-b border-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 text-center">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-secondary leading-tight mb-4">
+        Dough Hydration <span class="text-primary">Calculator</span>
+      </h1>
+      <p class="text-base sm:text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
+        Figure out your dough's hydration percentage or calculate how much water you need for your target ratio. Essential for bread, pizza, and sourdough baking.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <AdSlot position="top" />
+
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-secondary mb-3">Calculation Mode</label>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <button
+            data-mode="calculate"
+            class="mode-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-primary bg-primary/5 text-primary transition-all tap-target active"
+          >
+            🧮 Calculate Hydration %
+          </button>
+          <button
+            data-mode="target"
+            class="mode-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+          >
+            🎯 Hit Target Hydration
+          </button>
+        </div>
+      </div>
+
+      <div id="calculate-mode">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label for="calc-flour" class="block text-sm font-semibold text-secondary mb-2">
+              Flour Weight
+            </label>
+            <div class="flex gap-2">
+              <input
+                type="number"
+                id="calc-flour"
+                min="0"
+                value="500"
+                class="flex-1 px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+                inputmode="decimal"
+              />
+              <select
+                id="calc-flour-unit"
+                class="px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-white"
+              >
+                <option value="g" selected>grams</option>
+                <option value="oz">ounces</option>
+                <option value="lb">pounds</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="calc-water" class="block text-sm font-semibold text-secondary mb-2">
+              Water Weight
+            </label>
+            <div class="flex gap-2">
+              <input
+                type="number"
+                id="calc-water"
+                min="0"
+                value="325"
+                class="flex-1 px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+                inputmode="decimal"
+              />
+              <select
+                id="calc-water-unit"
+                class="px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-white"
+              >
+                <option value="g" selected>grams</option>
+                <option value="oz">ounces</option>
+                <option value="ml">mL</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="target-mode" class="hidden">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label for="target-flour" class="block text-sm font-semibold text-secondary mb-2">
+              Flour Weight
+            </label>
+            <div class="flex gap-2">
+              <input
+                type="number"
+                id="target-flour"
+                min="0"
+                value="500"
+                class="flex-1 px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+                inputmode="decimal"
+              />
+              <select
+                id="target-flour-unit"
+                class="px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-white"
+              >
+                <option value="g" selected>grams</option>
+                <option value="oz">ounces</option>
+                <option value="lb">pounds</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="target-hydration" class="block text-sm font-semibold text-secondary mb-2">
+              Target Hydration %
+            </label>
+            <div class="flex gap-2 items-center">
+              <input
+                type="number"
+                id="target-hydration"
+                min="0"
+                max="200"
+                value="65"
+                class="flex-1 px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+                inputmode="decimal"
+              />
+              <span class="text-lg font-medium text-text-light">%</span>
+            </div>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-semibold text-secondary mb-3">Quick Hydration Presets</label>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="setHydration(55)" class="px-3 py-2 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">
+              55% (Very Firm)
+            </button>
+            <button onclick="setHydration(60)" class="px-3 py-2 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">
+              60% (Firm)
+            </button>
+            <button onclick="setHydration(65)" class="px-3 py-2 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">
+              65% (Standard)
+            </button>
+            <button onclick="setHydration(70)" class="px-3 py-2 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">
+              70% (Soft)
+            </button>
+            <button onclick="setHydration(75)" class="px-3 py-2 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">
+              75% (High Hydration)
+            </button>
+            <button onclick="setHydration(80)" class="px-3 py-2 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">
+              80% (Very High)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button
+        id="calculate-btn"
+        class="w-full py-4 bg-primary hover:bg-primary-dark text-white font-bold text-lg rounded-xl transition-colors shadow-sm tap-target"
+      >
+        Calculate
+      </button>
+    </div>
+
+    <AdSlot position="middle" />
+
+    <div id="results-section" class="hidden">
+      <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
+        <div id="hydration-result"></div>
+        <div class="mt-6 pt-6 border-t border-border">
+          <h3 class="font-semibold text-secondary mb-3">Hydration Reference Chart</h3>
+          <div class="space-y-2 text-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-24 h-3 bg-amber-100 rounded-full overflow-hidden"><div class="h-full bg-amber-300" style="width: 50%"></div></div>
+              <span class="font-medium">50-55%</span>
+              <span class="text-text-light">Very firm dough — bagels, pretzels, pasta</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-24 h-3 bg-amber-100 rounded-full overflow-hidden"><div class="h-full bg-amber-400" style="width: 60%"></div></div>
+              <span class="font-medium">55-65%</span>
+              <span class="text-text-light">Standard — sandwich bread, dinner rolls</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-24 h-3 bg-amber-100 rounded-full overflow-hidden"><div class="h-full bg-orange-400" style="width: 70%"></div></div>
+              <span class="font-medium">65-75%</span>
+              <span class="text-text-light">Artisan bread, rustic loaves, pizza</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-24 h-3 bg-amber-100 rounded-full overflow-hidden"><div class="h-full bg-red-400" style="width: 85%"></div></div>
+              <span class="font-medium">75-90%+</span>
+              <span class="text-text-light">High hydration — ciabatta, focaccia, no-knead</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <AmazonProducts category="baking" title="Bread Baking Tools" />
+
+    <AdSlot position="bottom" />
+
+    <article class="mt-8 bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 prose prose-slate max-w-none">
+      <h2>What Is Dough Hydration?</h2>
+      <p>
+        Dough hydration is the ratio of water to flour in a dough, expressed as a percentage of the flour weight.
+        It's a core concept in bread baking (often called "baker's percentage" or "baker's math").
+        Hydration dramatically affects dough texture, crumb structure, and oven spring.
+      </p>
+
+      <h2>How to Calculate Hydration</h2>
+      <p><strong>Hydration % = (Water Weight ÷ Flour Weight) × 100</strong></p>
+      <p>
+        For example: 325g water ÷ 500g flour = 0.65 = <strong>65% hydration</strong>
+      </p>
+      <p>
+        In baker's percentage, flour is always 100%, and all other ingredients are measured as a percentage of the flour weight.
+      </p>
+
+      <h2>Hydration Levels and What They Mean</h2>
+      <h3>Low Hydration (50-60%)</h3>
+      <p>
+        Firm, stiff doughs. Best for bagels, pretzels, pasta, and some sandwich breads.
+        These doughs are easy to handle and produce a dense, chewy crumb.
+      </p>
+      <h3>Medium Hydration (60-70%)</h3>
+      <p>
+        The most common range. Great for sandwich bread, dinner rolls, cinnamon rolls,
+        and many pizza doughs. Dough is manageable and produces a good crumb.
+      </p>
+      <h3>High Hydration (70-85%)</h3>
+      <p>
+        Wet, sticky doughs. Used for artisan bread, rustic loaves, ciabatta, and focaccia.
+        Produces large, irregular holes (open crumb) and a crispy crust. More challenging to handle.
+      </p>
+      <h3>Very High Hydration (85%+)</h3>
+      <p>
+        Extremely wet, almost batter-like doughs. No-knead breads and some artisanal loaves
+        fall into this range. Requires careful folding and shaping techniques.
+      </p>
+
+      <h2>Factors That Affect Hydration</h2>
+      <ul>
+        <li><strong>Flour type:</strong> Whole wheat and rye flours absorb more water than white flour.</li>
+        <li><strong>Flour protein:</strong> Higher protein bread flour absorbs more water than all-purpose.</li>
+        <li><strong>Altitude:</strong> Higher altitudes may need slightly less water.</li>
+        <li><strong>Humidity:</strong> Flour absorbs moisture from the air — you may need less water in humid climates.</li>
+        <li><strong>Add-ins:</strong> Eggs, butter, oil, milk, and sweeteners all affect dough consistency.</li>
+      </ul>
+
+      <h2>Baker's Percentage Cheat Sheet</h2>
+      <p>Common ingredient percentages (all based on flour = 100%):</p>
+      <ul>
+        <li><strong>Water:</strong> 50-85% (varies by recipe type)</li>
+        <li><strong>Yeast:</strong> 0.5-3% (less for slow fermentation, more for sweet doughs)</li>
+        <li><strong>Salt:</strong> 1.5-2.5% (usually about 2% for bread)</li>
+        <li><strong>Sugar:</strong> 0-15% (sweet doughs can go higher)</li>
+        <li><strong>Fat (butter/oil):</strong> 0-15% (enriched doughs)</li>
+      </ul>
+    </article>
+  </section>
+</BaseLayout>
+
+<script>
+  let currentMode = "calculate";
+
+  function toGrams(amount: number, unit: string): number {
+    const factors: Record<string, number> = {
+      g: 1,
+      kg: 1000,
+      oz: 28.3495,
+      lb: 453.592,
+      ml: 1,
+    };
+    return amount * factors[unit];
+  }
+
+  function fromGrams(grams: number, unit: string): number {
+    const factors: Record<string, number> = {
+      g: 1,
+      oz: 28.3495,
+      lb: 453.592,
+      ml: 1,
+    };
+    return grams / factors[unit];
+  }
+
+  function switchMode(mode: string) {
+    currentMode = mode;
+    document.querySelectorAll(".mode-btn").forEach((btn) => {
+      const el = btn as HTMLElement;
+      if (el.dataset.mode === mode) {
+        el.className =
+          "mode-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-primary bg-primary/5 text-primary transition-all tap-target active";
+      } else {
+        el.className =
+          "mode-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target";
+      }
+    });
+    document.getElementById("calculate-mode")!.classList.toggle("hidden", mode !== "calculate");
+    document.getElementById("target-mode")!.classList.toggle("hidden", mode !== "target");
+    document.getElementById("results-section")!.classList.add("hidden");
+  }
+
+  function setHydration(value: number) {
+    (document.getElementById("target-hydration") as HTMLInputElement).value = String(value);
+  }
+
+  function getHydrationLabel(hydration: number): { label: string; description: string; examples: string } {
+    if (hydration < 50) return { label: "Very Low Hydration", description: "Extremely firm, dense dough", examples: "Pasta, hard pretzels" };
+    if (hydration < 58) return { label: "Low Hydration", description: "Firm, stiff dough", examples: "Bagels, dense sandwich bread" };
+    if (hydration < 65) return { label: "Medium-Low Hydration", description: "Manageable, soft dough", examples: "Sandwich bread, dinner rolls" };
+    if (hydration < 72) return { label: "Medium Hydration", description: "Soft, slightly sticky dough", examples: "White bread, pizza dough" };
+    if (hydration < 80) return { label: "High Hydration", description: "Wet, sticky dough", examples: "Artisan bread, ciabatta" };
+    if (hydration < 90) return { label: "Very High Hydration", description: "Very wet, slack dough", examples: "No-knead bread, focaccia" };
+    return { label: "Extremely High Hydration", description: "Almost batter-like", examples: "Some artisanal loaves" };
+  }
+
+  function calculate() {
+    const resultDiv = document.getElementById("hydration-result")!;
+
+    if (currentMode === "calculate") {
+      const flourAmount = parseFloat((document.getElementById("calc-flour") as HTMLInputElement).value) || 0;
+      const flourUnit = (document.getElementById("calc-flour-unit") as HTMLSelectElement).value;
+      const waterAmount = parseFloat((document.getElementById("calc-water") as HTMLInputElement).value) || 0;
+      const waterUnit = (document.getElementById("calc-water-unit") as HTMLSelectElement).value;
+
+      const flourGrams = toGrams(flourAmount, flourUnit);
+      const waterGrams = toGrams(waterAmount, waterUnit);
+
+      if (flourGrams <= 0 || waterGrams < 0) {
+        resultDiv.innerHTML = '<p class="text-center text-text-light py-4">Please enter valid flour and water amounts.</p>';
+      } else {
+        const hydration = (waterGrams / flourGrams) * 100;
+        const info = getHydrationLabel(hydration);
+
+        resultDiv.innerHTML = `
+          <div class="text-center mb-6">
+            <p class="text-sm text-text-light mb-1">Hydration Percentage</p>
+            <p class="text-5xl font-extrabold text-primary mb-2">${hydration.toFixed(1)}%</p>
+            <p class="text-lg font-bold text-secondary">${info.label}</p>
+            <p class="text-sm text-text-light mt-1">${info.description}</p>
+            <p class="text-xs text-text-light mt-2"><strong>Best for:</strong> ${info.examples}</p>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-cream/50 rounded-xl p-4 text-center">
+              <p class="text-xs text-text-light uppercase tracking-wider mb-1">Flour</p>
+              <p class="text-xl font-bold text-secondary">${flourAmount} ${flourUnit}</p>
+              <p class="text-xs text-text-light">${flourGrams.toFixed(0)} g</p>
+            </div>
+            <div class="bg-cream/50 rounded-xl p-4 text-center">
+              <p class="text-xs text-text-light uppercase tracking-wider mb-1">Water</p>
+              <p class="text-xl font-bold text-secondary">${waterAmount} ${waterUnit}</p>
+              <p class="text-xs text-text-light">${waterGrams.toFixed(0)} g</p>
+            </div>
+          </div>
+        `;
+      }
+    } else {
+      const flourAmount = parseFloat((document.getElementById("target-flour") as HTMLInputElement).value) || 0;
+      const flourUnit = (document.getElementById("target-flour-unit") as HTMLSelectElement).value;
+      const targetHydration = parseFloat((document.getElementById("target-hydration") as HTMLInputElement).value) || 0;
+
+      const flourGrams = toGrams(flourAmount, flourUnit);
+      const waterGrams = flourGrams * (targetHydration / 100);
+      const info = getHydrationLabel(targetHydration);
+
+      if (flourGrams <= 0 || targetHydration < 0) {
+        resultDiv.innerHTML = '<p class="text-center text-text-light py-4">Please enter valid values.</p>';
+      } else {
+        resultDiv.innerHTML = `
+          <div class="text-center mb-6">
+            <p class="text-sm text-text-light mb-1">Water Needed for ${targetHydration}% Hydration</p>
+            <p class="text-5xl font-extrabold text-primary mb-2">${waterGrams.toFixed(0)} g</p>
+            <p class="text-lg font-bold text-secondary">${info.label}</p>
+            <p class="text-sm text-text-light mt-1">${info.description}</p>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-cream/50 rounded-xl p-4 text-center">
+              <p class="text-xs text-text-light uppercase tracking-wider mb-1">Flour</p>
+              <p class="text-xl font-bold text-secondary">${flourAmount} ${flourUnit}</p>
+              <p class="text-xs text-text-light">${flourGrams.toFixed(0)} g</p>
+            </div>
+            <div class="bg-cream/50 rounded-xl p-4 text-center">
+              <p class="text-xs text-text-light uppercase tracking-wider mb-1">Water</p>
+              <p class="text-xl font-bold text-secondary">${waterGrams.toFixed(0)} g</p>
+              <p class="text-xs text-text-light">${(waterGrams).toFixed(0)} mL / ${(waterGrams / 28.3495).toFixed(1)} oz</p>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    document.getElementById("results-section")!.classList.remove("hidden");
+    document.getElementById("results-section")!.scrollIntoView({ behavior: "smooth" });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".mode-btn").forEach((btn) => {
+      btn.addEventListener("click", () => switchMode((btn as HTMLElement).dataset.mode!));
+    });
+    document.getElementById("calculate-btn")!.addEventListener("click", calculate);
+    (window as any).setHydration = setHydration;
+  });
+</script>

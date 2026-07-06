@@ -1,0 +1,271 @@
+---
+interface Props {
+  category: "baking" | "cooking" | "measuring" | "thermometers" | "scales" | "holiday" | "general" | "brewing" | "safety";
+  title?: string;
+}
+
+const { category, title = "Recommended Kitchen Tools" } = Astro.props;
+
+const affiliateId = "calchive-20";
+
+const products: Record<string, Array<{
+  name: string;
+  asin: string;
+  image: string;
+  price: string;
+  description: string;
+}>> = {
+  baking: [
+    {
+      name: "Digital Kitchen Scale",
+      asin: "B01136BW50",
+      image: "https://m.media-amazon.com/images/I/71WcUf3Y0jL._AC_SL1500_.jpg",
+      price: "$24.99",
+      description: "Precise measurements for baking. Measures in grams, ounces, pounds.",
+    },
+    {
+      name: "Stainless Steel Measuring Cups",
+      asin: "B00004OCUS",
+      image: "https://m.media-amazon.com/images/I/71Kq32tXx4L._AC_SL1500_.jpg",
+      price: "$19.99",
+      description: "Nesting set of 6 stainless steel measuring cups.",
+    },
+    {
+      name: "Silicone Baking Mat Set",
+      asin: "B07N8QJXZV",
+      image: "https://m.media-amazon.com/images/I/81hO5Sf56tL._AC_SL1500_.jpg",
+      price: "$15.99",
+      description: "Non-stick, reusable baking mats for even baking.",
+    },
+  ],
+  cooking: [
+    {
+      name: "Instant Read Meat Thermometer",
+      asin: "B01H53JE1E",
+      image: "https://m.media-amazon.com/images/I/71b3eY0TkRL._AC_SL1500_.jpg",
+      price: "$18.99",
+      description: "Fast and accurate digital thermometer for meat and candy.",
+    },
+    {
+      name: "Cast Iron Skillet",
+      asin: "B00006JSUA",
+      image: "https://m.media-amazon.com/images/I/711T+1bV7UL._AC_SL1500_.jpg",
+      price: "$29.99",
+      description: "Pre-seasoned 12-inch cast iron skillet for perfect searing.",
+    },
+    {
+      name: "Dutch Oven",
+      asin: "B000LETRF4",
+      image: "https://m.media-amazon.com/images/I/71D4Jn0bH+L._AC_SL1500_.jpg",
+      price: "$79.99",
+      description: "Enameled cast iron Dutch oven for braising and bread baking.",
+    },
+  ],
+  measuring: [
+    {
+      name: "Digital Kitchen Scale",
+      asin: "B01136BW50",
+      image: "https://m.media-amazon.com/images/I/71WcUf3Y0jL._AC_SL1500_.jpg",
+      price: "$24.99",
+      description: "Precise digital scale for grams, ounces, and pounds.",
+    },
+    {
+      name: "Liquid Measuring Cups",
+      asin: "B00006G2CB",
+      image: "https://m.media-amazon.com/images/I/81mJ2GOS7zL._AC_SL1500_.jpg",
+      price: "$14.99",
+      description: "Glass measuring cup set with easy-to-read markings.",
+    },
+    {
+      name: "Measuring Spoon Set",
+      asin: "B00004OCV7",
+      image: "https://m.media-amazon.com/images/I/71w192Q1wGL._AC_SL1500_.jpg",
+      price: "$9.99",
+      description: "Stainless steel measuring spoons, 6 sizes.",
+    },
+  ],
+  thermometers: [
+    {
+      name: "Instant Read Meat Thermometer",
+      asin: "B01H53JE1E",
+      image: "https://m.media-amazon.com/images/I/71b3eY0TkRL._AC_SL1500_.jpg",
+      price: "$18.99",
+      description: "Fast digital thermometer for meats, candy, baking.",
+    },
+    {
+      name: "Oven Thermometer",
+      asin: "B00004TLQB",
+      image: "https://m.media-amazon.com/images/I/71c8jQq2aZL._AC_SL1500_.jpg",
+      price: "$12.99",
+      description: "Large dial oven thermometer for accurate temperature.",
+    },
+    {
+      name: "Leave-in Meat Thermometer",
+      asin: "B00009WAUO",
+      image: "https://m.media-amazon.com/images/I/71aKZJxKxRL._AC_SL1500_.jpg",
+      price: "$22.99",
+      description: "Digital probe thermometer with timer for roasts.",
+    },
+  ],
+  scales: [
+    {
+      name: "Digital Kitchen Scale",
+      asin: "B01136BW50",
+      image: "https://m.media-amazon.com/images/I/71WcUf3Y0jL._AC_SL1500_.jpg",
+      price: "$24.99",
+      description: "Precise digital scale with tare function, 11lb capacity.",
+    },
+    {
+      name: "Food Scale with Bowl",
+      asin: "B07V3R7S1K",
+      image: "https://m.media-amazon.com/images/I/71Vx7Z8StgL._AC_SL1500_.jpg",
+      price: "$29.99",
+      description: "Digital scale with detachable mixing bowl.",
+    },
+    {
+      name: "Mechanical Kitchen Scale",
+      asin: "B00004S8VX",
+      image: "https://m.media-amazon.com/images/I/71v5FyMqYxL._AC_SL1500_.jpg",
+      price: "$19.99",
+      description: "Classic mechanical scale for kitchen use.",
+    },
+  ],
+  holiday: [
+    {
+      name: "Electric Roaster Oven",
+      asin: "B00006IV1L",
+      image: "https://m.media-amazon.com/images/I/71QvK0Q1j-L._AC_SL1500_.jpg",
+      price: "$59.99",
+      description: "18-quart electric roaster for turkeys up to 22 lbs.",
+    },
+    {
+      name: "Turkey Baster Set",
+      asin: "B07BQ2CDP1",
+      image: "https://m.media-amazon.com/images/I/71j9tL6tJmL._AC_SL1500_.jpg",
+      price: "$14.99",
+      description: "Stainless steel baster with meat injector needle.",
+    },
+    {
+      name: "Meat Thermometer",
+      asin: "B01H53JE1E",
+      image: "https://m.media-amazon.com/images/I/71b3eY0TkRL._AC_SL1500_.jpg",
+      price: "$18.99",
+      description: "Instant read thermometer for perfectly cooked turkey.",
+    },
+  ],
+  general: [
+    {
+      name: "Digital Kitchen Scale",
+      asin: "B01136BW50",
+      image: "https://m.media-amazon.com/images/I/71WcUf3Y0jL._AC_SL1500_.jpg",
+      price: "$24.99",
+      description: "Essential tool for accurate cooking and baking.",
+    },
+    {
+      name: "Instant Read Thermometer",
+      asin: "B01H53JE1E",
+      image: "https://m.media-amazon.com/images/I/71b3eY0TkRL._AC_SL1500_.jpg",
+      price: "$18.99",
+      description: "Food safety starts with accurate temperature checks.",
+    },
+    {
+      name: "Measuring Cup Set",
+      asin: "B00006G2CB",
+      image: "https://m.media-amazon.com/images/I/81mJ2GOS7zL._AC_SL1500_.jpg",
+      price: "$14.99",
+      description: "Durable glass measuring cups for every kitchen.",
+    },
+  ],
+  brewing: [
+    {
+      name: "Digital Hydrometer",
+      asin: "B08L57ZX6G",
+      image: "https://m.media-amazon.com/images/I/71RkL93Vp9L._AC_SL1500_.jpg",
+      price: "$49.99",
+      description: "Precise digital hydrometer for homebrewing and wine making.",
+    },
+    {
+      name: "Refractometer",
+      asin: "B01G6615VM",
+      image: "https://m.media-amazon.com/images/I/71tJ+2v3GQL._AC_SL1500_.jpg",
+      price: "$29.99",
+      description: "Dual scale Brix refractometer for sugar content.",
+    },
+    {
+      name: "Testing Jars Set",
+      asin: "B07CK5XK1T",
+      image: "https://m.media-amazon.com/images/I/61GQ9K3WfJL._AC_SL1500_.jpg",
+      price: "$19.99",
+      description: "Glass test jars for hydrometer readings.",
+    },
+  ],
+  safety: [
+    {
+      name: "Instant Read Meat Thermometer",
+      asin: "B01H53JE1E",
+      image: "https://m.media-amazon.com/images/I/71b3eY0TkRL._AC_SL1500_.jpg",
+      price: "$18.99",
+      description: "Ensure food safety with accurate temperature readings.",
+    },
+    {
+      name: "Food Storage Containers",
+      asin: "B01IFJPLX0",
+      image: "https://m.media-amazon.com/images/I/71y03fJDRwL._AC_SL1500_.jpg",
+      price: "$34.99",
+      description: "Airtight containers for safe food storage.",
+    },
+    {
+      name: "Cutting Board Set",
+      asin: "B0791Y7KVV",
+      image: "https://m.media-amazon.com/images/I/71k7wQfF7PL._AC_SL1500_.jpg",
+      price: "$24.99",
+      description: "Color-coded cutting boards to prevent cross-contamination.",
+    },
+  ],
+};
+
+const categoryProducts = products[category] || products.general;
+
+function getAmazonUrl(asin: string): string {
+  return `https://www.amazon.com/dp/${asin}/?tag=${affiliateId}&linkCode=ogi&th=1&psc=1`;
+}
+---
+
+<div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mt-8">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-bold text-secondary">{title}</h2>
+    <span class="text-xs text-text-light italic">As an Amazon Associate we earn from qualifying purchases.</span>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    {categoryProducts.map((product) => (
+      <a
+        href={getAmazonUrl(product.asin)}
+        target="_blank"
+        rel="noopener noreferrer sponsored"
+        class="group block bg-cream/50 rounded-xl p-4 hover:shadow-md hover:border-primary/30 border border-transparent transition-all no-underline"
+      >
+        <div class="aspect-square bg-white rounded-lg mb-3 flex items-center justify-center overflow-hidden">
+          <img
+            src={product.image}
+            alt={product.name}
+            loading="lazy"
+            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+            onerror="this.style.display='none'"
+          />
+        </div>
+        <h3 class="text-sm font-bold text-secondary mb-1 group-hover:text-primary transition-colors line-clamp-2">
+          {product.name}
+        </h3>
+        <p class="text-lg font-extrabold text-primary mb-2">{product.price}</p>
+        <p class="text-xs text-text-light line-clamp-2">{product.description}</p>
+        <div class="mt-3 flex items-center gap-1 text-xs font-medium text-primary">
+          <span>View on Amazon</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M7 17L17 7"></path>
+            <path d="M7 7h10v10"></path>
+          </svg>
+        </div>
+      </a>
+    ))}
+  </div>
+</div>

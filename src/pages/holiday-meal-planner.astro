@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import AdSlot from "../components/AdSlot.astro";
+import AmazonProducts from "../components/AmazonProducts.astro";
 
 const schema = {
   "@context": "https://schema.org",
@@ -8,7 +9,7 @@ const schema = {
   name: "Holiday Meal Planner",
   url: "https://thekitchencalc.com/holiday-meal-planner/",
   description:
-    "Plan the perfect Thanksgiving, Christmas, or Easter dinner. Calculate how much turkey, sides, and desserts you need based on your guest count and preferences.",
+    "Plan the perfect holiday meal. Thanksgiving, Christmas, Easter, Super Bowl, 4th of July BBQ, and more. Calculate how much food you need based on your guest count.",
   applicationCategory: "CookingApplication",
   operatingSystem: "Web",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
@@ -16,8 +17,8 @@ const schema = {
 ---
 
 <BaseLayout
-  title="Holiday Meal Planner — Thanksgiving, Christmas & Easter Calculator"
-  description="Figure out exactly how much food to buy for your holiday dinner. Our free calculator plans turkey, ham, sides, desserts, and drinks based on your guest count."
+  title="Holiday Meal Planner — Thanksgiving, Christmas, BBQ & More"
+  description="Plan the perfect holiday meal or party. Thanksgiving, Christmas, Easter, Super Bowl, 4th of July BBQ — calculate exactly how much food to buy for any number of guests."
   canonical="https://thekitchencalc.com/holiday-meal-planner/"
   schema={schema}
 >
@@ -28,8 +29,8 @@ const schema = {
         Holiday Meal <span class="text-primary">Planner</span>
       </h1>
       <p class="text-base sm:text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
-        Hosting Thanksgiving, Christmas, or Easter? Tell us your guest count and
-        we'll tell you exactly how much turkey, ham, sides, and pie to buy.
+        Hosting Thanksgiving, Christmas, a Super Bowl party, or 4th of July BBQ?
+        Tell us your guest count and we'll tell you exactly how much food to buy.
       </p>
     </div>
   </section>
@@ -40,25 +41,43 @@ const schema = {
     <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
       <!-- Holiday Selector -->
       <div class="mb-8">
-        <label class="block text-sm font-semibold text-secondary mb-3">Which holiday are you planning?</label>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="holiday-buttons">
+        <label class="block text-sm font-semibold text-secondary mb-3">Which event are you planning?</label>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="holiday-buttons">
           <button
             data-holiday="thanksgiving"
-            class="holiday-btn px-4 py-4 rounded-xl text-sm font-bold border-2 border-primary bg-primary/5 text-primary transition-all tap-target active"
+            class="holiday-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-primary bg-primary/5 text-primary transition-all tap-target active"
           >
             🦃 Thanksgiving
           </button>
           <button
             data-holiday="christmas"
-            class="holiday-btn px-4 py-4 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+            class="holiday-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
           >
             🎄 Christmas
           </button>
           <button
             data-holiday="easter"
-            class="holiday-btn px-4 py-4 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+            class="holiday-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
           >
             🐰 Easter
+          </button>
+          <button
+            data-holiday="superbowl"
+            class="holiday-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+          >
+            🏈 Super Bowl Party
+          </button>
+          <button
+            data-holiday="bbq"
+            class="holiday-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+          >
+            🍔 BBQ / Cookout
+          </button>
+          <button
+            data-holiday="generic"
+            class="holiday-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+          >
+            🎉 General Party
           </button>
         </div>
       </div>
@@ -123,6 +142,11 @@ const schema = {
             <option value="prime_rib">Prime Rib / Beef Roast</option>
             <option value="lamb">Leg of Lamb</option>
             <option value="both">Turkey + Ham Combo</option>
+            <option value="bbq_mixed" style="display:none">BBQ Mixed (burgers + dogs + brats)</option>
+            <option value="burgers" style="display:none">Burgers Only</option>
+            <option value="hotdogs" style="display:none">Hot Dogs Only</option>
+            <option value="wings" style="display:none">Chicken Wings</option>
+            <option value="fingerfood" style="display:none">Finger Food / Appetizers Only</option>
           </select>
         </div>
       </div>
@@ -163,24 +187,30 @@ const schema = {
       <!-- Sides Toggles -->
       <div class="mb-8">
         <label class="block text-sm font-semibold text-secondary mb-3">
-          Sides You're Serving
+          Sides & Apps You're Serving
         </label>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="sides-container">
           {[
-            { id: "side-mashed", label: "Mashed Potatoes", def: true },
-            { id: "side-stuffing", label: "Stuffing/Dressing", def: true },
-            { id: "side-gravy", label: "Gravy", def: true },
-            { id: "side-cranberry", label: "Cranberry Sauce", def: true },
-            { id: "side-green-bean", label: "Green Bean Casserole", def: true },
-            { id: "side-sweet-potato", label: "Sweet Potatoes", def: true },
-            { id: "side-rolls", label: "Dinner Rolls", def: true },
-            { id: "side-mac", label: "Mac & Cheese", def: false },
-            { id: "side-brussels", label: "Brussels Sprouts", def: false },
-            { id: "side-corn", label: "Corn", def: false },
-            { id: "side-salad", label: "Green Salad", def: false },
-            { id: "side-coleslaw", label: "Coleslaw", def: false },
+            { id: "side-mashed", label: "Mashed Potatoes", def: true, holiday: "traditional" },
+            { id: "side-stuffing", label: "Stuffing/Dressing", def: true, holiday: "traditional" },
+            { id: "side-gravy", label: "Gravy", def: true, holiday: "traditional" },
+            { id: "side-cranberry", label: "Cranberry Sauce", def: true, holiday: "traditional" },
+            { id: "side-green-bean", label: "Green Bean Casserole", def: true, holiday: "traditional" },
+            { id: "side-sweet-potato", label: "Sweet Potatoes", def: true, holiday: "traditional" },
+            { id: "side-rolls", label: "Dinner Rolls", def: true, holiday: "traditional" },
+            { id: "side-mac", label: "Mac & Cheese", def: false, holiday: "all" },
+            { id: "side-brussels", label: "Brussels Sprouts", def: false, holiday: "traditional" },
+            { id: "side-corn", label: "Corn on the Cob", def: false, holiday: "bbq" },
+            { id: "side-salad", label: "Green Salad", def: false, holiday: "all" },
+            { id: "side-coleslaw", label: "Coleslaw", def: false, holiday: "bbq" },
+            { id: "side-baked-beans", label: "Baked Beans", def: false, holiday: "bbq" },
+            { id: "side-potato-salad", label: "Potato Salad", def: false, holiday: "bbq" },
+            { id: "side-chips", label: "Chips & Dip", def: false, holiday: "party" },
+            { id: "side-nachos", label: "Nachos", def: false, holiday: "party" },
+            { id: "side-wings", label: "Chicken Wings", def: false, holiday: "party" },
+            { id: "side-deviled-eggs", label: "Deviled Eggs", def: false, holiday: "all" },
           ].map((side) => (
-            <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-cream/50 transition-colors cursor-pointer tap-target">
+            <label class={`side-item flex items-center gap-2 p-2 rounded-lg hover:bg-cream/50 transition-colors cursor-pointer tap-target ${side.holiday !== "traditional" ? "hidden" : ""}`} data-holiday={side.holiday}>
               <input
                 type="checkbox"
                 id={side.id}
@@ -269,32 +299,60 @@ const schema = {
       </div>
     </div>
 
+    <AmazonProducts category="holiday" title="Holiday Cooking Essentials" />
+
     <AdSlot position="bottom" />
 
     <!-- Content -->
     <article class="mt-8 bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 prose prose-slate max-w-none">
-      <h2>Holiday Meal Planning Guide</h2>
+      <h2>Holiday & Party Meal Planning Guide</h2>
 
-      <h3>Thanksgiving</h3>
+      <h3>🦃 Thanksgiving</h3>
       <p>
         The average American Thanksgiving dinner serves 10 people. The centerpiece
         is turkey — plan on 1 to 1.5 pounds of turkey per person (bone-in) for
-        generous leftovers. A 15 lb turkey feeds about 10—12 people.
+        generous leftovers. A 15 lb turkey feeds about 10–12 people. Classic sides
+        include mashed potatoes, stuffing, green bean casserole, and cranberry sauce.
       </p>
 
-      <h3>Christmas</h3>
+      <h3>🎄 Christmas</h3>
       <p>
-        Christmas dinners are more varied. Traditional mains include prime rib,
+        Christmas dinners are more varied across the US. Traditional mains include prime rib,
         ham, or roast goose. Side dishes lean toward roasted vegetables, potatoes
-        au gratin, and Yorkshire pudding for prime rib dinners.
+        au gratin, and Yorkshire pudding for prime rib dinners. Cookies and fruitcake
+        are classic desserts.
       </p>
 
-      <h3>Easter</h3>
+      <h3>🐰 Easter</h3>
       <p>
         Easter is the third largest food holiday in the US. Ham is the most
         popular main course, followed by leg of lamb. Spring sides like asparagus,
-        deviled eggs, and carrot cake are common.
+        deviled eggs, scalloped potatoes, and carrot cake are common.
       </p>
+
+      <h3>🏈 Super Bowl & Game Day Parties</h3>
+      <p>
+        Super Bowl Sunday is the second-largest food consumption day in the US
+        (after Thanksgiving). Think finger foods and shareable appetizers:
+        chicken wings, nachos, chili, sliders, chips & dip, and pizza.
+        Plan for about 8-10 wing pieces per person, or 2-3 sliders per person.
+      </p>
+
+      <h3>🍔 BBQ & Cookouts (4th of July, Memorial Day, Labor Day)</h3>
+      <p>
+        Summer holidays are all about grilling. Burgers, hot dogs, and bratwurst
+        are the stars. Plan for 1.5 burgers per person and 1-2 hot dogs per person
+        if doing a mix. Classic sides: potato salad, coleslaw, baked beans,
+        corn on the cob, and pasta salad.
+      </p>
+
+      <h3>🎉 General Party Tips</h3>
+      <ul>
+        <li><strong>Rule of thumb:</strong> Plan for 6-8 appetizer bites per person for the first hour, then 3-4 per hour after that.</li>
+        <li><strong>Better to have too much:</strong> Leftovers are the best part of holiday meals!</li>
+        <li><strong>Variety matters:</strong> Include at least one vegetarian option and consider common allergies (nuts, gluten, dairy).</li>
+        <li><strong>Drinks:</strong> Plan for 2-3 drinks per person in the first hour, then 1-2 per hour after that.</li>
+      </ul>
     </article>
   </section>
 </BaseLayout>
@@ -303,18 +361,96 @@ const schema = {
   let activeHoliday = "thanksgiving";
   const dietCounts: Record<string, number> = {};
 
+  const holidayConfig: Record<string, {
+    defaultProtein: string;
+    showSides: string[];
+    proteinOptions: string[];
+    resultTitle: string;
+    drinkStyle: "dinner" | "party";
+  }> = {
+    thanksgiving: {
+      defaultProtein: "turkey",
+      showSides: ["traditional", "all"],
+      proteinOptions: ["turkey", "ham", "prime_rib", "lamb", "both"],
+      resultTitle: "Your Thanksgiving Shopping List",
+      drinkStyle: "dinner",
+    },
+    christmas: {
+      defaultProtein: "ham",
+      showSides: ["traditional", "all"],
+      proteinOptions: ["ham", "turkey", "prime_rib", "lamb", "both"],
+      resultTitle: "Your Christmas Shopping List",
+      drinkStyle: "dinner",
+    },
+    easter: {
+      defaultProtein: "ham",
+      showSides: ["traditional", "all"],
+      proteinOptions: ["ham", "lamb", "turkey", "prime_rib"],
+      resultTitle: "Your Easter Shopping List",
+      drinkStyle: "dinner",
+    },
+    superbowl: {
+      defaultProtein: "wings",
+      showSides: ["party", "bbq", "all"],
+      proteinOptions: ["wings", "bbq_mixed", "burgers", "fingerfood"],
+      resultTitle: "Your Game Day Shopping List",
+      drinkStyle: "party",
+    },
+    bbq: {
+      defaultProtein: "bbq_mixed",
+      showSides: ["bbq", "all"],
+      proteinOptions: ["bbq_mixed", "burgers", "hotdogs", "wings"],
+      resultTitle: "Your BBQ Shopping List",
+      drinkStyle: "party",
+    },
+    generic: {
+      defaultProtein: "bbq_mixed",
+      showSides: ["bbq", "party", "traditional", "all"],
+      proteinOptions: ["bbq_mixed", "burgers", "turkey", "ham", "wings", "fingerfood"],
+      resultTitle: "Your Party Shopping List",
+      drinkStyle: "party",
+    },
+  };
+
   function switchHoliday(h: string) {
     activeHoliday = h;
+    const config = holidayConfig[h];
+
+    // Update holiday buttons
     document.querySelectorAll(".holiday-btn").forEach((btn) => {
       const el = btn as HTMLElement;
       if (el.dataset.holiday === h) {
         el.className =
-          "holiday-btn px-4 py-4 rounded-xl text-sm font-bold border-2 border-primary bg-primary/5 text-primary transition-all tap-target active";
+          "holiday-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-primary bg-primary/5 text-primary transition-all tap-target active";
       } else {
         el.className =
-          "holiday-btn px-4 py-4 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target";
+          "holiday-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target";
       }
     });
+
+    // Update protein options
+    const proteinSelect = document.getElementById("main-protein") as HTMLSelectElement;
+    const allProteins = proteinSelect.options;
+    for (let i = 0; i < allProteins.length; i++) {
+      const opt = allProteins[i];
+      opt.style.display = config.proteinOptions.includes(opt.value) ? "" : "none";
+    }
+    if (!config.proteinOptions.includes(proteinSelect.value)) {
+      proteinSelect.value = config.defaultProtein;
+    }
+
+    // Update sides
+    document.querySelectorAll(".side-item").forEach((el) => {
+      const sideHoliday = (el as HTMLElement).dataset.holiday!;
+      const show = config.showSides.includes(sideHoliday);
+      (el as HTMLElement).classList.toggle("hidden", !show);
+    });
+
+    // Update results section heading
+    document.querySelector("#plan-results-section h2")!.textContent = config.resultTitle;
+
+    // Hide results when switching
+    document.getElementById("plan-results-section")!.classList.add("hidden");
   }
 
   function calculate() {
@@ -324,26 +460,26 @@ const schema = {
     const protein = (document.getElementById("main-protein") as HTMLSelectElement).value;
     const desserts = parseInt((document.getElementById("dessert-count") as HTMLSelectElement).value);
 
-    // Child = 0.6 adult equivalent for food
     const effectiveAdults = adults + children * 0.6;
     const vegCount = dietCounts["vegetarian"] || 0;
     const veganCount = dietCounts["vegan"] || 0;
-    const gfCount = dietCounts["gluten_free"] || 0;
 
     const styleMultiplier = style === "generous" ? 1.3 : style === "light" ? 0.8 : 1.0;
 
-    // Active side checkboxes
     const activeSides: string[] = [];
     document.querySelectorAll(".side-toggle").forEach((cb) => {
-      if ((cb as HTMLInputElement).checked) activeSides.push(cb.id);
+      const parent = (cb as HTMLElement).closest(".side-item");
+      if (!parent || parent.classList.contains("hidden")) return;
+      if ((cb as HTMLInputElement).checked) activeSides.push((cb as HTMLInputElement).id);
     });
 
     // Protein calculation
     const proteinResults: string[] = [];
+
     if (protein === "turkey") {
       const lbs = Math.ceil(effectiveAdults * 1.25 * styleMultiplier);
       proteinResults.push(`🦃 <strong>${lbs} lb</strong> whole turkey`);
-      proteinResults.push(`    (Thaw in fridge: ${Math.ceil(lbs / 5)} days. Roast at 325°F: ~${Math.round(lbs * 13)} minutes)`);
+      proteinResults.push(`    (Thaw: ${Math.ceil(lbs / 5)} days in fridge. Roast at 325°F: ~${Math.round(lbs * 13)} min)`);
     } else if (protein === "ham") {
       const lbs = Math.ceil(effectiveAdults * 0.75 * styleMultiplier);
       proteinResults.push(`🐖 <strong>${lbs} lb</strong> bone-in ham`);
@@ -358,11 +494,37 @@ const schema = {
       const hamLbs = Math.ceil(effectiveAdults * 0.5 * styleMultiplier);
       proteinResults.push(`🦃 <strong>${turkeyLbs} lb</strong> turkey`);
       proteinResults.push(`🐖 <strong>${hamLbs} lb</strong> ham`);
+    } else if (protein === "bbq_mixed") {
+      const burgers = Math.ceil(effectiveAdults * 1.2 * styleMultiplier);
+      const hotdogs = Math.ceil(effectiveAdults * 0.8 * styleMultiplier);
+      const brats = Math.ceil(effectiveAdults * 0.5 * styleMultiplier);
+      const burgerLbs = Math.ceil(burgers * 0.25);
+      proteinResults.push(`🍔 <strong>${burgers}</strong> burger patties (${burgerLbs} lb ground beef)`);
+      proteinResults.push(`🌭 <strong>${hotdogs}</strong> hot dogs`);
+      proteinResults.push(`🌭 <strong>${brats}</strong> bratwurst / sausages`);
+      proteinResults.push(`    Plus buns for each (+10% extra just in case)`);
+    } else if (protein === "burgers") {
+      const count = Math.ceil(effectiveAdults * 1.8 * styleMultiplier);
+      const lbs = Math.ceil(count * 0.25);
+      proteinResults.push(`🍔 <strong>${count}</strong> burger patties (${lbs} lb ground beef)`);
+      proteinResults.push(`    <strong>${count}</strong> hamburger buns (+ extra)`);
+    } else if (protein === "hotdogs") {
+      const count = Math.ceil(effectiveAdults * 2 * styleMultiplier);
+      proteinResults.push(`🌭 <strong>${count}</strong> hot dogs`);
+      proteinResults.push(`    <strong>${Math.ceil(count / 8)}</strong> packs of buns`);
+    } else if (protein === "wings") {
+      const pieces = Math.ceil(effectiveAdults * 8 * styleMultiplier);
+      const lbs = Math.ceil(pieces * 0.1);
+      proteinResults.push(`🍗 <strong>${pieces}</strong> chicken wings (${lbs} lb)`);
+      proteinResults.push(`    About ${Math.ceil(pieces / 12)} dozen. Plan 8-10 per person for game day!`);
+    } else if (protein === "fingerfood") {
+      const bites = Math.ceil(effectiveAdults * 8 * styleMultiplier);
+      proteinResults.push(`🧀 <strong>${bites}+</strong> appetizer bites total`);
+      proteinResults.push(`    Mix of 3-5 types: meatballs, sliders, spring rolls, etc.`);
     }
 
-    // Veg/Vegan alternatives
     if (vegCount > 0 || veganCount > 0) {
-      proteinResults.push(`🥬 <strong>${vegCount + veganCount} servings</strong> of vegetarian/vegan main`);
+      proteinResults.push(`🥬 <strong>${vegCount + veganCount} servings</strong> of vegetarian/vegan option`);
     }
 
     // Sides calculation
@@ -376,9 +538,15 @@ const schema = {
       "side-rolls": { perPerson: 1.5, unit: "rolls", label: "Dinner Rolls" },
       "side-mac": { perPerson: 0.5, unit: "cup", label: "Mac & Cheese" },
       "side-brussels": { perPerson: 0.33, unit: "lb", label: "Brussels Sprouts" },
-      "side-corn": { perPerson: 0.5, unit: "cup", label: "Corn" },
-      "side-salad": { perPerson: 2, unit: "cup", label: "Green Salad" },
+      "side-corn": { perPerson: 1, unit: "ear", label: "Corn on the Cob" },
+      "side-salad": { perPerson: 1.5, unit: "cup", label: "Green Salad" },
       "side-coleslaw": { perPerson: 0.5, unit: "cup", label: "Coleslaw" },
+      "side-baked-beans": { perPerson: 0.5, unit: "cup", label: "Baked Beans" },
+      "side-potato-salad": { perPerson: 0.5, unit: "cup", label: "Potato Salad" },
+      "side-chips": { perPerson: 2, unit: "oz", label: "Potato Chips" },
+      "side-nachos": { perPerson: 8, unit: "chips", label: "Nachos (with toppings)" },
+      "side-wings": { perPerson: 5, unit: "pieces", label: "Bonus Chicken Wings" },
+      "side-deviled-eggs": { perPerson: 2, unit: "halves", label: "Deviled Eggs" },
     };
 
     const sideResults: string[] = [];
@@ -399,9 +567,18 @@ const schema = {
 
     // Drinks
     const drinkResults: string[] = [];
-    drinkResults.push(`🍷 <strong>${Math.ceil(effectiveAdults * 0.5)} bottles</strong> of wine (each serves ~5 glasses)`);
-    drinkResults.push(`🍺 <strong>${Math.ceil(effectiveAdults * 1.5)} servings</strong> of beer/cider`);
-    drinkResults.push(`🥤 <strong>${Math.ceil(effectiveAdults * 2)} cans/bottles</strong> of soda or sparkling water`);
+    const config = holidayConfig[activeHoliday];
+
+    if (config.drinkStyle === "dinner") {
+      drinkResults.push(`🍷 <strong>${Math.ceil(effectiveAdults * 0.5)} bottles</strong> of wine (~5 glasses each)`);
+      drinkResults.push(`🍺 <strong>${Math.ceil(effectiveAdults * 1.5)} servings</strong> of beer/cider`);
+      drinkResults.push(`🥤 <strong>${Math.ceil(effectiveAdults * 2)} drinks</strong> of soda / sparkling water`);
+    } else {
+      drinkResults.push(`🍺 <strong>${Math.ceil(effectiveAdults * 3)} servings</strong> of beer/cider`);
+      drinkResults.push(`🍷 <strong>${Math.ceil(effectiveAdults * 0.3)} bottles</strong> of wine`);
+      drinkResults.push(`🥤 <strong>${Math.ceil(effectiveAdults * 2.5)} drinks</strong> of soda / sparkling water`);
+      drinkResults.push(`💧 <strong>${Math.ceil(effectiveAdults * 1)}</strong> bottles of water`);
+    }
 
     // Render
     document.getElementById("result-protein")!.innerHTML = proteinResults
@@ -412,6 +589,8 @@ const schema = {
       .map((r) => `<div class="flex items-center py-1 text-sm">${r}</div>`).join("");
     document.getElementById("result-drinks")!.innerHTML = drinkResults
       .map((r) => `<div class="flex items-center py-1 text-sm">${r}</div>`).join("");
+
+    document.querySelector("#plan-results-section h2")!.textContent = config.resultTitle;
 
     const section = document.getElementById("plan-results-section")!;
     section.classList.remove("hidden");
@@ -439,7 +618,6 @@ const schema = {
     document.getElementById("plan-btn")!.addEventListener("click", calculate);
     document.getElementById("copy-plan")!.addEventListener("click", copyPlan);
 
-    // Diet toggles
     document.querySelectorAll(".diet-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const diet = (btn as HTMLElement).dataset.diet!;

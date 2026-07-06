@@ -1,0 +1,435 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AdSlot from "../components/AdSlot.astro";
+import AmazonProducts from "../components/AmazonProducts.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Brine Calculator",
+  url: "https://thekitchencalc.com/brine-calculator/",
+  description: "Calculate the perfect salt brine for turkey, chicken, pork, and more. Get exact salt, sugar, and water amounts for juicy, flavorful meat every time.",
+  applicationCategory: "CookingApplication",
+  operatingSystem: "Web",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+---
+
+<BaseLayout
+  title="Brine Calculator — Turkey, Chicken, Pork & Meat Brine"
+  description="Calculate the perfect brine for turkey, chicken, pork chops, and more. Get exact salt, sugar, and water amounts for juicy, tender, flavorful meat every time."
+  canonical="https://thekitchencalc.com/brine-calculator/"
+  schema={schema}
+>
+  <section class="bg-white border-b border-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 text-center">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-secondary leading-tight mb-4">
+        Brine <span class="text-primary">Calculator</span>
+      </h1>
+      <p class="text-base sm:text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
+        Get perfectly seasoned, juicy meat every time. Calculate exact salt, sugar, and water amounts for turkey, chicken, pork, and more.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <AdSlot position="top" />
+
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label for="meat-type" class="block text-sm font-semibold text-secondary mb-2">
+            Meat Type
+          </label>
+          <select
+            id="meat-type"
+            class="w-full px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-white"
+          >
+            <option value="turkey-whole">Whole Turkey</option>
+            <option value="turkey-breast">Turkey Breast</option>
+            <option value="chicken-whole">Whole Chicken</option>
+            <option value="chicken-pieces">Chicken Pieces / Thighs</option>
+            <option value="pork-chops">Pork Chops</option>
+            <option value="pork-loin">Pork Loin / Tenderloin</option>
+            <option value="pork-shoulder">Pork Shoulder / Butt</option>
+            <option value="corn-beef">Corned Beef</option>
+          </select>
+        </div>
+        <div>
+          <label for="meat-weight" class="block text-sm font-semibold text-secondary mb-2">
+            Meat Weight
+          </label>
+          <div class="flex gap-2">
+            <input
+              type="number"
+              id="meat-weight"
+              min="0.5"
+              max="50"
+              value="15"
+              step="0.5"
+              class="flex-1 px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="decimal"
+            />
+            <select
+              id="weight-unit"
+              class="px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-white"
+            >
+              <option value="lb" selected>pounds (lb)</option>
+              <option value="kg">kilograms (kg)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label for="brine-strength" class="block text-sm font-semibold text-secondary mb-2">
+            Brine Strength
+          </label>
+          <select
+            id="brine-strength"
+            class="w-full px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-white"
+          >
+            <option value="mild">Mild (3.5%) — for delicate meats, longer brine</option>
+            <option value="standard" selected>Standard (5%) — most common, all-purpose</option>
+            <option value="strong">Strong (7%) — quick brine, hearty meats</option>
+            <option value="very-strong">Very Strong (10%) — fast brine (1-2 hrs)</option>
+          </select>
+        </div>
+        <div>
+          <label for="brine-type" class="block text-sm font-semibold text-secondary mb-2">
+            Brine Type
+          </label>
+          <select
+            id="brine-type"
+            class="w-full px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-white"
+          >
+            <option value="salt-only">Salt Only</option>
+            <option value="salt-sugar" selected>Salt + Sugar (balanced)</option>
+            <option value="sweet">Sweet Brine (more sugar)</option>
+            <option value="savory">Savory (herbs + garlic included)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-secondary mb-3">
+          Brine Volume (water needed)
+        </label>
+        <div class="flex items-center gap-4">
+          <div class="flex-1">
+            <input
+              type="range"
+              id="water-ratio"
+              min="0.5"
+              max="2"
+              step="0.1"
+              value="1"
+              class="w-full h-2 bg-cream rounded-lg appearance-none cursor-pointer accent-primary"
+            />
+          </div>
+          <div class="text-right">
+            <p class="text-lg font-bold text-secondary"><span id="water-display">—</span></p>
+            <p class="text-xs text-text-light">ratio: <span id="ratio-display">1.0</span>x meat weight</p>
+          </div>
+        </div>
+        <p class="text-xs text-text-light mt-2">
+          💡 You need enough brine to fully submerge the meat. Use a heavy plate to keep it submerged.
+        </p>
+      </div>
+
+      <button
+        id="calculate-btn"
+        class="w-full py-4 bg-primary hover:bg-primary-dark text-white font-bold text-lg rounded-xl transition-colors shadow-sm tap-target"
+      >
+        Calculate My Brine
+      </button>
+    </div>
+
+    <AdSlot position="middle" />
+
+    <div id="results-section" class="hidden">
+      <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
+        <h2 class="text-xl font-bold text-secondary mb-6">Your Brine Recipe</h2>
+        <div id="brine-results"></div>
+        <div class="mt-6 pt-6 border-t border-border">
+          <h3 class="font-semibold text-secondary mb-3">🧂 Brine Time Guide</h3>
+          <div id="brine-time" class="text-sm text-text-light space-y-1"></div>
+        </div>
+        <div class="mt-4 p-4 bg-cream rounded-xl">
+          <h3 class="font-bold text-secondary mb-2">💡 Pro Tips</h3>
+          <ul class="text-sm text-text-light space-y-1 list-disc list-inside">
+            <li>Always brine in the refrigerator — never at room temperature</li>
+            <li>Use a non-reactive container (glass, plastic, or food-safe bucket)</li>
+            <li>Weigh down meat with a plate to keep it fully submerged</li>
+            <li>Rinse meat briefly after brining, then pat dry before cooking</li>
+            <li>Reduce or skip added salt in your rub/seasoning after brining</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <AmazonProducts category="cooking" title="Brining & Cooking Tools" />
+
+    <AdSlot position="bottom" />
+
+    <article class="mt-8 bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 prose prose-slate max-w-none">
+      <h2>What Is Brining?</h2>
+      <p>
+        Brining is the process of soaking meat in a salt-water solution before cooking.
+        The salt breaks down muscle proteins, allowing the meat to absorb more moisture.
+        The result? Juicier, more tender, more flavorful meat — especially for lean cuts
+        like turkey breast and pork chops that tend to dry out during cooking.
+      </p>
+
+      <h2>How Brining Works</h2>
+      <p>
+        Brining works through osmosis and protein denaturation:
+      </p>
+      <ol>
+        <li><strong>Salt dissolves</strong> into muscle proteins, causing them to unravel</li>
+        <li><strong>Water is absorbed</strong> — meat can absorb 10-30% of its weight in water</li>
+        <li><strong>Flavors infuse</strong> — salt and any aromatics penetrate the meat</li>
+        <li><strong>Better moisture retention</strong> — even with cooking loss, brined meat ends up juicier</li>
+      </ol>
+
+      <h2>Salt Percentage Guide</h2>
+      <p>
+        Brine strength is measured as the percentage of salt by weight of the water.
+      </p>
+      <ul>
+        <li><strong>3-4% (Mild):</strong> Best for delicate fish, seafood, and longer brines (12-24+ hours)</li>
+        <li><strong>5% (Standard):</strong> The most versatile. Works for poultry, pork, and most meats. 4-12 hour brine.</li>
+        <li><strong>6-7% (Strong):</strong> For quick brines (1-4 hours) and hearty meats. Don't over-brine!</li>
+        <li><strong>10% (Very Strong):</strong> Very fast brine (30 min to 2 hours). Easy to over-brine — set a timer!</li>
+      </ul>
+
+      <h2>Brine Time by Meat Type</h2>
+      <ul>
+        <li><strong>Whole turkey (12-20 lbs):</strong> 12-24 hours</li>
+        <li><strong>Turkey breast:</strong> 6-12 hours</li>
+        <li><strong>Whole chicken (3-5 lbs):</strong> 6-12 hours</li>
+        <li><strong>Chicken pieces / thighs:</strong> 2-6 hours</li>
+        <li><strong>Pork chops (1 inch):</strong> 2-6 hours</li>
+        <li><strong>Pork loin / tenderloin:</strong> 4-12 hours</li>
+        <li><strong>Pork shoulder / butt:</strong> 8-24 hours</li>
+        <li><strong>Corned beef (uncured):</strong> 5-7 days</li>
+      </ul>
+
+      <h2>Common Brine Add-Ins</h2>
+      <p>
+        Salt is essential, but you can customize your brine with aromatics:
+      </p>
+      <ul>
+        <li><strong>Sweeteners:</strong> Brown sugar, white sugar, honey, maple syrup — balances salt, promotes browning</li>
+        <li><strong>Herbs:</strong> Rosemary, thyme, sage, bay leaves, peppercorns</li>
+        <li><strong>Aromatics:</strong> Garlic, onion, shallot, ginger, citrus zest</li>
+        <li><strong>Spices:</strong> Allspice, cloves, cinnamon, coriander, mustard seed</li>
+        <li><strong>Savory:</strong> Soy sauce, Worcestershire, fish sauce (add umami, reduce salt if using)</li>
+      </ul>
+
+      <h2>Wet Brine vs. Dry Brine</h2>
+      <p>
+        This calculator focuses on <strong>wet brining</strong> (soaking in salt water).
+        <strong>Dry brining</strong> is an alternative: rub salt directly onto the meat surface
+        and let it rest in the fridge. No water needed, and you get great flavor concentration
+        and crispy skin. For dry brining, use about 0.5-1% of the meat's weight in salt.
+      </p>
+    </article>
+  </section>
+</BaseLayout>
+
+<script>
+  const brineStrengths: Record<string, number> = {
+    mild: 0.035,
+    standard: 0.05,
+    strong: 0.07,
+    "very-strong": 0.10,
+  };
+
+  const brineTimes: Record<string, { min: number; max: number; unit: string }> = {
+    "turkey-whole": { min: 12, max: 24, unit: "hours" },
+    "turkey-breast": { min: 6, max: 12, unit: "hours" },
+    "chicken-whole": { min: 6, max: 12, unit: "hours" },
+    "chicken-pieces": { min: 2, max: 6, unit: "hours" },
+    "pork-chops": { min: 2, max: 6, unit: "hours" },
+    "pork-loin": { min: 4, max: 12, unit: "hours" },
+    "pork-shoulder": { min: 8, max: 24, unit: "hours" },
+    "corn-beef": { min: 5, max: 7, unit: "days" },
+  };
+
+  function updateWaterDisplay() {
+    const ratio = parseFloat((document.getElementById("water-ratio") as HTMLInputElement).value);
+    const weight = parseFloat((document.getElementById("meat-weight") as HTMLInputElement).value) || 0;
+    const unit = (document.getElementById("weight-unit") as HTMLSelectElement).value;
+
+    document.getElementById("ratio-display")!.textContent = ratio.toFixed(1);
+
+    if (weight > 0) {
+      const waterAmount = weight * ratio;
+      if (unit === "lb") {
+        const quarts = waterAmount * 0.5;
+        const gallons = quarts / 4;
+        const cups = waterAmount * 2;
+        document.getElementById("water-display")!.textContent = `${waterAmount.toFixed(1)} lb / ${gallons.toFixed(1)} gal / ${quarts.toFixed(0)} qt`;
+      } else {
+        const liters = waterAmount;
+        document.getElementById("water-display")!.textContent = `${waterAmount.toFixed(1)} kg / ${liters.toFixed(1)} L`;
+      }
+    } else {
+      document.getElementById("water-display")!.textContent = "—";
+    }
+  }
+
+  function calculate() {
+    const meatType = (document.getElementById("meat-type") as HTMLSelectElement).value;
+    const weight = parseFloat((document.getElementById("meat-weight") as HTMLInputElement).value) || 0;
+    const weightUnit = (document.getElementById("weight-unit") as HTMLSelectElement).value;
+    const strength = (document.getElementById("brine-strength") as HTMLSelectElement).value;
+    const brineType = (document.getElementById("brine-type") as HTMLSelectElement).value;
+    const waterRatio = parseFloat((document.getElementById("water-ratio") as HTMLInputElement).value);
+
+    if (weight <= 0) {
+      alert("Please enter a valid meat weight.");
+      return;
+    }
+
+    const weightLb = weightUnit === "kg" ? weight * 2.20462 : weight;
+    const waterLb = weightLb * waterRatio;
+    const waterOz = waterLb * 16;
+    const waterCups = waterLb * 2;
+    const waterQuarts = waterLb * 0.5;
+    const waterGallons = waterLb * 0.125;
+    const waterGrams = waterLb * 453.592;
+    const waterLiters = waterLb * 0.453592;
+
+    const saltPercent = brineStrengths[strength];
+    const saltOz = waterOz * saltPercent;
+    const saltLb = saltOz / 16;
+    const saltG = waterGrams * saltPercent;
+    const saltTsp = saltG / 5;
+    const saltTbsp = saltTsp / 3;
+    const saltCups = saltTbsp / 16;
+
+    let sugarG = 0;
+    let sugarLabel = "";
+    if (brineType === "salt-sugar") {
+      sugarG = saltG * 0.5;
+      sugarLabel = " (balanced sweet-savory)";
+    } else if (brineType === "sweet") {
+      sugarG = saltG * 1;
+      sugarLabel = " (sweet brine)";
+    } else if (brineType === "savory") {
+      sugarG = saltG * 0.25;
+      sugarLabel = " (with herbs & garlic)";
+    }
+
+    const sugarOz = sugarG / 28.3495;
+    const sugarCups = sugarG / 200;
+
+    const timeGuide = brineTimes[meatType];
+    const timeText = timeGuide.unit === "days"
+      ? `${timeGuide.min}-${timeGuide.max} days`
+      : `${timeGuide.min}-${timeGuide.max} hours`;
+
+    const strengthLabels: Record<string, string> = {
+      mild: "Mild (3.5%)",
+      standard: "Standard (5%)",
+      strong: "Strong (7%)",
+      "very-strong": "Very Strong (10%)",
+    };
+
+    let herbsText = "";
+    if (brineType === "savory") {
+      herbsText = `
+        <div class="flex items-center justify-between py-2 px-3 rounded-lg bg-cream/30">
+          <span class="text-sm font-medium text-secondary">🌿 Fresh Herbs (rosemary, thyme, sage)</span>
+          <span class="text-sm font-bold text-text">a few sprigs each</span>
+        </div>
+        <div class="flex items-center justify-between py-2 px-3 rounded-lg bg-cream/30">
+          <span class="text-sm font-medium text-secondary">🧄 Garlic (crushed)</span>
+          <span class="text-sm font-bold text-text">4-6 cloves</span>
+        </div>
+        <div class="flex items-center justify-between py-2 px-3 rounded-lg bg-cream/30">
+          <span class="text-sm font-medium text-secondary">🧅 Onion (quartered)</span>
+          <span class="text-sm font-bold text-text">1 medium</span>
+        </div>
+        <div class="flex items-center justify-between py-2 px-3 rounded-lg bg-cream/30">
+          <span class="text-sm font-medium text-secondary">🌶️ Black Peppercorns</span>
+          <span class="text-sm font-bold text-text">1 tbsp</span>
+        </div>
+        <div class="flex items-center justify-between py-2 px-3 rounded-lg bg-cream/30">
+          <span class="text-sm font-medium text-secondary">🍃 Bay Leaves</span>
+          <span class="text-sm font-bold text-text">3-4</span>
+        </div>
+      `;
+    }
+
+    const resultsDiv = document.getElementById("brine-results")!;
+    resultsDiv.innerHTML = `
+      <div class="mb-6 p-4 bg-primary/5 rounded-xl border border-primary/20">
+        <p class="text-sm text-text-light mb-1">Brine Strength</p>
+        <p class="text-xl font-bold text-primary">${strengthLabels[strength]}${sugarLabel}</p>
+      </div>
+      
+      <h3 class="font-semibold text-secondary mb-3">Water</h3>
+      <div class="space-y-2 mb-6">
+        <div class="flex items-center justify-between py-2 px-3 rounded-lg bg-cream/30">
+          <span class="text-sm font-medium text-secondary">💧 Cold Water</span>
+          <span class="text-sm font-bold text-text">${waterGallons.toFixed(1)} gal / ${waterQuarts.toFixed(0)} qt / ${waterCups.toFixed(0)} cups</span>
+        </div>
+      </div>
+
+      <h3 class="font-semibold text-secondary mb-3">Salt</h3>
+      <div class="space-y-2 mb-6">
+        <div class="flex items-center justify-between py-2 px-3 rounded-lg bg-cream/30">
+          <span class="text-sm font-medium text-secondary">🧂 Kosher or Sea Salt</span>
+          <span class="text-sm font-bold text-text">${saltOz.toFixed(1)} oz / ${saltG.toFixed(0)} g (about ${saltCups.toFixed(1)} cups)</span>
+        </div>
+      </div>
+
+      ${sugarG > 0 ? `
+      <h3 class="font-semibold text-secondary mb-3">Sweetener</h3>
+      <div class="space-y-2 mb-6">
+        <div class="flex items-center justify-between py-2 px-3 rounded-lg bg-cream/30">
+          <span class="text-sm font-medium text-secondary">🍯 Brown Sugar (or white sugar)</span>
+          <span class="text-sm font-bold text-text">${sugarOz.toFixed(1)} oz / ${sugarG.toFixed(0)} g (about ${sugarCups.toFixed(1)} cups)</span>
+        </div>
+      </div>
+      ` : ""}
+
+      ${herbsText ? `
+      <h3 class="font-semibold text-secondary mb-3">Aromatics</h3>
+      <div class="space-y-2 mb-6">
+        ${herbsText}
+      </div>
+      ` : ""}
+
+      <div class="p-3 bg-cream rounded-lg">
+        <p class="text-xs font-semibold text-secondary mb-1">📝 Instructions</p>
+        <p class="text-xs text-text-light">
+          Dissolve salt and sugar in about 1 quart of hot water. Add remaining cold water and aromatics.
+          Let cool completely before adding meat. Submerge meat fully and refrigerate.
+          After brining, rinse meat briefly and pat dry before cooking.
+        </p>
+      </div>
+    `;
+
+    const brineTimeDiv = document.getElementById("brine-time")!;
+    brineTimeDiv.innerHTML = `
+      <p>Recommended brine time for this cut: <strong class="text-secondary">${timeText}</strong></p>
+      <p class="text-xs">Set a timer — over-brining makes meat too salty!</p>
+    `;
+
+    document.getElementById("results-section")!.classList.remove("hidden");
+    document.getElementById("results-section")!.scrollIntoView({ behavior: "smooth" });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("water-ratio")!.addEventListener("input", updateWaterDisplay);
+    document.getElementById("meat-weight")!.addEventListener("input", updateWaterDisplay);
+    document.getElementById("weight-unit")!.addEventListener("change", updateWaterDisplay);
+    document.getElementById("calculate-btn")!.addEventListener("click", calculate);
+    updateWaterDisplay();
+  });
+</script>
