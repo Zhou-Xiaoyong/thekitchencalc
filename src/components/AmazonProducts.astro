@@ -10,7 +10,7 @@ const affiliateId = "calchive-20";
 
 const products: Record<string, Array<{
   name: string;
-  asin: string;
+  searchTerm: string;
   image: string;
   price: string;
   description: string;
@@ -18,207 +18,207 @@ const products: Record<string, Array<{
   baking: [
     {
       name: "OXO Stainless Steel Food Scale",
-      asin: "B079D9B82W",
+      searchTerm: "OXO+stainless+steel+food+scale",
       image: "https://m.media-amazon.com/images/I/71v5FyMqYxL._AC_SL1500_.jpg",
-      price: "$64.99",
+      price: "~$65",
       description: "Pull-out display, removable stainless steel platform, 11lb capacity.",
     },
     {
       name: "OXO Good Grips Measuring Beakers",
-      asin: "B00LE6FO4Q",
+      searchTerm: "OXO+measuring+beakers+set",
       image: "https://m.media-amazon.com/images/I/81mJ2GOS7zL._AC_SL1500_.jpg",
-      price: "$25.99",
+      price: "~$26",
       description: "7-piece nesting measuring beakers with easy-to-read markings.",
     },
     {
       name: "Silicone Baking Mat Set",
-      asin: "B07N8QJXZV",
+      searchTerm: "silicone+baking+mat+set",
       image: "https://m.media-amazon.com/images/I/81hO5Sf56tL._AC_SL1500_.jpg",
-      price: "$15.99",
+      price: "~$16",
       description: "Non-stick, reusable baking mats for even baking results.",
     },
   ],
   cooking: [
     {
       name: "ThermoWorks Thermapen ONE",
-      asin: "B0DC87RW4R",
+      searchTerm: "ThermoWorks+Thermapen+ONE+thermometer",
       image: "https://m.media-amazon.com/images/I/71b3eY0TkRL._AC_SL1500_.jpg",
-      price: "$124.99",
+      price: "~$125",
       description: "Fast and accurate instant-read thermometer, rotating display.",
     },
     {
-      name: "Lodge Cast Iron Skillet",
-      asin: "B00006JSUA",
+      name: "Lodge Cast Iron Skillet 12-inch",
+      searchTerm: "Lodge+cast+iron+skillet+12+inch",
       image: "https://m.media-amazon.com/images/I/711T+1bV7UL._AC_SL1500_.jpg",
-      price: "$29.99",
+      price: "~$30",
       description: "Pre-seasoned 12-inch cast iron skillet for perfect searing.",
     },
     {
-      name: "Staub Round Cocotte Dutch Oven",
-      asin: "B00166OAMG",
+      name: "Lodge Enameled Dutch Oven",
+      searchTerm: "Lodge+enameled+dutch+oven+5+quart",
       image: "https://m.media-amazon.com/images/I/71D4Jn0bH+L._AC_SL1500_.jpg",
-      price: "$399.99",
-      description: "Enameled cast iron, 5.5-quart, excellent heat retention.",
+      price: "~$80",
+      description: "Enameled cast iron, excellent heat retention for braising.",
     },
   ],
   measuring: [
     {
       name: "Etekcity Digital Kitchen Scale",
-      asin: "B0113UZJE2",
+      searchTerm: "Etekcity+digital+kitchen+scale",
       image: "https://m.media-amazon.com/images/I/71WcUf3Y0jL._AC_SL1500_.jpg",
-      price: "$13.99",
+      price: "~$14",
       description: "Precise measurements in grams, ounces, pounds. Tare function.",
     },
     {
       name: "OXO Good Grips Angled Measuring Cups",
-      asin: "B0000CCY1Y",
+      searchTerm: "OXO+angled+measuring+cup+set",
       image: "https://m.media-amazon.com/images/I/71Kq32tXx4L._AC_SL1500_.jpg",
-      price: "$30.99",
+      price: "~$31",
       description: "3-piece set. Read measurements from above.",
     },
     {
-      name: "Bellemain Stainless Steel Measuring Spoons",
-      asin: "B00GSXFKYY",
+      name: "Stainless Steel Measuring Spoons Set",
+      searchTerm: "stainless+steel+measuring+spoons+set",
       image: "https://m.media-amazon.com/images/I/71w192Q1wGL._AC_SL1500_.jpg",
-      price: "$20.99",
+      price: "~$21",
       description: "6-piece nesting measuring spoons, dishwasher safe.",
     },
   ],
   thermometers: [
     {
       name: "ThermoWorks Thermapen ONE",
-      asin: "B0DC87RW4R",
+      searchTerm: "ThermoWorks+Thermapen+ONE+thermometer",
       image: "https://m.media-amazon.com/images/I/71b3eY0TkRL._AC_SL1500_.jpg",
-      price: "$124.99",
+      price: "~$125",
       description: "Professional instant-read thermometer, ultra-fast response.",
     },
     {
-      name: "ThermoPro TP18 Digital Thermometer",
-      asin: "B078KPHKZD",
+      name: "ThermoPro Digital Meat Thermometer",
+      searchTerm: "ThermoPro+digital+meat+thermometer",
       image: "https://m.media-amazon.com/images/I/71c8jQq2aZL._AC_SL1500_.jpg",
-      price: "$26.99",
+      price: "~$27",
       description: "Digital probe thermometer with backlight and alarm.",
     },
     {
       name: "Lavatools Javelin Pro Duo",
-      asin: "B01F59K0KA",
+      searchTerm: "Lavatools+Javelin+Pro+Duo+thermometer",
       image: "https://m.media-amazon.com/images/I/71aKZJxKxRL._AC_SL1500_.jpg",
-      price: "$42.99",
+      price: "~$43",
       description: "Dual display instant-read thermometer with magnetic backing.",
     },
   ],
   scales: [
     {
       name: "Etekcity Digital Kitchen Scale",
-      asin: "B0113UZJE2",
+      searchTerm: "Etekcity+digital+kitchen+scale",
       image: "https://m.media-amazon.com/images/I/71WcUf3Y0jL._AC_SL1500_.jpg",
-      price: "$13.99",
+      price: "~$14",
       description: "Precise digital scale with tare function, 11lb capacity.",
     },
     {
       name: "Amazon Basics Kitchen Scale",
-      asin: "B06X9NQ8GX",
+      searchTerm: "Amazon+Basics+kitchen+scale",
       image: "https://m.media-amazon.com/images/I/71Vx7Z8StgL._AC_SL1500_.jpg",
-      price: "$12.99",
+      price: "~$13",
       description: "Budget-friendly scale with large LCD display.",
     },
     {
       name: "OXO Stainless Steel Food Scale",
-      asin: "B079D9B82W",
+      searchTerm: "OXO+stainless+steel+food+scale",
       image: "https://m.media-amazon.com/images/I/71v5FyMqYxL._AC_SL1500_.jpg",
-      price: "$64.99",
+      price: "~$65",
       description: "Premium scale with pull-out display, 11lb capacity.",
     },
   ],
   holiday: [
     {
-      name: "Lodge Electric Roaster Oven",
-      asin: "B00006IV1L",
+      name: "Electric Roaster Oven 18qt",
+      searchTerm: "electric+roaster+oven+18+quart",
       image: "https://m.media-amazon.com/images/I/71QvK0Q1j-L._AC_SL1500_.jpg",
-      price: "$59.99",
+      price: "~$60",
       description: "18-quart electric roaster for turkeys up to 22 lbs.",
     },
     {
       name: "Turkey Baster Set",
-      asin: "B07BQ2CDP1",
+      searchTerm: "turkey+baster+stainless+steel",
       image: "https://m.media-amazon.com/images/I/71j9tL6tJmL._AC_SL1500_.jpg",
-      price: "$14.99",
+      price: "~$15",
       description: "Stainless steel baster with meat injector needle.",
     },
     {
       name: "ThermoWorks Thermapen ONE",
-      asin: "B0DC87RW4R",
+      searchTerm: "ThermoWorks+Thermapen+ONE+thermometer",
       image: "https://m.media-amazon.com/images/I/71b3eY0TkRL._AC_SL1500_.jpg",
-      price: "$124.99",
+      price: "~$125",
       description: "Instant-read thermometer for perfectly cooked turkey.",
     },
   ],
   general: [
     {
       name: "Etekcity Digital Kitchen Scale",
-      asin: "B0113UZJE2",
+      searchTerm: "Etekcity+digital+kitchen+scale",
       image: "https://m.media-amazon.com/images/I/71WcUf3Y0jL._AC_SL1500_.jpg",
-      price: "$13.99",
+      price: "~$14",
       description: "Essential tool for accurate cooking and baking measurements.",
     },
     {
       name: "ThermoWorks Thermapen ONE",
-      asin: "B0DC87RW4R",
+      searchTerm: "ThermoWorks+Thermapen+ONE+thermometer",
       image: "https://m.media-amazon.com/images/I/71b3eY0TkRL._AC_SL1500_.jpg",
-      price: "$124.99",
+      price: "~$125",
       description: "Professional-grade thermometer for perfect cooking.",
     },
     {
       name: "OXO Good Grips Angled Measuring Cups",
-      asin: "B0000CCY1Y",
+      searchTerm: "OXO+angled+measuring+cup+set",
       image: "https://m.media-amazon.com/images/I/71Kq32tXx4L._AC_SL1500_.jpg",
-      price: "$30.99",
+      price: "~$31",
       description: "Durable measuring cups for every kitchen task.",
     },
   ],
   brewing: [
     {
       name: "Digital Hydrometer",
-      asin: "B08L57ZX6G",
+      searchTerm: "digital+hydrometer+homebrew",
       image: "https://m.media-amazon.com/images/I/71RkL93Vp9L._AC_SL1500_.jpg",
-      price: "$49.99",
+      price: "~$50",
       description: "Precise digital hydrometer for homebrewing and wine making.",
     },
     {
-      name: "Refractometer",
-      asin: "B01G6615VM",
+      name: "Brix Refractometer",
+      searchTerm: "brix+refractometer+brewing",
       image: "https://m.media-amazon.com/images/I/71tJ+2v3GQL._AC_SL1500_.jpg",
-      price: "$29.99",
+      price: "~$30",
       description: "Dual scale Brix refractometer for sugar content measurement.",
     },
     {
       name: "Glass Test Jars Set",
-      asin: "B07CK5XK1T",
+      searchTerm: "glass+test+jars+hydrometer",
       image: "https://m.media-amazon.com/images/I/61GQ9K3WfJL._AC_SL1500_.jpg",
-      price: "$19.99",
+      price: "~$20",
       description: "Glass test jars for hydrometer readings and sample storage.",
     },
   ],
   safety: [
     {
       name: "ThermoWorks Thermapen ONE",
-      asin: "B0DC87RW4R",
+      searchTerm: "ThermoWorks+Thermapen+ONE+thermometer",
       image: "https://m.media-amazon.com/images/I/71b3eY0TkRL._AC_SL1500_.jpg",
-      price: "$124.99",
+      price: "~$125",
       description: "Ensure food safety with accurate temperature readings.",
     },
     {
       name: "Airtight Food Storage Containers",
-      asin: "B01IFJPLX0",
+      searchTerm: "airtight+food+storage+containers",
       image: "https://m.media-amazon.com/images/I/71y03fJDRwL._AC_SL1500_.jpg",
-      price: "$34.99",
+      price: "~$35",
       description: "Airtight containers for safe food storage and leftovers.",
     },
     {
       name: "Color-Coded Cutting Board Set",
-      asin: "B0791Y7KVV",
+      searchTerm: "color+coded+cutting+board+set",
       image: "https://m.media-amazon.com/images/I/71k7wQfF7PL._AC_SL1500_.jpg",
-      price: "$24.99",
+      price: "~$25",
       description: "Color-coded boards to prevent cross-contamination.",
     },
   ],
@@ -226,8 +226,9 @@ const products: Record<string, Array<{
 
 const categoryProducts = products[category] || products.general;
 
-function getAmazonUrl(asin: string): string {
-  return `https://www.amazon.com/dp/${asin}/?tag=${affiliateId}&linkCode=ogi&th=1&psc=1`;
+function getAmazonSearchUrl(searchTerm: string): string {
+  // 使用Amazon搜索链接，更可靠且包含联盟追踪
+  return `https://www.amazon.com/s?k=${searchTerm}&tag=${affiliateId}`;
 }
 ---
 
@@ -239,7 +240,7 @@ function getAmazonUrl(asin: string): string {
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
     {categoryProducts.map((product) => (
       <a
-        href={getAmazonUrl(product.asin)}
+        href={getAmazonSearchUrl(product.searchTerm)}
         target="_blank"
         rel="noopener noreferrer sponsored"
         class="group block bg-cream/50 rounded-xl p-4 hover:shadow-md hover:border-primary/30 border border-transparent transition-all no-underline"
@@ -259,7 +260,7 @@ function getAmazonUrl(asin: string): string {
         <p class="text-lg font-extrabold text-primary mb-2">{product.price}</p>
         <p class="text-xs text-text-light line-clamp-2">{product.description}</p>
         <div class="mt-3 flex items-center gap-1 text-xs font-medium text-primary">
-          <span>View on Amazon</span>
+          <span>Shop on Amazon</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <path d="M7 17L17 7"></path>
             <path d="M7 7h10v10"></path>
