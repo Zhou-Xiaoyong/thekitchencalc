@@ -1,0 +1,878 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AdSlot from "../components/AdSlot.astro";
+import AmazonProducts from "../components/AmazonProducts.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Coffee Ratio Calculator",
+  url: "https://thekitchencalc.com/coffee-ratio-calculator/",
+  description:
+    "Calculate perfect coffee-to-water ratios for every brew method. Pour over, French press, espresso, drip, cold brew — get exact grams for your perfect cup.",
+  applicationCategory: "CookingApplication",
+  operatingSystem: "Web",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
+const brewMethods = [
+  {
+    name: "Pour Over",
+    icon: "☕",
+    ratio: "1:16",
+    grind: "Medium-fine",
+    temp: "195-205°F (90-96°C)",
+    time: "3-4 minutes",
+    tip: "Classic golden ratio. Adjust to 1:15 for stronger, 1:17 for milder.",
+  },
+  {
+    name: "French Press",
+    icon: "🫖",
+    ratio: "1:15",
+    grind: "Coarse",
+    temp: "200°F (93°C)",
+    time: "4 minutes",
+    tip: "Coarse grind prevents sediment. Steep, plunge slowly.",
+  },
+  {
+    name: "Espresso",
+    icon: "☕",
+    ratio: "1:2",
+    grind: "Extra fine",
+    temp: "195-205°F (90-96°C)",
+    time: "25-30 seconds",
+    tip: "18g in → 36g out in 25-30 seconds is the classic double shot.",
+  },
+  {
+    name: "Drip / Auto Brew",
+    icon: "☕",
+    ratio: "1:17",
+    grind: "Medium",
+    temp: "195-205°F (90-96°C)",
+    time: "5-8 minutes",
+    tip: "Most drip coffee makers use a 1:17 ratio as their baseline.",
+  },
+  {
+    name: "Cold Brew",
+    icon: "🧊",
+    ratio: "1:8",
+    grind: "Coarse",
+    temp: "Cold / Room temp",
+    time: "12-24 hours",
+    tip: "This makes a concentrate. Dilute 1:1 with water or milk to serve.",
+  },
+  {
+    name: "AeroPress",
+    icon: "🔵",
+    ratio: "1:14",
+    grind: "Fine",
+    temp: "175-185°F (80-85°C)",
+    time: "1-2 minutes",
+    tip: "Inverted method + 1 minute steep = rich, smooth cup.",
+  },
+  {
+    name: "Chemex",
+    icon: "⚗️",
+    ratio: "1:16",
+    grind: "Medium-coarse",
+    temp: "200-205°F (93-96°C)",
+    time: "4-5 minutes",
+    tip: "Slightly coarser than V60 due to thicker filter paper.",
+  },
+  {
+    name: "Moka Pot",
+    icon: "🫕",
+    ratio: "1:7",
+    grind: "Fine",
+    temp: "Medium-low heat",
+    time: "4-5 minutes",
+    tip: "Stop brewing early to avoid bitterness. Listen for the gurgle.",
+  },
+];
+
+const cupSizes = [
+  { label: "Small (6 oz / 180ml)", ml: 180 },
+  { label: "Regular (8 oz / 240ml)", ml: 240 },
+  { label: "Large (12 oz / 360ml)", ml: 360 },
+  { label: "Mug (16 oz / 480ml)", ml: 480 },
+];
+---
+
+<BaseLayout
+  title="Coffee Ratio Calculator — Perfect Coffee-to-Water Ratios"
+  description="Calculate perfect coffee-to-water ratios for every brew method. Pour over, French press, espresso, drip, cold brew — get exact grams for your perfect cup every time."
+  canonical="https://thekitchencalc.com/coffee-ratio-calculator/"
+  ogType="website"
+  schema={schema}
+>
+  <!-- Hero -->
+  <section class="bg-white border-b border-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 text-center">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-secondary leading-tight mb-4">
+        Coffee Ratio <span class="text-primary">Calculator</span>
+      </h1>
+      <p class="text-base sm:text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
+        Calculate perfect coffee-to-water ratios for every brew method. Pour
+        over, French press, espresso, cold brew — get exact grams for your
+        perfect cup every time.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <AdSlot position="top" />
+
+    <!-- Calculator Card -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
+      <!-- Tab Buttons -->
+      <div class="flex flex-wrap gap-2 mb-6 border-b border-border pb-4">
+        <button
+          data-tab="ratio"
+          class="tab-btn px-4 py-2 rounded-xl text-sm font-bold border-2 border-primary bg-primary/5 text-primary transition-all tap-target active"
+        >
+          ⚖️ Ratio Calculator
+        </button>
+        <button
+          data-tab="cups"
+          class="tab-btn px-4 py-2 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+        >
+          🫖 By Cups
+        </button>
+        <button
+          data-tab="reverse"
+          class="tab-btn px-4 py-2 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+        >
+          🔄 Reverse (Coffee → Water)
+        </button>
+      </div>
+
+      <!-- Ratio Calculator Tab -->
+      <div id="tab-ratio" class="tab-content">
+        <h2 class="text-lg font-bold text-secondary mb-4">
+          Coffee-to-Water Ratio
+        </h2>
+
+        <!-- Quick Ratio Presets -->
+        <div class="mb-6">
+          <label class="block text-sm font-semibold text-secondary mb-2">
+            Quick Ratio Presets
+          </label>
+          <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+            <button
+              data-ratio="1:12"
+              class="ratio-preset px-3 py-2 rounded-lg text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+            >
+              1:12
+            </button>
+            <button
+              data-ratio="1:14"
+              class="ratio-preset px-3 py-2 rounded-lg text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+            >
+              1:14
+            </button>
+            <button
+              data-ratio="1:15"
+              class="ratio-preset px-3 py-2 rounded-lg text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+            >
+              1:15
+            </button>
+            <button
+              data-ratio="1:16"
+              class="ratio-preset px-3 py-2 rounded-lg text-sm font-bold border-2 border-primary bg-primary/5 text-primary transition-all tap-target"
+            >
+              1:16 ★
+            </button>
+            <button
+              data-ratio="1:17"
+              class="ratio-preset px-3 py-2 rounded-lg text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+            >
+              1:17
+            </button>
+            <button
+              data-ratio="1:18"
+              class="ratio-preset px-3 py-2 rounded-lg text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+            >
+              1:18
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label
+              for="ratio-coffee"
+              class="block text-sm font-semibold text-secondary mb-2"
+            >
+              Coffee (grams)
+            </label>
+            <input
+              type="number"
+              id="ratio-coffee"
+              min="1"
+              value="30"
+              class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="decimal"
+            />
+          </div>
+          <div>
+            <label
+              for="ratio-value"
+              class="block text-sm font-semibold text-secondary mb-2"
+            >
+              Ratio (1 : X)
+            </label>
+            <input
+              type="number"
+              id="ratio-value"
+              min="5"
+              max="30"
+              step="0.5"
+              value="16"
+              class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="decimal"
+            />
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="bg-cream rounded-xl p-5 mb-4 print-break-avoid">
+          <div class="flex items-center justify-between mb-3 no-print">
+            <p class="text-xs text-text-light uppercase tracking-wider font-semibold">
+              Result
+            </p>
+            <button
+              id="print-ratio-btn"
+              class="px-3 py-1.5 text-xs font-semibold border border-border bg-white hover:bg-cream rounded-lg transition-colors tap-target"
+            >
+              🖨️ Print
+            </button>
+          </div>
+          <p class="text-xs text-text-light uppercase tracking-wider mb-3 text-center print-only">
+            Coffee Ratio
+          </p>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="text-center">
+              <p class="text-2xl sm:text-3xl font-extrabold text-secondary tabular-nums" id="ratio-result-coffee">
+                30g
+              </p>
+              <p class="text-sm text-text-light mt-1">Coffee</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl sm:text-3xl font-extrabold text-secondary tabular-nums" id="ratio-result-water">
+                480g
+              </p>
+              <p class="text-sm text-text-light mt-1">Water</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl sm:text-3xl font-extrabold text-primary tabular-nums" id="ratio-result-cups">
+                ~2
+              </p>
+              <p class="text-sm text-text-light mt-1">Cups (8oz)</p>
+            </div>
+          </div>
+          <p class="text-xs text-text-light text-center mt-4" id="ratio-note">
+            1:16 ratio — the classic "golden ratio" for balanced coffee
+          </p>
+        </div>
+      </div>
+
+      <!-- By Cups Tab -->
+      <div id="tab-cups" class="tab-content hidden">
+        <h2 class="text-lg font-bold text-secondary mb-4">
+          Calculate by Number of Cups
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label
+              for="cups-count"
+              class="block text-sm font-semibold text-secondary mb-2"
+            >
+              Number of Cups
+            </label>
+            <input
+              type="number"
+              id="cups-count"
+              min="1"
+              max="20"
+              value="2"
+              class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="numeric"
+            />
+          </div>
+          <div>
+            <label
+              for="cups-size"
+              class="block text-sm font-semibold text-secondary mb-2"
+            >
+              Cup Size
+            </label>
+            <select
+              id="cups-size"
+              class="w-full px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-white"
+            >
+              {cupSizes.map((c) => (
+                <option value={c.ml}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label
+            for="cups-ratio"
+            class="block text-sm font-semibold text-secondary mb-2"
+          >
+            Coffee Ratio (1 : X)
+          </label>
+          <div class="flex items-center gap-4">
+            <input
+              type="range"
+              id="cups-ratio"
+              min="10"
+              max="20"
+              step="0.5"
+              value="16"
+              class="flex-1 accent-primary"
+            />
+            <span
+              id="cups-ratio-display"
+              class="text-lg font-bold text-primary tabular-nums w-16 text-right"
+            >
+              1:16
+            </span>
+          </div>
+          <p class="text-xs text-text-light mt-1" id="cups-ratio-label">
+            Golden ratio — balanced and smooth
+          </p>
+        </div>
+
+        <!-- Result -->
+        <div class="bg-cream rounded-xl p-5 mb-4 print-break-avoid">
+          <div class="flex items-center justify-between mb-3 no-print">
+            <p class="text-xs text-text-light uppercase tracking-wider font-semibold">
+              You'll Need
+            </p>
+            <button
+              id="print-cups-btn"
+              class="px-3 py-1.5 text-xs font-semibold border border-border bg-white hover:bg-cream rounded-lg transition-colors tap-target"
+            >
+              🖨️ Print
+            </button>
+          </div>
+          <p class="text-xs text-text-light uppercase tracking-wider mb-3 text-center print-only">
+            Coffee by Cups
+          </p>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="text-center">
+              <p class="text-2xl sm:text-3xl font-extrabold text-secondary tabular-nums" id="cups-result-coffee">
+                30g
+              </p>
+              <p class="text-sm text-text-light mt-1">Coffee</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl sm:text-3xl font-extrabold text-secondary tabular-nums" id="cups-result-water">
+                480g
+              </p>
+              <p class="text-sm text-text-light mt-1">Water</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl sm:text-3xl font-extrabold text-primary tabular-nums" id="cups-result-cups">
+                2
+              </p>
+              <p class="text-sm text-text-light mt-1">Cups</p>
+            </div>
+          </div>
+          <p class="text-xs text-text-light text-center mt-4" id="cups-note">
+            2 × 8oz cups at 1:16 ratio
+          </p>
+        </div>
+      </div>
+
+      <!-- Reverse Tab -->
+      <div id="tab-reverse" class="tab-content hidden">
+        <h2 class="text-lg font-bold text-secondary mb-4">
+          I Have Coffee, How Much Water?
+        </h2>
+        <p class="text-sm text-text-light mb-6">
+          If you have a certain amount of coffee and want to know how much water
+          to use, this is the calculator for you.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label
+              for="rev-coffee"
+              class="block text-sm font-semibold text-secondary mb-2"
+            >
+              Coffee You Have (grams)
+            </label>
+            <input
+              type="number"
+              id="rev-coffee"
+              min="1"
+              value="250"
+              class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="decimal"
+            />
+          </div>
+          <div>
+            <label
+              for="rev-ratio"
+              class="block text-sm font-semibold text-secondary mb-2"
+            >
+              Desired Ratio (1 : X)
+            </label>
+            <input
+              type="number"
+              id="rev-ratio"
+              min="5"
+              max="30"
+              step="0.5"
+              value="16"
+              class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="decimal"
+            />
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="bg-cream rounded-xl p-5 mb-4 print-break-avoid">
+          <div class="flex items-center justify-between mb-3 no-print">
+            <p class="text-xs text-text-light uppercase tracking-wider font-semibold">
+              Result
+            </p>
+            <button
+              id="print-rev-btn"
+              class="px-3 py-1.5 text-xs font-semibold border border-border bg-white hover:bg-cream rounded-lg transition-colors tap-target"
+            >
+              🖨️ Print
+            </button>
+          </div>
+          <p class="text-xs text-text-light uppercase tracking-wider mb-3 text-center print-only">
+            Reverse Coffee Calc
+          </p>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="text-center">
+              <p class="text-2xl sm:text-3xl font-extrabold text-secondary tabular-nums" id="rev-result-coffee">
+                250g
+              </p>
+              <p class="text-sm text-text-light mt-1">Coffee</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl sm:text-3xl font-extrabold text-primary tabular-nums" id="rev-result-water">
+                4000g
+              </p>
+              <p class="text-sm text-text-light mt-1">Water</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl sm:text-3xl font-extrabold text-secondary tabular-nums" id="rev-result-cups">
+                ~17
+              </p>
+              <p class="text-sm text-text-light mt-1">Cups (8oz)</p>
+            </div>
+          </div>
+          <p class="text-xs text-text-light text-center mt-4" id="rev-note">
+            250g coffee × 16 = 4000g water — that's 4 liters!
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick tip -->
+      <div class="border-t border-border pt-4">
+        <p class="text-xs text-text-light font-semibold mb-2">
+          💡 Pro tip: Use a digital scale for the most accurate results. Volume
+          measurements (scoops, tablespoons) can vary by 20%+.
+        </p>
+      </div>
+    </div>
+
+    <AdSlot position="middle" />
+
+    <!-- Brew Methods Guide -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
+      <h2 class="text-xl font-bold text-secondary mb-2">
+        Brew Method Reference
+      </h2>
+      <p class="text-sm text-text-light mb-6">
+        Recommended ratios, grind sizes, water temperatures, and brew times for
+        popular coffee brewing methods.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {brewMethods.map((method) => (
+          <div class="bg-cream rounded-xl p-4">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl">{method.icon}</span>
+              <div>
+                <h3 class="font-bold text-secondary">{method.name}</h3>
+                <p class="text-xs text-primary font-semibold">
+                  Ratio {method.ratio}
+                </p>
+              </div>
+            </div>
+            <div class="space-y-1.5 text-xs text-text-light">
+              <div class="flex justify-between">
+                <span>Grind:</span>
+                <span class="font-medium text-secondary">{method.grind}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Temp:</span>
+                <span class="font-medium text-secondary">{method.temp}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Time:</span>
+                <span class="font-medium text-secondary">{method.time}</span>
+              </div>
+            </div>
+            <p class="text-xs text-text-light mt-3 pt-2 border-t border-border/50">
+              {method.tip}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- How to Guide -->
+    <div class="bg-cream rounded-2xl border border-border p-4 sm:p-6 lg:p-8 mt-6">
+      <h2 class="text-lg font-bold text-secondary mb-4">
+        Perfect Coffee: Quick Tips
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-text-light leading-relaxed">
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Weigh everything</p>
+          <p class="text-xs">
+            A digital scale is the #1 upgrade. "Scoops" are inconsistent — a
+            tablespoon of coffee can be 5-10g depending on grind and packing.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Use fresh beans</p>
+          <p class="text-xs">
+            Coffee is best 7-21 days after roasting. Buy whole bean and grind
+            right before brewing for maximum flavor.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Water quality matters</p>
+          <p class="text-xs">
+            Coffee is 98% water. If your tap water tastes bad, your coffee
+            will too. Use filtered water for best results.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Adjust to taste</p>
+          <p class="text-xs">
+            Start with 1:16 and adjust. Too strong? Use more water (1:17-1:18).
+            Too weak? Use less water (1:14-1:15) or more coffee.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strength Guide -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mt-6">
+      <h2 class="text-xl font-bold text-secondary mb-4">
+        Coffee Strength Guide
+      </h2>
+      <div class="overflow-x-auto -mx-4 sm:mx-0">
+        <table class="w-full min-w-[480px] text-sm">
+          <thead>
+            <tr class="border-b-2 border-border">
+              <th class="text-left py-2.5 px-3 font-semibold text-secondary">
+                Ratio
+              </th>
+              <th class="text-left py-2.5 px-3 font-semibold text-secondary">
+                Strength
+              </th>
+              <th class="text-left py-2.5 px-3 font-semibold text-secondary">
+                Description
+              </th>
+              <th class="text-right py-2.5 px-3 font-semibold text-secondary">
+                Per 8oz cup
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-border/50">
+              <td class="py-2.5 px-3 font-bold text-secondary">1:12</td>
+              <td class="py-2.5 px-3">
+                <span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-semibold rounded-full">
+                  Very Strong
+                </span>
+              </td>
+              <td class="py-2.5 px-3 text-text-light">
+                Espresso-like, intense, bold
+              </td>
+              <td class="text-right py-2.5 px-3 font-medium">20g coffee</td>
+            </tr>
+            <tr class="border-b border-border/50">
+              <td class="py-2.5 px-3 font-bold text-secondary">1:14</td>
+              <td class="py-2.5 px-3">
+                <span class="px-2 py-0.5 bg-orange-100 text-orange-700 text-xs font-semibold rounded-full">
+                  Strong
+                </span>
+              </td>
+              <td class="py-2.5 px-3 text-text-light">
+                Bold, rich, full-bodied
+              </td>
+              <td class="text-right py-2.5 px-3 font-medium">17g coffee</td>
+            </tr>
+            <tr class="border-b border-border/50 bg-cream/50">
+              <td class="py-2.5 px-3 font-bold text-primary">1:16 ★</td>
+              <td class="py-2.5 px-3">
+                <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
+                  Golden Ratio
+                </span>
+              </td>
+              <td class="py-2.5 px-3 text-text-light">
+                Balanced, smooth, classic
+              </td>
+              <td class="text-right py-2.5 px-3 font-medium">15g coffee</td>
+            </tr>
+            <tr class="border-b border-border/50">
+              <td class="py-2.5 px-3 font-bold text-secondary">1:17</td>
+              <td class="py-2.5 px-3">
+                <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">
+                  Medium
+                </span>
+              </td>
+              <td class="py-2.5 px-3 text-text-light">
+                Mellow, clean, easy-drinking
+              </td>
+              <td class="text-right py-2.5 px-3 font-medium">14g coffee</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 px-3 font-bold text-secondary">1:18</td>
+              <td class="py-2.5 px-3">
+                <span class="px-2 py-0.5 bg-sky-100 text-sky-700 text-xs font-semibold rounded-full">
+                  Mild
+                </span>
+              </td>
+              <td class="py-2.5 px-3 text-text-light">
+                Light, tea-like, subtle
+              </td>
+              <td class="text-right py-2.5 px-3 font-medium">13g coffee</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <AdSlot position="bottom" />
+
+    <AmazonProducts category="coffee" title="Coffee Brewing Essentials" />
+  </section>
+</BaseLayout>
+
+<script>
+  // ============ TABS ============
+  function switchTab(tabName: string) {
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
+      const btnEl = btn as HTMLElement;
+      if (btnEl.dataset.tab === tabName) {
+        btnEl.classList.add("border-primary", "bg-primary/5", "text-primary");
+        btnEl.classList.remove("border-border", "text-text-light");
+      } else {
+        btnEl.classList.remove("border-primary", "bg-primary/5", "text-primary");
+        btnEl.classList.add("border-border", "text-text-light");
+      }
+    });
+
+    document.querySelectorAll(".tab-content").forEach((content) => {
+      const el = content as HTMLElement;
+      if (el.id === `tab-${tabName}`) {
+        el.classList.remove("hidden");
+      } else {
+        el.classList.add("hidden");
+      }
+    });
+  }
+
+  // ============ RATIO CALC ============
+  function getRatioNote(ratio: number): string {
+    if (ratio <= 12) return "Very strong — espresso-level intensity";
+    if (ratio <= 14) return "Strong — bold and rich, like a dark roast diner style";
+    if (ratio <= 15.5) return "On the stronger side of balanced";
+    if (ratio <= 16.5) return "Golden ratio — the classic balanced cup ★";
+    if (ratio <= 17.5) return "Medium — smooth and easy-drinking";
+    if (ratio <= 18.5) return "Mild — lighter and tea-like";
+    return "Very mild — subtle and delicate";
+  }
+
+  function calcRatio() {
+    const coffee =
+      parseFloat(
+        (document.getElementById("ratio-coffee") as HTMLInputElement).value
+      ) || 0;
+    const ratio =
+      parseFloat(
+        (document.getElementById("ratio-value") as HTMLInputElement).value
+      ) || 16;
+
+    const water = coffee * ratio;
+    const cups = water / 240;
+
+    document.getElementById("ratio-result-coffee")!.textContent = `${Math.round(coffee)}g`;
+    document.getElementById("ratio-result-water")!.textContent = `${Math.round(water)}g`;
+    document.getElementById("ratio-result-cups")!.textContent = `~${Math.round(cups)}`;
+    document.getElementById("ratio-note")!.textContent =
+      `1:${ratio} ratio — ${getRatioNote(ratio)}`;
+  }
+
+  function setRatioPreset(ratio: number) {
+    const ratioInput = document.getElementById("ratio-value") as HTMLInputElement;
+    ratioInput.value = String(ratio);
+    calcRatio();
+
+    document.querySelectorAll(".ratio-preset").forEach((btn) => {
+      const btnEl = btn as HTMLElement;
+      const btnRatio = parseFloat(btnEl.dataset.ratio!.split(":")[1]);
+      if (Math.abs(btnRatio - ratio) < 0.1) {
+        btnEl.classList.add("border-primary", "bg-primary/5", "text-primary");
+        btnEl.classList.remove("border-border", "text-text-light");
+      } else {
+        btnEl.classList.remove("border-primary", "bg-primary/5", "text-primary");
+        btnEl.classList.add("border-border", "text-text-light");
+      }
+    });
+  }
+
+  // ============ CUPS CALC ============
+  function getRatioLabel(ratio: number): string {
+    if (ratio <= 13) return "Very strong — intense and bold";
+    if (ratio <= 15) return "Strong — rich and full-bodied";
+    if (ratio <= 16.5) return "Golden ratio — balanced and smooth";
+    if (ratio <= 17.5) return "Medium — mellow and clean";
+    return "Mild — light and easy-drinking";
+  }
+
+  function calcCups() {
+    const cups =
+      parseFloat(
+        (document.getElementById("cups-count") as HTMLInputElement).value
+      ) || 1;
+    const cupSize =
+      parseFloat(
+        (document.getElementById("cups-size") as HTMLSelectElement).value
+      ) || 240;
+    const ratio =
+      parseFloat(
+        (document.getElementById("cups-ratio") as HTMLInputElement).value
+      ) || 16;
+
+    const water = cups * cupSize;
+    const coffee = water / ratio;
+
+    document.getElementById("cups-ratio-display")!.textContent = `1:${ratio}`;
+    document.getElementById("cups-ratio-label")!.textContent = getRatioLabel(ratio);
+    document.getElementById("cups-result-coffee")!.textContent = `${Math.round(coffee)}g`;
+    document.getElementById("cups-result-water")!.textContent = `${Math.round(water)}g`;
+    document.getElementById("cups-result-cups")!.textContent = `${cups}`;
+    document.getElementById("cups-note")!.textContent =
+      `${cups} × ${cupSize}ml cups at 1:${ratio} ratio`;
+  }
+
+  // ============ REVERSE CALC ============
+  function calcReverse() {
+    const coffee =
+      parseFloat(
+        (document.getElementById("rev-coffee") as HTMLInputElement).value
+      ) || 0;
+    const ratio =
+      parseFloat(
+        (document.getElementById("rev-ratio") as HTMLInputElement).value
+      ) || 16;
+
+    const water = coffee * ratio;
+    const cups = water / 240;
+
+    document.getElementById("rev-result-coffee")!.textContent = `${Math.round(coffee)}g`;
+    document.getElementById("rev-result-water")!.textContent = `${Math.round(water)}g`;
+    document.getElementById("rev-result-cups")!.textContent = `~${Math.round(cups)}`;
+    document.getElementById("rev-note")!.textContent =
+      `${Math.round(coffee)}g coffee × ${ratio} = ${Math.round(water)}g water ${water >= 1000 ? `— that's ${(water / 1000).toFixed(1)} liters!` : ""}`;
+  }
+
+  // ============ INIT ============
+  document.addEventListener("DOMContentLoaded", () => {
+    // Tab handlers
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        switchTab((btn as HTMLElement).dataset.tab!);
+      });
+    });
+
+    // Ratio calculator
+    document
+      .getElementById("ratio-coffee")!
+      .addEventListener("input", calcRatio);
+    document
+      .getElementById("ratio-value")!
+      .addEventListener("input", () => {
+        calcRatio();
+        // Update preset highlight
+        const val = parseFloat(
+          (document.getElementById("ratio-value") as HTMLInputElement).value
+        );
+        document.querySelectorAll(".ratio-preset").forEach((btn) => {
+          const btnEl = btn as HTMLElement;
+          const btnRatio = parseFloat(btnEl.dataset.ratio!.split(":")[1]);
+          if (Math.abs(btnRatio - val) < 0.1) {
+            btnEl.classList.add("border-primary", "bg-primary/5", "text-primary");
+            btnEl.classList.remove("border-border", "text-text-light");
+          } else {
+            btnEl.classList.remove("border-primary", "bg-primary/5", "text-primary");
+            btnEl.classList.add("border-border", "text-text-light");
+          }
+        });
+      });
+
+    // Ratio presets
+    document.querySelectorAll(".ratio-preset").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const ratio = parseFloat(
+          (btn as HTMLElement).dataset.ratio!.split(":")[1]
+        );
+        setRatioPreset(ratio);
+      });
+    });
+
+    // Cups calculator
+    document
+      .getElementById("cups-count")!
+      .addEventListener("input", calcCups);
+    document
+      .getElementById("cups-size")!
+      .addEventListener("change", calcCups);
+    document
+      .getElementById("cups-ratio")!
+      .addEventListener("input", calcCups);
+
+    // Reverse calculator
+    document
+      .getElementById("rev-coffee")!
+      .addEventListener("input", calcReverse);
+    document
+      .getElementById("rev-ratio")!
+      .addEventListener("input", calcReverse);
+
+    // Print buttons
+    const printButtons = ["print-ratio-btn", "print-cups-btn", "print-rev-btn"];
+    printButtons.forEach((id) => {
+      const btn = document.getElementById(id);
+      if (btn) {
+        btn.addEventListener("click", () => {
+          window.print();
+        });
+      }
+    });
+
+    // Initial calculations
+    calcRatio();
+    calcCups();
+    calcReverse();
+  });
+</script>

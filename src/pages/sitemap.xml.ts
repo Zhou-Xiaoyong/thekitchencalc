@@ -5,6 +5,7 @@ const pages = [
   { url: "/blog/", priority: "0.9", changefreq: "weekly" },
   { url: "/recipe-servings-calculator/", priority: "0.9", changefreq: "monthly" },
   { url: "/air-fryer-converter/", priority: "0.9", changefreq: "monthly" },
+  { url: "/coffee-ratio-calculator/", priority: "0.9", changefreq: "monthly" },
   { url: "/sourdough-calculator/", priority: "0.9", changefreq: "monthly" },
   { url: "/cooking-time-calculator/", priority: "0.9", changefreq: "monthly" },
   { url: "/holiday-meal-planner/", priority: "0.9", changefreq: "monthly" },
