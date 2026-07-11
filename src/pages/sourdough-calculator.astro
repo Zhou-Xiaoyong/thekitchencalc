@@ -1,0 +1,804 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AdSlot from "../components/AdSlot.astro";
+import AmazonProducts from "../components/AmazonProducts.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Sourdough Calculator",
+  url: "https://thekitchencalc.com/sourdough-calculator/",
+  description:
+    "Calculate sourdough starter feeding ratios, bread dough formulas, and hydration percentages. Perfect your sourdough with baker's math made simple.",
+  applicationCategory: "CookingApplication",
+  operatingSystem: "Web",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+---
+
+<BaseLayout
+  title="Sourdough Calculator — Starter Feeding & Dough Formula"
+  description="Calculate sourdough starter feeding ratios, bread dough formulas, and hydration percentages. Perfect your sourdough baking with baker's math made simple."
+  canonical="https://thekitchencalc.com/sourdough-calculator/"
+  ogType="website"
+  schema={schema}
+>
+  <!-- Hero -->
+  <section class="bg-white border-b border-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 text-center">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-secondary leading-tight mb-4">
+        Sourdough <span class="text-primary">Calculator</span>
+      </h1>
+      <p class="text-base sm:text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
+        Calculate starter feeding ratios, bread dough formulas, and hydration
+        percentages. Baker's math made simple for perfect sourdough every time.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <AdSlot position="top" />
+
+    <!-- Calculator Tabs -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
+      <!-- Tab Buttons -->
+      <div class="flex flex-wrap gap-2 mb-6 border-b border-border pb-4">
+        <button
+          data-tab="starter"
+          class="tab-btn px-4 py-2 rounded-xl text-sm font-bold border-2 border-primary bg-primary/5 text-primary transition-all tap-target active"
+        >
+          🍞 Starter Feeding
+        </button>
+        <button
+          data-tab="dough"
+          class="tab-btn px-4 py-2 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+        >
+          🥖 Bread Dough
+        </button>
+        <button
+          data-tab="hydration"
+          class="tab-btn px-4 py-2 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+        >
+          💧 Hydration Calc
+        </button>
+      </div>
+
+      <!-- Starter Feeding Tab -->
+      <div id="tab-starter" class="tab-content">
+        <h2 class="text-lg font-bold text-secondary mb-4">
+          Sourdough Starter Feeding
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label
+              for="starter-amount"
+              class="block text-sm font-semibold text-secondary mb-2"
+            >
+              Current Starter (g)
+            </label>
+            <input
+              type="number"
+              id="starter-amount"
+              min="10"
+              value="50"
+              class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="decimal"
+            />
+          </div>
+          <div>
+            <label
+              for="feeding-ratio"
+              class="block text-sm font-semibold text-secondary mb-2"
+            >
+              Feeding Ratio
+            </label>
+            <select
+              id="feeding-ratio"
+              class="w-full px-4 py-3 border border-border rounded-xl text-base focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-white"
+            >
+              <option value="1:1:1">1:1:1 (Equal parts)</option>
+              <option value="1:2:2" selected>1:2:2 (Double feed)</option>
+              <option value="1:3:3">1:3:3 (Triple feed)</option>
+              <option value="1:5:5">1:5:5 (Once daily)</option>
+              <option value="1:1:2">1:1:2 (High hydration)</option>
+              <option value="2:2:1">2:2:1 (Stiff starter)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Starter Results -->
+        <div class="bg-cream rounded-xl p-5 mb-4 print-break-avoid">
+          <div class="flex items-center justify-between mb-3 no-print">
+            <p class="text-xs text-text-light uppercase tracking-wider font-semibold">
+              Feeding Amounts
+            </p>
+            <button
+              id="print-starter-btn"
+              class="px-3 py-1.5 text-xs font-semibold border border-border bg-white hover:bg-cream rounded-lg transition-colors tap-target"
+            >
+              🖨️ Print
+            </button>
+          </div>
+          <p class="text-xs text-text-light uppercase tracking-wider mb-3 print-only">
+            Sourdough Starter Feeding
+          </p>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="text-center">
+              <p class="text-2xl sm:text-3xl font-extrabold text-secondary tabular-nums" id="feed-flour">
+                100g
+              </p>
+              <p class="text-sm text-text-light mt-1">Flour</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl sm:text-3xl font-extrabold text-secondary tabular-nums" id="feed-water">
+                100g
+              </p>
+              <p class="text-sm text-text-light mt-1">Water</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl sm:text-3xl font-extrabold text-primary tabular-nums" id="feed-total">
+                250g
+              </p>
+              <p class="text-sm text-text-light mt-1">Total</p>
+            </div>
+          </div>
+          <p class="text-xs text-text-light text-center mt-4" id="feed-note">
+            1:2:2 ratio — 50g starter + 100g flour + 100g water
+          </p>
+        </div>
+
+        <div class="text-xs text-text-light">
+          💡 <strong>Tip:</strong> Keep at least 20-30g of starter as a backup
+          before feeding. If you need more starter for baking, just increase
+          the feeding amounts.
+        </div>
+      </div>
+
+      <!-- Bread Dough Tab -->
+      <div id="tab-dough" class="tab-content hidden">
+        <h2 class="text-lg font-bold text-secondary mb-4">
+          Sourdough Bread Formula
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label
+              for="dough-weight"
+              class="block text-sm font-semibold text-secondary mb-2"
+            >
+              Target Dough Weight (g)
+            </label>
+            <input
+              type="number"
+              id="dough-weight"
+              min="200"
+              max="5000"
+              value="1000"
+              class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="decimal"
+            />
+          </div>
+          <div>
+            <label
+              for="dough-hydration"
+              class="block text-sm font-semibold text-secondary mb-2"
+            >
+              Hydration (%)
+            </label>
+            <input
+              type="number"
+              id="dough-hydration"
+              min="50"
+              max="90"
+              value="75"
+              step="1"
+              class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="decimal"
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          <div>
+            <label
+              for="starter-percent"
+              class="block text-sm font-semibold text-secondary mb-2"
+            >
+              Starter (%)
+            </label>
+            <input
+              type="number"
+              id="starter-percent"
+              min="5"
+              max="50"
+              value="20"
+              step="1"
+              class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="decimal"
+            />
+          </div>
+          <div>
+            <label
+              for="salt-percent"
+              class="block text-sm font-semibold text-secondary mb-2"
+            >
+              Salt (%)
+            </label>
+            <input
+              type="number"
+              id="salt-percent"
+              min="0"
+              max="3"
+              value="2"
+              step="0.1"
+              class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="decimal"
+            />
+          </div>
+          <div>
+            <label
+              for="starter-hydration"
+              class="block text-sm font-semibold text-secondary mb-2"
+            >
+              Starter Hydration (%)
+            </label>
+            <input
+              type="number"
+              id="starter-hydration"
+              min="50"
+              max="150"
+              value="100"
+              step="10"
+              class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+              inputmode="decimal"
+            />
+          </div>
+        </div>
+
+        <!-- Dough Results -->
+        <div class="bg-cream rounded-xl p-5 mb-4 print-break-avoid">
+          <div class="flex items-center justify-between mb-3 no-print">
+            <p class="text-xs text-text-light uppercase tracking-wider font-semibold">
+              Dough Formula
+            </p>
+            <button
+              id="print-dough-btn"
+              class="px-3 py-1.5 text-xs font-semibold border border-border bg-white hover:bg-cream rounded-lg transition-colors tap-target"
+            >
+              🖨️ Print
+            </button>
+          </div>
+          <p class="text-xs text-text-light uppercase tracking-wider mb-3 print-only">
+            Sourdough Bread Formula (Total Dough: <span id="dough-total-weight-print">1000g</span>)
+          </p>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-text-light">Flour (total)</span>
+              <span class="text-lg font-bold text-secondary tabular-nums" id="dough-flour">555g</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-text-light">Water (total)</span>
+              <span class="text-lg font-bold text-secondary tabular-nums" id="dough-water">416g</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-text-light">Starter</span>
+              <span class="text-lg font-bold text-secondary tabular-nums" id="dough-starter">111g</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-text-light">Salt</span>
+              <span class="text-lg font-bold text-secondary tabular-nums" id="dough-salt">11g</span>
+            </div>
+            <div class="border-t border-border/50 pt-3">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-semibold text-text-light">Additional flour needed</span>
+                <span class="text-lg font-bold text-primary tabular-nums" id="dough-extra-flour">500g</span>
+              </div>
+              <div class="flex items-center justify-between mt-2">
+                <span class="text-sm font-semibold text-text-light">Additional water needed</span>
+                <span class="text-lg font-bold text-primary tabular-nums" id="dough-extra-water">361g</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-xs text-text-light">
+          💡 <strong>Tip:</strong> "Additional" means what you add to the
+          starter. The starter itself counts toward both flour and water totals.
+        </div>
+      </div>
+
+      <!-- Hydration Calc Tab -->
+      <div id="tab-hydration" class="tab-content hidden">
+        <h2 class="text-lg font-bold text-secondary mb-4">
+          Dough Hydration Calculator
+        </h2>
+        <p class="text-sm text-text-light mb-4">
+          Calculate the hydration percentage of your dough, or work backwards
+          to hit a target hydration.
+        </p>
+
+        <div class="flex gap-2 mb-6">
+          <button
+            data-mode="forward"
+            class="hydration-mode-btn px-4 py-2 rounded-xl text-sm font-bold border-2 border-primary bg-primary/5 text-primary transition-all tap-target flex-1"
+          >
+            Flour + Water → Hydration %
+          </button>
+          <button
+            data-mode="reverse"
+            class="hydration-mode-btn px-4 py-2 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target flex-1"
+          >
+            Flour + Target % → Water
+          </button>
+        </div>
+
+        <!-- Forward Mode -->
+        <div id="hydration-forward">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            <div>
+              <label
+                for="hyd-flour"
+                class="block text-sm font-semibold text-secondary mb-2"
+              >
+                Flour (g)
+              </label>
+              <input
+                type="number"
+                id="hyd-flour"
+                min="1"
+                value="500"
+                class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+                inputmode="decimal"
+              />
+            </div>
+            <div>
+              <label
+                for="hyd-water"
+                class="block text-sm font-semibold text-secondary mb-2"
+              >
+                Water (g)
+              </label>
+              <input
+                type="number"
+                id="hyd-water"
+                min="1"
+                value="350"
+                class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+                inputmode="decimal"
+              />
+            </div>
+          </div>
+
+          <div class="bg-cream rounded-xl p-5 text-center print-break-avoid">
+            <div class="flex items-center justify-between mb-2 no-print">
+              <p class="text-xs text-text-light uppercase tracking-wider font-semibold">
+                Dough Hydration
+              </p>
+              <button
+                id="print-hyd-btn"
+                class="px-3 py-1.5 text-xs font-semibold border border-border bg-white/80 hover:bg-white rounded-lg transition-colors tap-target"
+              >
+                🖨️ Print
+              </button>
+            </div>
+            <p class="text-xs text-text-light uppercase tracking-wider mb-2 print-only">
+              Dough Hydration
+            </p>
+            <p class="text-4xl sm:text-5xl font-extrabold text-primary tabular-nums" id="hyd-result">
+              70%
+            </p>
+            <p class="text-sm text-text-light mt-2" id="hyd-level">
+              Medium-high hydration — artisan loaf range
+            </p>
+          </div>
+        </div>
+
+        <!-- Reverse Mode -->
+        <div id="hydration-reverse" class="hidden">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            <div>
+              <label
+                for="rev-flour"
+                class="block text-sm font-semibold text-secondary mb-2"
+              >
+                Flour (g)
+              </label>
+              <input
+                type="number"
+                id="rev-flour"
+                min="1"
+                value="500"
+                class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+                inputmode="decimal"
+              />
+            </div>
+            <div>
+              <label
+                for="rev-target"
+                class="block text-sm font-semibold text-secondary mb-2"
+              >
+                Target Hydration (%)
+              </label>
+              <input
+                type="number"
+                id="rev-target"
+                min="30"
+                max="100"
+                value="75"
+                step="1"
+                class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+                inputmode="decimal"
+              />
+            </div>
+          </div>
+
+          <div class="bg-cream rounded-xl p-5 text-center print-break-avoid">
+            <div class="flex items-center justify-between mb-2 no-print">
+              <p class="text-xs text-text-light uppercase tracking-wider font-semibold">
+                Water Needed
+              </p>
+              <button
+                id="print-rev-btn"
+                class="px-3 py-1.5 text-xs font-semibold border border-border bg-white/80 hover:bg-white rounded-lg transition-colors tap-target"
+              >
+                🖨️ Print
+              </button>
+            </div>
+            <p class="text-xs text-text-light uppercase tracking-wider mb-2 print-only">
+              Water Needed
+            </p>
+            <p class="text-4xl sm:text-5xl font-extrabold text-primary tabular-nums" id="rev-result">
+              375g
+            </p>
+            <p class="text-sm text-text-light mt-2">
+              Add this much water to your flour
+            </p>
+          </div>
+        </div>
+
+        <!-- Hydration Guide -->
+        <div class="mt-6 border-t border-border pt-4">
+          <p class="text-xs font-semibold text-secondary mb-2">
+            Hydration Reference
+          </p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+            <div class="bg-cream rounded-lg p-2 text-center">
+              <p class="font-bold text-secondary">50-55%</p>
+              <p class="text-text-light">Very stiff (bagels, pretzels)</p>
+            </div>
+            <div class="bg-cream rounded-lg p-2 text-center">
+              <p class="font-bold text-secondary">60-65%</p>
+              <p class="text-text-light">Firm (sandwich bread)</p>
+            </div>
+            <div class="bg-cream rounded-lg p-2 text-center">
+              <p class="font-bold text-secondary">65-70%</p>
+              <p class="text-text-light">Medium (white bread)</p>
+            </div>
+            <div class="bg-cream rounded-lg p-2 text-center">
+              <p class="font-bold text-secondary">70-75%</p>
+              <p class="text-text-light">Medium-high (artisan)</p>
+            </div>
+            <div class="bg-cream rounded-lg p-2 text-center">
+              <p class="font-bold text-secondary">75-80%</p>
+              <p class="text-text-light">High (ciabatta)</p>
+            </div>
+            <div class="bg-cream rounded-lg p-2 text-center">
+              <p class="font-bold text-secondary">80%+</p>
+              <p class="text-text-light">Very high (focaccia)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <AdSlot position="middle" />
+
+    <!-- Tips Section -->
+    <div class="bg-cream rounded-2xl border border-border p-4 sm:p-6 lg:p-8">
+      <h2 class="text-lg font-bold text-secondary mb-4">
+        Sourdough Baking Tips
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-text-light leading-relaxed">
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Use a digital scale</p>
+          <p class="text-xs">
+            Sourdough is all about ratios. A scale is essential — volume
+            measurements are too inconsistent for reliable results.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Feed before baking</p>
+          <p class="text-xs">
+            Use starter at its peak (when it's doubled and bubbly). Feed it 1:2:2
+            about 4-6 hours before you plan to mix dough.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Autolyse first</p>
+          <p class="text-xs">
+            Mix flour and water, let rest 20-60 minutes before adding salt and
+            starter. This develops gluten with less kneading.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Watch the dough, not the clock</p>
+          <p class="text-xs">
+            Rising times vary with temperature. Let the dough double (or reach
+            50% increase) regardless of how long it takes.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- More Resources -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mt-6">
+      <h2 class="text-xl font-bold text-secondary mb-4">
+        More Sourdough Resources
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <a
+          href="/blog/sourdough-starter-feeding-ratios/"
+          class="group block p-4 rounded-xl border border-border hover:border-primary/30 hover:bg-primary/5 transition-all no-underline"
+        >
+          <p class="font-bold text-secondary group-hover:text-primary transition-colors mb-1">
+            Sourdough Starter Feeding Ratios Guide →
+          </p>
+          <p class="text-sm text-text-light">
+            Learn what 1:1:1 means, how to adjust for your schedule, and
+            troubleshoot common starter problems.
+          </p>
+        </a>
+        <a
+          href="/dough-hydration-calculator/"
+          class="group block p-4 rounded-xl border border-border hover:border-primary/30 hover:bg-primary/5 transition-all no-underline"
+        >
+          <p class="font-bold text-secondary group-hover:text-primary transition-colors mb-1">
+            Dough Hydration Calculator →
+          </p>
+          <p class="text-sm text-text-light">
+            More detailed hydration calculations with baker's percentage
+            breakdowns for all dough types.
+          </p>
+        </a>
+      </div>
+    </div>
+
+    <AdSlot position="bottom" />
+
+    <AmazonProducts category="sourdough" title="Sourdough Baking Essentials" />
+  </section>
+</BaseLayout>
+
+<script>
+  // ============ TABS ============
+  function switchTab(tabName: string) {
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
+      const btnEl = btn as HTMLElement;
+      if (btnEl.dataset.tab === tabName) {
+        btnEl.classList.add("border-primary", "bg-primary/5", "text-primary");
+        btnEl.classList.remove("border-border", "text-text-light");
+      } else {
+        btnEl.classList.remove("border-primary", "bg-primary/5", "text-primary");
+        btnEl.classList.add("border-border", "text-text-light");
+      }
+    });
+
+    document.querySelectorAll(".tab-content").forEach((content) => {
+      const el = content as HTMLElement;
+      if (el.id === `tab-${tabName}`) {
+        el.classList.remove("hidden");
+      } else {
+        el.classList.add("hidden");
+      }
+    });
+  }
+
+  // ============ STARTER FEEDING ============
+  function parseRatio(ratioStr: string): [number, number, number] {
+    const parts = ratioStr.split(":").map(Number);
+    return [parts[0], parts[1], parts[2]];
+  }
+
+  function calcStarterFeeding() {
+    const starter =
+      parseFloat(
+        (document.getElementById("starter-amount") as HTMLInputElement).value
+      ) || 0;
+    const ratioStr = (
+      document.getElementById("feeding-ratio") as HTMLSelectElement
+    ).value;
+    const [s, f, w] = parseRatio(ratioStr);
+
+    const flour = (starter * f) / s;
+    const water = (starter * w) / s;
+    const total = starter + flour + water;
+
+    document.getElementById("feed-flour")!.textContent = `${Math.round(flour)}g`;
+    document.getElementById("feed-water")!.textContent = `${Math.round(water)}g`;
+    document.getElementById("feed-total")!.textContent = `${Math.round(total)}g`;
+    document.getElementById("feed-note")!.textContent =
+      `${ratioStr} ratio — ${Math.round(starter)}g starter + ${Math.round(flour)}g flour + ${Math.round(water)}g water`;
+  }
+
+  // ============ BREAD DOUGH ============
+  function calcBreadDough() {
+    const totalWeight =
+      parseFloat(
+        (document.getElementById("dough-weight") as HTMLInputElement).value
+      ) || 1000;
+    const hydration =
+      parseFloat(
+        (document.getElementById("dough-hydration") as HTMLInputElement).value
+      ) / 100 || 0.75;
+    const starterPct =
+      parseFloat(
+        (document.getElementById("starter-percent") as HTMLInputElement).value
+      ) / 100 || 0.2;
+    const saltPct =
+      parseFloat(
+        (document.getElementById("salt-percent") as HTMLInputElement).value
+      ) / 100 || 0.02;
+    const starterHydration =
+      parseFloat(
+        (document.getElementById("starter-hydration") as HTMLInputElement)
+          .value
+      ) / 100 || 1;
+
+    // Total flour = X, water = X * hydration, salt = X * saltPct
+    // Starter is X * starterPct, which includes flour and water
+    // Total weight = X + X*hydration + X*saltPct = X * (1 + hydration + saltPct)
+    const totalFlour = totalWeight / (1 + hydration + saltPct);
+    const totalWater = totalFlour * hydration;
+    const totalSalt = totalFlour * saltPct;
+    const totalStarter = totalFlour * starterPct;
+
+    // Starter breakdown
+    const starterFlour = totalStarter / (1 + starterHydration);
+    const starterWater = starterFlour * starterHydration;
+
+    // Additional flour/water needed
+    const extraFlour = totalFlour - starterFlour;
+    const extraWater = totalWater - starterWater;
+
+    document.getElementById("dough-total-weight")!.textContent = `${Math.round(totalWeight)}g`;
+    document.getElementById("dough-flour")!.textContent = `${Math.round(totalFlour)}g`;
+    document.getElementById("dough-water")!.textContent = `${Math.round(totalWater)}g`;
+    document.getElementById("dough-starter")!.textContent = `${Math.round(totalStarter)}g`;
+    document.getElementById("dough-salt")!.textContent = `${Math.round(totalSalt * 10) / 10}g`;
+    document.getElementById("dough-extra-flour")!.textContent = `${Math.round(extraFlour)}g`;
+    document.getElementById("dough-extra-water")!.textContent = `${Math.round(extraWater)}g`;
+  }
+
+  // ============ HYDRATION ============
+  function getHydrationLevel(hydration: number): string {
+    if (hydration < 55) return "Very low hydration — dense, tight crumb";
+    if (hydration < 65) return "Low hydration — firm sandwich bread";
+    if (hydration < 70) return "Medium hydration — everyday white bread";
+    if (hydration < 75) return "Medium-high hydration — artisan boule range";
+    if (hydration < 80) return "High hydration — open crumb, big holes";
+    return "Very high hydration — focaccia, ciabatta territory";
+  }
+
+  function calcHydrationForward() {
+    const flour =
+      parseFloat(
+        (document.getElementById("hyd-flour") as HTMLInputElement).value
+      ) || 0;
+    const water =
+      parseFloat(
+        (document.getElementById("hyd-water") as HTMLInputElement).value
+      ) || 0;
+
+    const hydration = flour > 0 ? (water / flour) * 100 : 0;
+    document.getElementById("hyd-result")!.textContent = `${hydration.toFixed(1)}%`;
+    document.getElementById("hyd-level")!.textContent = getHydrationLevel(hydration);
+  }
+
+  function calcHydrationReverse() {
+    const flour =
+      parseFloat(
+        (document.getElementById("rev-flour") as HTMLInputElement).value
+      ) || 0;
+    const target =
+      parseFloat(
+        (document.getElementById("rev-target") as HTMLInputElement).value
+      ) / 100 || 0;
+
+    const water = flour * target;
+    document.getElementById("rev-result")!.textContent = `${Math.round(water)}g`;
+  }
+
+  function setHydrationMode(mode: string) {
+    document.querySelectorAll(".hydration-mode-btn").forEach((btn) => {
+      const btnEl = btn as HTMLElement;
+      if (btnEl.dataset.mode === mode) {
+        btnEl.classList.add("border-primary", "bg-primary/5", "text-primary");
+        btnEl.classList.remove("border-border", "text-text-light");
+      } else {
+        btnEl.classList.remove("border-primary", "bg-primary/5", "text-primary");
+        btnEl.classList.add("border-border", "text-text-light");
+      }
+    });
+
+    const fwd = document.getElementById("hydration-forward")!;
+    const rev = document.getElementById("hydration-reverse")!;
+    if (mode === "forward") {
+      fwd.classList.remove("hidden");
+      rev.classList.add("hidden");
+    } else {
+      fwd.classList.add("hidden");
+      rev.classList.remove("hidden");
+    }
+  }
+
+  // ============ INIT ============
+  document.addEventListener("DOMContentLoaded", () => {
+    // Tab handlers
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        switchTab((btn as HTMLElement).dataset.tab!);
+      });
+    });
+
+    // Starter feeding
+    document
+      .getElementById("starter-amount")!
+      .addEventListener("input", calcStarterFeeding);
+    document
+      .getElementById("feeding-ratio")!
+      .addEventListener("change", calcStarterFeeding);
+
+    // Bread dough
+    ["dough-weight", "dough-hydration", "starter-percent", "salt-percent", "starter-hydration"].forEach(
+      (id) => {
+        document.getElementById(id)!.addEventListener("input", calcBreadDough);
+      }
+    );
+
+    // Hydration forward
+    document
+      .getElementById("hyd-flour")!
+      .addEventListener("input", calcHydrationForward);
+    document
+      .getElementById("hyd-water")!
+      .addEventListener("input", calcHydrationForward);
+
+    // Hydration reverse
+    document
+      .getElementById("rev-flour")!
+      .addEventListener("input", calcHydrationReverse);
+    document
+      .getElementById("rev-target")!
+      .addEventListener("input", calcHydrationReverse);
+
+    // Hydration mode toggle
+    document.querySelectorAll(".hydration-mode-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setHydrationMode((btn as HTMLElement).dataset.mode!);
+      });
+    });
+
+    // Print buttons
+    const printButtons = [
+      "print-starter-btn",
+      "print-dough-btn",
+      "print-hyd-btn",
+      "print-rev-btn",
+    ];
+    printButtons.forEach((id) => {
+      const btn = document.getElementById(id);
+      if (btn) {
+        btn.addEventListener("click", () => {
+          window.print();
+        });
+      }
+    });
+
+    // Initial calculations
+    calcStarterFeeding();
+    calcBreadDough();
+    calcHydrationForward();
+    calcHydrationReverse();
+  });
+</script>
