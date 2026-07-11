@@ -662,6 +662,8 @@ const schema = {
     const extraWater = totalWater - starterWater;
 
     document.getElementById("dough-total-weight")!.textContent = `${Math.round(totalWeight)}g`;
+    const printWeight = document.getElementById("dough-total-weight-print");
+    if (printWeight) printWeight.textContent = `${Math.round(totalWeight)}g`;
     document.getElementById("dough-flour")!.textContent = `${Math.round(totalFlour)}g`;
     document.getElementById("dough-water")!.textContent = `${Math.round(totalWater)}g`;
     document.getElementById("dough-starter")!.textContent = `${Math.round(totalStarter)}g`;
