@@ -1,0 +1,415 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AdSlot from "../components/AdSlot.astro";
+import AmazonProducts from "../components/AmazonProducts.astro";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Air Fryer Converter",
+  url: "https://thekitchencalc.com/air-fryer-converter/",
+  description:
+    "Convert any oven recipe to air fryer in seconds. Calculate temperature and time adjustments, plus a complete cooking times chart for chicken, fries, veggies, and more.",
+  applicationCategory: "CookingApplication",
+  operatingSystem: "Web",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
+const quickChart = [
+  { food: "Chicken wings", f: "400°F", time: "18-22 min", note: "Flip halfway" },
+  { food: "Chicken breast", f: "375°F", time: "12-15 min", note: "165°F internal" },
+  { food: "French fries (frozen)", f: "400°F", time: "15-20 min", note: "Shake basket halfway" },
+  { food: "Salmon fillets", f: "375°F", time: "8-10 min", note: "Skin-side down" },
+  { food: "Steak (1-inch)", f: "400°F", time: "8-12 min", note: "Medium rare: 135°F" },
+  { food: "Pork chops (1-inch)", f: "375°F", time: "12-15 min", note: "145°F internal" },
+  { food: "Shrimp", f: "400°F", time: "6-8 min", note: "Toss with oil first" },
+  { food: "Brussels sprouts", f: "375°F", time: "12-15 min", note: "Halved, toss with oil" },
+  { food: "Bacon", f: "360°F", time: "8-12 min", note: "Single layer" },
+  { food: "Frozen nuggets", f: "400°F", time: "10-12 min", note: "Flip halfway" },
+];
+---
+
+<BaseLayout
+  title="Air Fryer Converter — Oven to Air Fryer Temperature & Time"
+  description="Convert any oven recipe to air fryer in seconds. Calculate exact temperature and time adjustments, plus a complete cooking times chart for chicken, fries, veggies, and more."
+  canonical="https://thekitchencalc.com/air-fryer-converter/"
+  ogType="website"
+  schema={schema}
+>
+  <!-- Hero -->
+  <section class="bg-white border-b border-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 text-center">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-secondary leading-tight mb-4">
+        Air Fryer <span class="text-primary">Converter</span>
+      </h1>
+      <p class="text-base sm:text-lg text-text-light max-w-2xl mx-auto leading-relaxed">
+        Convert any oven recipe to air fryer in seconds. Just enter the oven
+        temperature and time — we'll give you the air fryer equivalents, plus
+        tips for perfect results.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <AdSlot position="top" />
+
+    <!-- Converter Card -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
+      <h2 class="text-lg font-bold text-secondary mb-4">
+        Oven → Air Fryer Converter
+      </h2>
+
+      <!-- Inputs -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label
+            for="oven-temp"
+            class="block text-sm font-semibold text-secondary mb-2"
+          >
+            Oven Temperature (°F)
+          </label>
+          <input
+            type="number"
+            id="oven-temp"
+            min="200"
+            max="550"
+            value="400"
+            class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-shadow"
+            inputmode="numeric"
+          />
+        </div>
+        <div>
+          <label
+            for="oven-time"
+            class="block text-sm font-semibold text-secondary mb-2"
+          >
+            Oven Cooking Time (minutes)
+          </label>
+          <input
+            type="number"
+            id="oven-time"
+            min="1"
+            max="300"
+            value="30"
+            class="w-full px-4 py-3 border border-border rounded-xl text-lg font-medium focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-shadow"
+            inputmode="numeric"
+          />
+        </div>
+      </div>
+
+      <!-- Air Fryer Type -->
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-secondary mb-2">
+          Air Fryer Type
+        </label>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <button
+            data-type="basket"
+            class="airfryer-type-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-primary bg-primary/5 text-primary transition-all tap-target active"
+          >
+            🧺 Basket
+          </button>
+          <button
+            data-type="oven"
+            class="airfryer-type-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+          >
+            🔥 Oven-Style
+          </button>
+          <button
+            data-type="small"
+            class="airfryer-type-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+          >
+            📦 Small (2-3 qt)
+          </button>
+          <button
+            data-type="large"
+            class="airfryer-type-btn px-4 py-3 rounded-xl text-sm font-bold border-2 border-border text-text-light hover:border-primary/30 transition-all tap-target"
+          >
+            🏠 Large (6+ qt)
+          </button>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="bg-cream rounded-xl p-5 mb-6 print-break-avoid">
+        <div class="flex items-center justify-between mb-3 no-print">
+          <p class="text-xs text-text-light uppercase tracking-wider font-semibold">
+            Air Fryer Equivalent
+          </p>
+          <button
+            id="print-btn"
+            class="px-3 py-1.5 text-xs font-semibold border border-border bg-white hover:bg-cream rounded-lg transition-colors tap-target"
+          >
+            🖨️ Print / Save as PDF
+          </button>
+        </div>
+        <p class="text-xs text-text-light uppercase tracking-wider mb-3 text-center print-only">
+          Air Fryer Conversion
+        </p>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="text-center">
+            <p class="text-3xl sm:text-4xl font-extrabold text-primary tabular-nums" id="af-temp">
+              375°F
+            </p>
+            <p class="text-sm text-text-light mt-1">Temperature</p>
+          </div>
+          <div class="text-center">
+            <p class="text-3xl sm:text-4xl font-extrabold text-primary tabular-nums" id="af-time">
+              24 min
+            </p>
+            <p class="text-sm text-text-light mt-1">Cooking Time</p>
+          </div>
+        </div>
+        <p class="text-xs text-text-light text-center mt-4" id="af-note">
+          Basket air fryer: 25°F lower, 20% less time
+        </p>
+      </div>
+
+      <!-- Quick Tips -->
+      <div class="border-t border-border pt-4">
+        <p class="text-xs text-text-light font-semibold mb-2">
+          💡 Pro tip: Always check food 2-3 minutes before the calculated time. Every air fryer cooks differently.
+        </p>
+      </div>
+    </div>
+
+    <AdSlot position="middle" />
+
+    <!-- Quick Reference Chart -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
+      <h2 class="text-xl font-bold text-secondary mb-2">
+        Air Fryer Cooking Times Chart
+      </h2>
+      <p class="text-sm text-text-light mb-4">
+        Quick reference for the most popular air fryer foods. All times assume
+        preheating for 3 minutes and food in a single layer.
+      </p>
+      <div class="overflow-x-auto -mx-4 sm:mx-0">
+        <table class="w-full min-w-[480px] text-sm">
+          <thead>
+            <tr class="border-b-2 border-border">
+              <th class="text-left py-2.5 px-3 font-semibold text-secondary">
+                Food
+              </th>
+              <th class="text-right py-2.5 px-3 font-semibold text-secondary">
+                Temp
+              </th>
+              <th class="text-right py-2.5 px-3 font-semibold text-secondary">
+                Time
+              </th>
+              <th class="text-left py-2.5 px-3 font-semibold text-secondary">
+                Notes
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {quickChart.map((row, i) => (
+              <tr
+                class={
+                  i < quickChart.length - 1 ? "border-b border-border/50" : ""
+                }
+              >
+                <td class="py-2.5 px-3 font-medium">{row.food}</td>
+                <td class="text-right py-2.5 px-3 font-medium">{row.f}</td>
+                <td class="text-right py-2.5 px-3 font-medium">{row.time}</td>
+                <td class="py-2.5 px-3 text-text-light">{row.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4 text-center">
+        <a
+          href="/blog/air-fryer-cooking-times-guide/"
+          class="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+        >
+          See full cooking times guide →
+        </a>
+      </div>
+    </div>
+
+    <!-- Tips Section -->
+    <div class="bg-cream rounded-2xl border border-border p-4 sm:p-6 lg:p-8 mt-6">
+      <h2 class="text-lg font-bold text-secondary mb-4">
+        Air Fryer Pro Tips
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-text-light leading-relaxed">
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Don't overcrowd</p>
+          <p class="text-xs">
+            Air fryers need airflow. If food is stacked, it will steam instead
+            of crisp. Cook in batches if needed.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Use a little oil</p>
+          <p class="text-xs">
+            A light spray of oil (1 tsp per serving) helps food crisp up. Use
+            an oil sprayer for even coverage.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Flip halfway</p>
+          <p class="text-xs">
+            Flip or shake the basket halfway through for even browning on both
+            sides. Fries benefit from shaking every 5 minutes.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Pat food dry</p>
+          <p class="text-xs">
+            Excess moisture = steamed, not crispy. Pat meats and marinated
+            foods dry with paper towels first.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Use a thermometer</p>
+          <p class="text-xs">
+            The only way to know meat is done is with a food thermometer.
+            Chicken = 165°F, pork = 145°F.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-4">
+          <p class="font-semibold text-secondary mb-1">Toast at the end</p>
+          <p class="text-xs">
+            Want extra crispiness? Crank up 25°F for the last 2-3 minutes.
+            Watch carefully — it burns fast!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8 mt-6">
+      <h2 class="text-xl font-bold text-secondary mb-4">
+        How the Conversion Works
+      </h2>
+      <div class="prose prose-slate max-w-none text-sm text-text-light leading-relaxed">
+        <p>
+          Air fryers cook faster and more efficiently than conventional ovens
+          because they circulate hot air directly around the food. The general
+          rule of thumb is:
+        </p>
+        <p>
+          <strong>Reduce temperature by 25°F (about 15°C)</strong> and{" "}
+          <strong>reduce cooking time by about 20%</strong>.
+        </p>
+        <p>
+          But there are variables. Basket-style air fryers cook faster than
+          oven-style ones. Small air fryers cook faster than large ones. And
+          every brand is a little different.
+        </p>
+        <p>
+          That's why we always recommend checking food 2-3 minutes before the
+          calculated time the first time you make something in your air fryer.
+          Once you learn how yours behaves, you'll get a feel for the right
+          adjustments.
+        </p>
+      </div>
+    </div>
+
+    <AdSlot position="bottom" />
+
+    <AmazonProducts category="airfryer" title="Air Fryer Essentials" />
+  </section>
+</BaseLayout>
+
+<script>
+  const conversionFactors: Record<
+    string,
+    { tempReduction: number; timeReduction: number; note: string }
+  > = {
+    basket: {
+      tempReduction: 25,
+      timeReduction: 0.2,
+      note: "Basket air fryer: 25°F lower, 20% less time",
+    },
+    oven: {
+      tempReduction: 15,
+      timeReduction: 0.1,
+      note: "Oven-style air fryer: 15°F lower, 10% less time",
+    },
+    small: {
+      tempReduction: 35,
+      timeReduction: 0.25,
+      note: "Small air fryer (2-3 qt): 35°F lower, 25% less time",
+    },
+    large: {
+      tempReduction: 20,
+      timeReduction: 0.15,
+      note: "Large air fryer (6+ qt): 20°F lower, 15% less time",
+    },
+  };
+
+  let currentType = "basket";
+
+  function roundToNearest25(n: number): number {
+    return Math.round(n / 25) * 25;
+  }
+
+  function calculate() {
+    const ovenTemp =
+      parseFloat(
+        (document.getElementById("oven-temp") as HTMLInputElement).value
+      ) || 400;
+    const ovenTime =
+      parseFloat(
+        (document.getElementById("oven-time") as HTMLInputElement).value
+      ) || 30;
+
+    const factor = conversionFactors[currentType];
+    const afTemp = Math.max(250, roundToNearest25(ovenTemp - factor.tempReduction));
+    const afTime = Math.max(3, Math.round(ovenTime * (1 - factor.timeReduction)));
+
+    document.getElementById("af-temp")!.textContent = `${afTemp}°F`;
+    document.getElementById("af-time")!.textContent = `${afTime} min`;
+    document.getElementById("af-note")!.textContent = factor.note;
+  }
+
+  function setType(type: string) {
+    currentType = type;
+    document.querySelectorAll(".airfryer-type-btn").forEach((btn) => {
+      const btnEl = btn as HTMLElement;
+      if (btnEl.dataset.type === type) {
+        btnEl.classList.add(
+          "border-primary",
+          "bg-primary/5",
+          "text-primary"
+        );
+        btnEl.classList.remove("border-border", "text-text-light");
+      } else {
+        btnEl.classList.remove(
+          "border-primary",
+          "bg-primary/5",
+          "text-primary"
+        );
+        btnEl.classList.add("border-border", "text-text-light");
+      }
+    });
+    calculate();
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document
+      .getElementById("oven-temp")!
+      .addEventListener("input", calculate);
+    document
+      .getElementById("oven-time")!
+      .addEventListener("input", calculate);
+
+    document.querySelectorAll(".airfryer-type-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setType((btn as HTMLElement).dataset.type!);
+      });
+    });
+
+    const printBtn = document.getElementById("print-btn");
+    if (printBtn) {
+      printBtn.addEventListener("click", () => {
+        window.print();
+      });
+    }
+
+    calculate();
+  });
+</script>

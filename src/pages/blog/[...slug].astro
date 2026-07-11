@@ -1,0 +1,208 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, getEntry } from "astro:content";
+import AdSlot from "../../components/AdSlot.astro";
+
+export async function getStaticPaths() {
+  const blogPosts = await getCollection("blog");
+  return blogPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { slug } = Astro.params;
+const post = await getEntry("blog", slug as string);
+
+if (!post) {
+  return Astro.redirect("/404");
+}
+
+const { Content } = await post.render();
+
+const allPosts = await getCollection("blog");
+const relatedPosts = allPosts
+  .filter(
+    (p) =>
+      p.slug !== post.slug &&
+      p.data.category === post.data.category
+  )
+  .slice(0, 3);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: post.data.updatedDate?.toISOString() || post.data.pubDate.toISOString(),
+  author: {
+    "@type": "Organization",
+    name: post.data.author,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "The Kitchen Calc",
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": `https://thekitchencalc.com/blog/${post.slug}/`,
+  },
+};
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  canonical={`https://thekitchencalc.com/blog/${post.slug}/`}
+  ogType="article"
+  schema={schema}
+>
+  <!-- Hero -->
+  <section class="bg-white border-b border-border">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
+      <div class="flex flex-wrap items-center gap-2 mb-4">
+        <span class="text-xs font-semibold text-primary bg-primary-light/20 px-2.5 py-1 rounded-full">
+          {post.data.category}
+        </span>
+        <span class="text-sm text-text-light">
+          {formatDate(post.data.pubDate)}
+        </span>
+        {post.data.updatedDate && (
+          <span class="text-sm text-text-light">
+            · Updated {formatDate(post.data.updatedDate)}
+          </span>
+        )}
+      </div>
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-secondary leading-tight mb-4">
+        {post.data.title}
+      </h1>
+      <p class="text-base sm:text-lg text-text-light leading-relaxed">
+        {post.data.description}
+      </p>
+      <div class="mt-4 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-lg">
+          👨‍🍳
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-secondary">
+            {post.data.author}
+          </p>
+          <p class="text-xs text-text-light">
+            {Math.ceil(post.body.length / 2000)} min read
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 py-8">
+    <AdSlot position="top" />
+
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-4 sm:p-6 lg:p-8">
+      <!-- Article Content -->
+      <div class="prose prose-slate max-w-none prose-headings:text-secondary prose-headings:font-bold prose-h2:text-2xl prose-h3:text-xl prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-secondary">
+        <Content />
+      </div>
+
+      <!-- Tags -->
+      {post.data.tags.length > 0 && (
+        <div class="mt-8 pt-6 border-t border-border">
+          <h3 class="text-sm font-semibold text-secondary mb-3">Tags:</h3>
+          <div class="flex flex-wrap gap-2">
+            {post.data.tags.map((tag) => (
+              <span class="px-3 py-1.5 text-xs font-medium bg-cream text-text-light rounded-full">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Share -->
+      <div class="mt-8 pt-6 border-t border-border">
+        <h3 class="text-sm font-semibold text-secondary mb-3">Share this article:</h3>
+        <div class="flex gap-2">
+          <button class="px-4 py-2 text-sm font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">
+            📋 Copy Link
+          </button>
+          <button class="px-4 py-2 text-sm font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">
+            🐦 Twitter
+          </button>
+          <button class="px-4 py-2 text-sm font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">
+            📘 Facebook
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <AdSlot position="middle" />
+
+    <!-- Related Posts -->
+    {relatedPosts.length > 0 && (
+      <div class="mt-8">
+        <h2 class="text-xl sm:text-2xl font-extrabold text-secondary mb-6">
+          Related Articles
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {relatedPosts.map((related) => (
+            <a
+              href={`/blog/${related.slug}/`}
+              class="group bg-white rounded-2xl shadow-sm border border-border p-4 hover:border-primary/30 hover:shadow-md transition-all block no-underline"
+            >
+              <div class="aspect-[16/9] bg-cream rounded-xl flex items-center justify-center text-4xl mb-3">
+                {related.data.heroImage ? (
+                  <img
+                    src={related.data.heroImage}
+                    alt={related.data.title}
+                    class="w-full h-full object-cover rounded-xl"
+                  />
+                ) : (
+                  <span aria-hidden="true">📝</span>
+                )}
+              </div>
+              <p class="text-xs text-text-light mb-1">
+                {formatDate(related.data.pubDate)}
+              </p>
+              <h3 class="text-sm font-bold text-secondary group-hover:text-primary transition-colors line-clamp-2">
+                {related.data.title}
+              </h3>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Back to Blog -->
+    <div class="mt-8 text-center">
+      <a
+        href="/blog/"
+        class="inline-flex items-center gap-2 px-6 py-3 border-2 border-border text-secondary hover:border-primary hover:text-primary font-semibold rounded-xl transition-colors"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to all articles
+      </a>
+    </div>
+
+    <AdSlot position="bottom" />
+  </article>
+</BaseLayout>
