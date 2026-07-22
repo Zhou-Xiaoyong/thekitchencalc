@@ -22,9 +22,9 @@ const panPresets = [
   { label: "9-inch square", area: 81, w: 9, h: 9, shape: "square" },
   { label: "9×13 rectangular", area: 117, w: 9, h: 13, shape: "rectangle" },
   { label: "9×5 loaf pan", area: 45, w: 9, h: 5, shape: "rectangle" },
-  { label: "Standard muffin", area: Math.PI * 1.44, w: 2.4, h: 2.4, shape: "round", note: "per cup (12-cup pan = 12×)" },
+  { label: "Standard muffin (12-cup)", area: Math.PI * 1.44 * 12, w: 2.4, h: 2.4, shape: "round", note: "full 12-cup pan area" },
   { label: "Half sheet pan", area: 13 * 18, w: 13, h: 18, shape: "rectangle" },
-  { label: "Bundt (10-cup)", area: Math.PI * 25, w: 10, h: 10, shape: "round", note: "approximate area" },
+  { label: "Bundt (10-cup)", area: Math.PI * 25, w: 10, h: 10, shape: "round", note: "volume-based (~10 cups)" },
   { label: "Springform 9-inch", area: Math.PI * 20.25, w: 9, h: 9, shape: "round" },
 ];
 ---
@@ -205,9 +205,9 @@ const panPresets = [
               <td class="text-right py-2.5 px-3">1.03× (nearly identical)</td>
             </tr>
             <tr>
-              <td class="py-2.5 px-3 font-medium">12-cup muffin</td>
+              <td class="py-2.5 px-3 font-medium">12-cup muffin pan</td>
               <td class="text-right py-2.5 px-3">9×13 rectangle</td>
-              <td class="text-right py-2.5 px-3">0.54× per muffin</td>
+              <td class="text-right py-2.5 px-3">0.46× (whole batch)</td>
             </tr>
           </tbody>
         </table>

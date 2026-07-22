@@ -130,16 +130,16 @@ function formatDate(date: Date): string {
       <!-- Share -->
       <div class="mt-8 pt-6 border-t border-border">
         <h3 class="text-sm font-semibold text-secondary mb-3">Share this article:</h3>
-        <div class="flex gap-2">
-          <button class="px-4 py-2 text-sm font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">
+        <div class="flex gap-2" id="share-buttons">
+          <button id="share-copy" class="px-4 py-2 text-sm font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">
             📋 Copy Link
           </button>
-          <button class="px-4 py-2 text-sm font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">
+          <a id="share-twitter" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 text-sm font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors no-underline">
             🐦 Twitter
-          </button>
-          <button class="px-4 py-2 text-sm font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">
+          </a>
+          <a id="share-facebook" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 text-sm font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors no-underline">
             📘 Facebook
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -205,4 +205,40 @@ function formatDate(date: Date): string {
 
     <AdSlot position="bottom" />
   </article>
+
+  <script>
+    const url = window.location.href;
+    const title = document.title;
+
+    const copyBtn = document.getElementById("share-copy");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", async () => {
+        const restore = () => { copyBtn.textContent = "📋 Copy Link"; };
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(url);
+          } else {
+            throw new Error("clipboard unavailable");
+          }
+        } catch {
+          const tmp = document.createElement("textarea");
+          tmp.value = url;
+          tmp.style.position = "fixed";
+          tmp.style.opacity = "0";
+          document.body.appendChild(tmp);
+          tmp.select();
+          try { document.execCommand("copy"); } catch {}
+          document.body.removeChild(tmp);
+        }
+        copyBtn.textContent = "✓ Copied!";
+        setTimeout(restore, 2000);
+      });
+    }
+
+    const tw = document.getElementById("share-twitter") as HTMLAnchorElement | null;
+    if (tw) tw.href = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+
+    const fb = document.getElementById("share-facebook") as HTMLAnchorElement | null;
+    if (fb) fb.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+  </script>
 </BaseLayout>

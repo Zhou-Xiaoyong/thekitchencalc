@@ -185,9 +185,9 @@ const schema = {
         <div class="mb-4">
           <label class="block text-sm font-semibold text-secondary mb-3">Quick Presets</label>
           <div class="flex flex-wrap gap-2">
-            <button onclick="setTarget(3.5)" class="px-3 py-1.5 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">3.5% (mild brine)</button>
-            <button onclick="setTarget(5)" class="px-3 py-1.5 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">5% (standard brine)</button>
-            <button onclick="setTarget(7)" class="px-3 py-1.5 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">7% (strong brine)</button>
+            <button onclick="setTarget(3.5)" class="px-3 py-1.5 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">3.5% (w/w brine)</button>
+            <button onclick="setTarget(5)" class="px-3 py-1.5 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">5% (w/w brine)</button>
+            <button onclick="setTarget(7)" class="px-3 py-1.5 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">7% (w/w brine)</button>
             <button onclick="setTarget(20)" class="px-3 py-1.5 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">20% (light syrup)</button>
             <button onclick="setTarget(30)" class="px-3 py-1.5 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">30% (simple syrup)</button>
             <button onclick="setTarget(50)" class="px-3 py-1.5 text-xs font-medium bg-cream hover:bg-primary-light/30 rounded-lg transition-colors">50% (rich syrup)</button>
@@ -479,7 +479,7 @@ const schema = {
 
       resultDiv.innerHTML = `
         <div class="text-center mb-6">
-          <p class="text-sm text-text-light mb-1">${substanceNames[substance].charAt(0).toUpperCase() + substanceNames[substance].slice(1)} Needed for ${targetPct}% Solution</p>
+          <p class="text-sm text-text-light mb-1">${substanceNames[substance].charAt(0).toUpperCase() + substanceNames[substance].slice(1)} Needed for ${targetPct}% Solution (w/w)</p>
           <p class="text-4xl font-extrabold text-primary mb-2">${solidGrams.toFixed(0)} g</p>
           <p class="text-sm text-text-light">${gramsToReadable(solidGrams, substance)}</p>
         </div>

@@ -55,18 +55,20 @@ function formatDate(date: Date): string {
     <AdSlot position="top" />
 
     <!-- Categories -->
-    <div class="flex flex-wrap gap-2 mb-8">
+    <div class="flex flex-wrap gap-2 mb-8" id="category-filters">
       <span class="text-sm font-medium text-text-light self-center mr-1">
         Categories:
       </span>
       <button
-        class="px-3 py-1.5 text-sm font-semibold bg-primary text-white rounded-lg transition-colors"
+        data-category="all"
+        class="cat-btn px-3 py-1.5 text-sm font-semibold bg-primary text-white rounded-lg transition-colors"
       >
         All Posts
       </button>
       {categories.map((cat) => (
         <button
-          class="px-3 py-1.5 text-sm font-medium bg-cream hover:bg-primary-light/30 text-text-light rounded-lg transition-colors"
+          data-category={cat}
+          class="cat-btn px-3 py-1.5 text-sm font-medium bg-cream hover:bg-primary-light/30 text-text-light rounded-lg transition-colors"
         >
           {cat}
         </button>
@@ -74,10 +76,11 @@ function formatDate(date: Date): string {
     </div>
 
     <!-- Blog Posts Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="posts-grid">
       {sortedPosts.map((post) => (
         <a
           href={`/blog/${post.slug}/`}
+          data-category={post.data.category}
           class="group bg-white rounded-2xl shadow-sm border border-border overflow-hidden hover:border-primary/30 hover:shadow-md transition-all block no-underline"
         >
           <div class="aspect-[16/9] bg-cream flex items-center justify-center text-6xl">
@@ -129,30 +132,25 @@ function formatDate(date: Date): string {
 
     <AdSlot position="middle" />
 
-    <!-- Newsletter CTA -->
-    <div class="bg-white rounded-2xl shadow-sm border border-border p-6 sm:p-8 text-center mt-8">
-      <h2 class="text-xl sm:text-2xl font-extrabold text-secondary mb-2">
-        Get Cooking Tips in Your Inbox
-      </h2>
-      <p class="text-text-light mb-4 max-w-lg mx-auto">
-        Join our weekly newsletter for kitchen hacks, calculator updates, and
-        time-saving cooking tips. No spam, unsubscribe anytime.
-      </p>
-      <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-        <input
-          type="email"
-          placeholder="Your email address"
-          class="flex-1 px-4 py-3 border border-border rounded-xl text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
-        />
-        <button
-          type="submit"
-          class="px-6 py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-xl transition-colors tap-target"
-        >
-          Subscribe
-        </button>
-      </form>
-    </div>
-
     <AdSlot position="bottom" />
   </section>
+
+  <script>
+    const filterBtns = document.querySelectorAll<HTMLButtonElement>("#category-filters .cat-btn");
+    const posts = document.querySelectorAll<HTMLElement>("#posts-grid > a");
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const cat = btn.dataset.category;
+        filterBtns.forEach((b) => {
+          b.className = "cat-btn px-3 py-1.5 text-sm font-medium bg-cream hover:bg-primary-light/30 text-text-light rounded-lg transition-colors";
+        });
+        btn.className = "cat-btn px-3 py-1.5 text-sm font-semibold bg-primary text-white rounded-lg transition-colors";
+        posts.forEach((p) => {
+          const show = cat === "all" || p.dataset.category === cat;
+          p.style.display = show ? "" : "none";
+        });
+      });
+    });
+  </script>
 </BaseLayout>

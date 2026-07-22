@@ -234,13 +234,13 @@ const schema = {
   }
 
   function formatAmount(grams: number, type: string): string {
+    // ~3.1 g per tsp active dry, ~3.0 g per tsp instant/bread-machine, ~3.4 g per tsp fresh
     const tspPerGram = {
-      "active-dry": 0.2,
-      "instant": 0.23,
-      "bread-machine": 0.23,
-      "fresh": 0.067,
+      "active-dry": 0.32,
+      "instant": 0.33,
+      "bread-machine": 0.33,
+      "fresh": 0.29,
     };
-    const gramsPerTsp = 1 / tspPerGram[type as keyof typeof tspPerGram];
     const tsp = grams * tspPerGram[type as keyof typeof tspPerGram];
 
     let tspDisplay: string;
@@ -274,7 +274,7 @@ const schema = {
     const flourGrams = toGrams(flourAmount, flourUnit);
     const percentage = yeastPercentages[doughType][riseTime as keyof typeof yeastPercentages[string]];
     const baseYeastGrams = flourGrams * percentage;
-    const selectedYeastGrams = baseYeastGrams / yeastMultipliers[yeastType];
+    const selectedYeastGrams = baseYeastGrams * yeastMultipliers[yeastType];
 
     const results: string[] = [];
     results.push(`
@@ -293,7 +293,7 @@ const schema = {
 
     for (const [type, mult] of Object.entries(yeastMultipliers)) {
       if (type === yeastType) continue;
-      const equivalent = baseYeastGrams / mult;
+      const equivalent = baseYeastGrams * mult;
       results.push(`
         <div class="flex items-center justify-between py-2 px-3 rounded-lg bg-cream/30">
           <span class="text-sm font-medium text-secondary">${yeastNames[type]}</span>

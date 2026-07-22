@@ -138,6 +138,8 @@ const schema = {
         </p>
       </div>
 
+      <p id="brine-error" class="hidden text-sm font-medium text-red-600 mb-3"></p>
+
       <button
         id="calculate-btn"
         class="w-full py-4 bg-primary hover:bg-primary-dark text-white font-bold text-lg rounded-xl transition-colors shadow-sm tap-target"
@@ -290,9 +292,10 @@ const schema = {
     const waterRatio = parseFloat((document.getElementById("water-ratio") as HTMLInputElement).value);
 
     if (weight <= 0) {
-      alert("Please enter a valid meat weight.");
+      showError("Please enter a valid meat weight.");
       return;
     }
+    clearError();
 
     const weightLb = weightUnit === "kg" ? weight * 2.20462 : weight;
     const waterLb = weightLb * waterRatio;
@@ -307,7 +310,7 @@ const schema = {
     const saltOz = waterOz * saltPercent;
     const saltLb = saltOz / 16;
     const saltG = waterGrams * saltPercent;
-    const saltTsp = saltG / 5;
+    const saltTsp = saltG / 6;
     const saltTbsp = saltTsp / 3;
     const saltCups = saltTbsp / 16;
 
@@ -339,6 +342,18 @@ const schema = {
       "very-strong": "Very Strong (10%)",
     };
 
+    function showError(msg: string) {
+      const el = document.getElementById("brine-error")!;
+      el.textContent = msg;
+      el.classList.remove("hidden");
+    }
+
+    function clearError() {
+      const el = document.getElementById("brine-error")!;
+      el.textContent = "";
+      el.classList.add("hidden");
+    }
+
     let herbsText = "";
     if (brineType === "savory") {
       herbsText = `
@@ -367,10 +382,11 @@ const schema = {
 
     const resultsDiv = document.getElementById("brine-results")!;
     resultsDiv.innerHTML = `
-      <div class="mb-6 p-4 bg-primary/5 rounded-xl border border-primary/20">
-        <p class="text-sm text-text-light mb-1">Brine Strength</p>
-        <p class="text-xl font-bold text-primary">${strengthLabels[strength]}${sugarLabel}</p>
-      </div>
+        <div class="mb-6 p-4 bg-primary/5 rounded-xl border border-primary/20">
+          <p class="text-sm text-text-light mb-1">Brine Strength</p>
+          <p class="text-xl font-bold text-primary">${strengthLabels[strength]}${sugarLabel}</p>
+          <p class="text-xs text-text-light mt-1">Salt % is by weight of the water (5% = 50 g salt per 1 kg / 1 L water).</p>
+        </div>
       
       <h3 class="font-semibold text-secondary mb-3">Water</h3>
       <div class="space-y-2 mb-6">

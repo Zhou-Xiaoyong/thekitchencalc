@@ -1,7 +1,17 @@
 import type { APIRoute } from "astro";
+import { getCollection } from "astro:content";
+
+const blogPosts = await getCollection("blog");
+
+const blogPages = blogPosts.map((post) => ({
+  url: `/blog/${post.slug}/`,
+  priority: "0.7",
+  changefreq: "monthly",
+}));
 
 const pages = [
   { url: "/", priority: "1.0", changefreq: "weekly" },
+  ...blogPages,
   { url: "/blog/", priority: "0.9", changefreq: "weekly" },
   { url: "/recipe-servings-calculator/", priority: "0.9", changefreq: "monthly" },
   { url: "/air-fryer-converter/", priority: "0.9", changefreq: "monthly" },

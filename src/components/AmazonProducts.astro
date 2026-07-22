@@ -1,6 +1,6 @@
 ---
 interface Props {
-  category: "baking" | "cooking" | "measuring" | "thermometers" | "scales" | "holiday" | "general" | "brewing" | "safety";
+  category: "baking" | "cooking" | "measuring" | "thermometers" | "scales" | "holiday" | "general" | "brewing" | "safety" | "coffee" | "sourdough" | "airfryer";
   title?: string;
 }
 
@@ -220,6 +220,75 @@ const products: Record<string, Array<{
       image: "https://m.media-amazon.com/images/I/71k7wQfF7PL._AC_SL1500_.jpg",
       price: "~$25",
       description: "Color-coded boards to prevent cross-contamination.",
+    },
+  ],
+  coffee: [
+    {
+      name: "Timemore Black Mirror Coffee Scale",
+      searchTerm: "timemore+coffee+scale",
+      image: "https://m.media-amazon.com/images/I/71WcUf3Y0jL._AC_SL1500_.jpg",
+      price: "~$55",
+      description: "Precision scale with timer for pour over and espresso.",
+    },
+    {
+      name: "Gooseneck Kettle (Temperature Control)",
+      searchTerm: "gooseneck+kettle+temperature+control",
+      image: "https://m.media-amazon.com/images/I/71D4Jn0bH+L._AC_SL1500_.jpg",
+      price: "~$70",
+      description: "Slow, precise pour for even coffee extraction.",
+    },
+    {
+      name: "Burr Coffee Grinder",
+      searchTerm: "burr+coffee+grinder",
+      image: "https://m.media-amazon.com/images/I/81mJ2GOS7zL._AC_SL1500_.jpg",
+      price: "~$90",
+      description: "Consistent grind size for better flavor.",
+    },
+  ],
+  sourdough: [
+    {
+      name: "Banneton Proofing Basket (Set of 2)",
+      searchTerm: "banneton+proofing+basket+set",
+      image: "https://m.media-amazon.com/images/I/81hO5Sf56tL._AC_SL1500_.jpg",
+      price: "~$20",
+      description: "Rattan basket for shaping and proofing sourdough boules.",
+    },
+    {
+      name: "Lodge Enameled Dutch Oven",
+      searchTerm: "Lodge+enameled+dutch+oven+5+quart",
+      image: "https://m.media-amazon.com/images/I/71D4Jn0bH+L._AC_SL1500_.jpg",
+      price: "~$80",
+      description: "The classic vessel for baking crusty sourdough loaves.",
+    },
+    {
+      name: "Bench Scraper & Lame Set",
+      searchTerm: "bench+scraper+bread+lame",
+      image: "https://m.media-amazon.com/images/I/71v5FyMqYxL._AC_SL1500_.jpg",
+      price: "~$15",
+      description: "Scoring blade and scraper for clean dough handling.",
+    },
+  ],
+  airfryer: [
+    {
+      name: "Cosori Air Fryer (5.8 Qt)",
+      searchTerm: "cosori+air+fryer+5.8+quart",
+      image: "https://m.media-amazon.com/images/I/711T+1bV7UL._AC_SL1500_.jpg",
+      price: "~$120",
+      description: "Popular basket air fryer with presets and app control.",
+    },
+    {
+      name: "Air Fryer Parchment Liners",
+      searchTerm: "air+fryer+parchment+liners",
+      image: "https://m.media-amazon.com/images/I/81hO5Sf56tL._AC_SL1500_.jpg",
+      price: "~$12",
+      description: "Pre-cut, perforated liners for easy cleanup.",
+    },
+    {
+      name: "Oil Spray Bottle (Misting)",
+      searchTerm: "oil+spray+bottle+misting",
+      image: "https://m.media-amazon.com/images/I/71Kq32tXx4L._AC_SL1500_.jpg",
+      price: "~$14",
+      description: "Lightly coat food for crispier air-fried results.",
     },
   ],
 };

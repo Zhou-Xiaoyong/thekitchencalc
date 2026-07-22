@@ -247,27 +247,55 @@ const schema = {
     { value: "dozen", label: "dozen" },
   ];
 
-  const conversionToGrams: Record<string, number> = {
-    cup: 120,
-    tbsp: 7.5,
-    tsp: 2.5,
-    g: 1,
-    kg: 1000,
-    oz: 28.3495,
-    lb: 453.592,
-    ml: 1,
-    whole: 50,
+  // Grams per US cup (240 mL) for common ingredients, used for volume → gram conversion.
+  const INGREDIENT_DENSITY: Record<string, number> = {
+    "flour": 120, "bread flour": 120, "cake flour": 110, "oat flour": 100,
+    "sugar": 200, "granulated sugar": 200, "white sugar": 200, "caster sugar": 200,
+    "brown sugar": 220, "brown sugar (packed)": 220, "powdered sugar": 120, "confectioners sugar": 120, "icing sugar": 120,
+    "butter": 227, "unsalted butter": 227, "salted butter": 227, "margarine": 227,
+    "oil": 218, "vegetable oil": 218, "olive oil": 218, "coconut oil": 218,
+    "honey": 340, "maple syrup": 322, "corn syrup": 320,
+    "milk": 240, "water": 240, "broth": 240, "cream": 240, "buttermilk": 240,
+    "salt": 292, "table salt": 292, "kosher salt": 240, "sea salt": 290,
+    "baking soda": 220, "baking powder": 220, "cocoa": 100, "cocoa powder": 100,
+    "chocolate": 170, "chocolate chips": 170,
+    "oats": 90, "rolled oats": 90, "rice": 185,
+    "cheese": 113, "shredded cheese": 113, "parmesan": 113,
+    "nuts": 120, "almonds": 120, "walnuts": 120, "pecans": 120,
+    "peanut butter": 270, "yogurt": 245, "sour cream": 240,
+    "vanilla": 240, "extract": 240,
   };
 
-  const packageToGrams: Record<string, number> = {
-    lb: 453.592,
-    oz: 28.3495,
-    kg: 1000,
-    g: 1,
-    cup: 120,
-    each: 50,
-    dozen: 600,
+  // Match an ingredient name to its density (grams per cup). Falls back to a neutral value.
+  function densityFor(name: string): number {
+    const n = (name || "").toLowerCase();
+    for (const key of Object.keys(INGREDIENT_DENSITY)) {
+      if (n.includes(key)) return INGREDIENT_DENSITY[key];
+    }
+    return 200; // neutral default for unknown dry ingredients
+  }
+
+  const WEIGHT_TO_GRAMS: Record<string, number> = {
+    g: 1, kg: 1000, oz: 28.3495, lb: 453.592,
   };
+
+  function volumeToGrams(amount: number, unit: string, density: number): number {
+    switch (unit) {
+      case "cup": return amount * density;
+      case "tbsp": return amount * density / 16;
+      case "tsp": return amount * density / 48;
+      case "ml": return amount * (density / 240);
+      default: return amount * density;
+    }
+  }
+
+  // Convert any ingredient amount to grams, using its density for volume units.
+  function amountToGrams(amount: number, unit: string, density: number): number {
+    if (unit in WEIGHT_TO_GRAMS) return amount * WEIGHT_TO_GRAMS[unit];
+    if (unit === "whole") return amount * 50;
+    if (unit === "dozen") return amount * 600;
+    return volumeToGrams(amount, unit, density);
+  }
 
   interface Ingredient {
     name: string;
@@ -447,8 +475,9 @@ const schema = {
 
       if (amt <= 0 || price <= 0 || pkgSize <= 0) return;
 
-      const usedGrams = amt * conversionToGrams[ing.unit];
-      const pkgGrams = pkgSize * packageToGrams[ing.packageUnit];
+      const density = densityFor(ing.name);
+      const usedGrams = amountToGrams(amt, ing.unit, density);
+      const pkgGrams = amountToGrams(pkgSize, ing.packageUnit, density);
       const cost = (usedGrams / pkgGrams) * price;
 
       totalCost += cost;

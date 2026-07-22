@@ -156,6 +156,8 @@ const schema = {
         </div>
       </div>
 
+      <p id="bac-error" class="hidden text-sm font-medium text-red-600 mb-3"></p>
+
       <button
         id="calculate-btn"
         class="w-full py-4 bg-primary hover:bg-primary-dark text-white font-bold text-lg rounded-xl transition-colors shadow-sm tap-target"
@@ -334,14 +336,20 @@ const schema = {
     }, 0);
 
     if (weight <= 0) {
-      alert("Please enter a valid weight.");
+      const el = document.getElementById("bac-error")!;
+      el.textContent = "Please enter a valid weight.";
+      el.classList.remove("hidden");
       return;
     }
 
     if (totalAlcoholG === 0) {
-      alert("Please add at least one drink.");
+      const el = document.getElementById("bac-error")!;
+      el.textContent = "Please add at least one drink.";
+      el.classList.remove("hidden");
       return;
     }
+
+    document.getElementById("bac-error")!.classList.add("hidden");
 
     const rawBAC = (totalAlcoholG / (weightG * rFactor)) * 100;
     const elimination = 0.015 * hours;
