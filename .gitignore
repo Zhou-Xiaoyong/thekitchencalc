@@ -26,3 +26,7 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Internal planning & local memory (NOT part of the published website — never sync to GitHub)
+content-plan/
+.workbuddy/
