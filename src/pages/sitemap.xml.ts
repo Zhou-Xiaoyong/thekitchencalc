@@ -26,7 +26,7 @@ const pages = [
   { url: "/sourdough-calculator/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/cooking-time-calculator/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/holiday-meal-planner/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
-  { url: "/kitchen-measurement-converter/", priority: "0.9", changefreq: "monthly", lastmod: "2026-09-02" },
+  { url: "/kitchen-measurement-converter/", priority: "0.9", changefreq: "monthly", lastmod: "2026-09-09" },
   { url: "/baking-pan-converter/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/oven-temperature-converter/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/ingredient-substitution-finder/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
