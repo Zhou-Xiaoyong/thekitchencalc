@@ -31,7 +31,7 @@ const pages = [
   { url: "/oven-temperature-converter/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/ingredient-substitution-finder/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/yeast-calculator/", priority: "0.8", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
-  { url: "/dough-hydration-calculator/", priority: "0.8", changefreq: "monthly", lastmod: "2026-10-24" },
+  { url: "/dough-hydration-calculator/", priority: "0.8", changefreq: "monthly", lastmod: "2026-10-25" },
   { url: "/brine-calculator/", priority: "0.8", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/sugar-salt-calculator/", priority: "0.8", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/food-safety-temperature-guide/", priority: "0.8", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
