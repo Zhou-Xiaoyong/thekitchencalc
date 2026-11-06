@@ -1,6 +1,6 @@
 ---
 title: "How Much Stuffing Per Person for Thanksgiving? Three-Quarters of a Cup, Weighed"
-description: "Thanksgiving stuffing runs 3/4 cup per person: 1 cup of dry cubes, 2 slices of bread. Headcount chart, pan depths, 165°F, and a 350°F bake."
+description: "How much stuffing per person for Thanksgiving? 3/4 cup, which is 1 cup of dry cubes and 2 slices of bread. Headcount chart, pan depths, 165°F bake."
 pubDate: 2026-11-06
 author: "The Kitchen Calc Team"
 tags: ["how much stuffing per person", "thanksgiving stuffing quantity", "Holiday"]
@@ -17,17 +17,17 @@ Nobody has 21 coming. That is why the stuffing is still in the fridge on Sunday,
 
 ## How Much Stuffing Do You Need for 12 People?
 
-Nine cups of finished stuffing, built from 12 cups of dry cubes and about 1¼ pounds of bread.
+Nine cups of finished stuffing, built from 12 cups of dry cubes and 540 g of bread, a little over a pound.
 
 | Guests | Prepared, ¾ cup each | Dry cubes | Bread | Pan at 1½ inches |
 |---|---|---|---|---|
-| 6 | 4½ cups | 6 cups | ¾ lb (270 g) | 8x8 |
-| 8 | 6 cups | 8 cups | ¾ lb (340 g) | 8x8, heaped |
-| 12 | 9 cups | 12 cups | 1¼ lb (540 g) | 9x13 |
-| 16 | 12 cups | 16 cups | 1½ lb (680 g) | 9x13, 2 in deep |
-| 20 | 15 cups | 20 cups | 2 lb (900 g) | two 9x13 pans |
+| 6 | 4½ cups | 6 cups | 270 g | 8x8 |
+| 8 | 6 cups | 8 cups | 360 g | 8x8, nearly full |
+| 12 | 9 cups | 12 cups | 540 g | 9x13 |
+| 16 | 12 cups | 16 cups | 720 g | 9x13, 2 in deep |
+| 20 | 15 cups | 20 cups | 900 g | two 9x13 pans |
 
-The middle column is the one to carry into the store. Cubed stuffing is sold by weight, never by volume, and 12 cups of half-inch cubes weighs 540 g, so a cup is 45 g. Two slices of sandwich bread make a cup. If the bag is printed in ounces, our [pounds to grams converter](/blog/convert-pounds-grams/) has the full table.
+The middle column is the one to carry into the store. Cubed stuffing is sold by weight, never by volume, and 12 cups of half-inch cubes weighs 540 g, so a cup is 45 g and a pound is 10 cups. Two slices of sandwich bread make a cup. If the bag is printed in ounces, our [pounds to grams converter](/blog/convert-pounds-grams/) has the full table.
 
 From there the batch is arithmetic: 12 cups of cubes, 3 cups of broth, 1½ sticks of butter, and 2 cups of diced onion and celery bake down to about 9 cups. The bread loses its air, not its weight.
 
@@ -58,7 +58,7 @@ That last line is where hosts come up short. A calculator answers in cups of stu
 
 ## The Pan, Measured by Depth
 
-Pan capacity depends entirely on how deep you fill it, so measure the depth before you measure the pan.
+Pan capacity depends on how deep you fill it, so measure the depth first.
 
 | Pan | At 1½ inches | Feeds | At 2 inches | Feeds |
 |---|---|---|---|---|
@@ -67,11 +67,11 @@ Pan capacity depends entirely on how deep you fill it, so measure the depth befo
 | 9x13 | 12 cups | 16 | 16 cups | 21 |
 | 13x18 half sheet | 24 cups | 32 | 32 cups | 42 |
 
-Stuffing wants 1½ to 2 inches, no more. Past 2½ inches the center steams itself soft while the top browns, and you get a soggy middle under a crisp lid. Two shallower pans beat one deep one every time, and they also fit around the turkey. If the 9x13 is already holding the green bean casserole, the [baking pan converter](/baking-pan-converter/) will size the substitute by area.
+Stuffing wants 1½ to 2 inches, no more. Past 2½ inches the center steams itself soft while the top browns, and you get a soggy middle under a crisp lid. Two shallower pans beat one deep one, and they fit around the turkey. If the 9x13 is already holding the green bean casserole, the [baking pan converter](/baking-pan-converter/) will size the substitute by area.
 
 ## If Part of It Goes Inside the Bird
 
-USDA does not recommend stuffing a whole turkey, because the cavity is the slowest part of the bird to heat and the stuffing has to clear 165°F on its own. Cook it in a pan for the most even result.
+USDA does not recommend stuffing a whole turkey, because the stuffing heats slower than the meat around it and the cavity is easy to cross-contaminate. It has to clear 165°F on its own. Cook it in a pan for the most even result.
 
 If you stuff anyway:
 
