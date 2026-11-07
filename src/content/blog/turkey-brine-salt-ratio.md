@@ -34,7 +34,7 @@ Strength alone tells you nothing. A 10 percent brine for 90 minutes and a 3.5 pe
 | 7% (strong) | 1 to 4 hours | A same-morning rescue |
 | 10% (very strong) | 30 min to 2 hours | Not worth it on a whole bird |
 
-The guide puts 3.5 percent at 12 to 24 hours and 5 percent at 4 to 12, while the turkey timing allows 12 to 24. Twelve hours is where they overlap.
+The guide puts 3.5 percent at 12 to 24 hours and 5 percent at 4 to 12, while the turkey time guide allows 12 to 24. Twelve hours is where they overlap.
 
 ## The Math for Any Bird on the Table
 
@@ -43,7 +43,7 @@ One part water to one part bird, 5 percent salt, sugar at half the weight of the
 | Bird | Brine at 1× weight | Salt at 5% | Sugar | Vessel |
 |---|---|---|---|---|
 | 10 lb | 5 qt (1¼ gal) | 227 g / 8 oz | 113 g | 12-qt stockpot |
-| 12 lb | 6 qt (1½ gal) | 272 g / 9.6 oz | 136 g | 16-qt pot or 3-gal bucket |
+| 12 lb | 6 qt (1½ gal) | 272 g / 9.6 oz | 136 g | 16-qt pot or 4-gal bucket |
 | 15 lb | 7½ qt (1⅞ gal) | 340 g / 12 oz | 170 g | 5-gal bucket |
 | 18 lb | 9 qt (2¼ gal) | 408 g / 14.4 oz | 204 g | 5-gal bucket, 2 in spare |
 | 20 lb | 10 qt (2½ gal) | 454 g / 1 lb | 227 g | 5-gal bucket, near the rim |
