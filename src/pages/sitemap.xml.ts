@@ -32,7 +32,7 @@ const pages = [
   { url: "/ingredient-substitution-finder/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/yeast-calculator/", priority: "0.8", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/dough-hydration-calculator/", priority: "0.8", changefreq: "monthly", lastmod: "2026-11-04" },
-  { url: "/brine-calculator/", priority: "0.8", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
+  { url: "/brine-calculator/", priority: "0.8", changefreq: "monthly", lastmod: "2026-11-07" },
   { url: "/sugar-salt-calculator/", priority: "0.8", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/food-safety-temperature-guide/", priority: "0.8", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/recipe-cost-calculator/", priority: "0.8", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
