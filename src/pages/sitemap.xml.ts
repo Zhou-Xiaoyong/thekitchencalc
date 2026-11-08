@@ -24,7 +24,7 @@ const pages = [
   { url: "/air-fryer-converter/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/coffee-ratio-calculator/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/sourdough-calculator/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
-  { url: "/cooking-time-calculator/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
+  { url: "/cooking-time-calculator/", priority: "0.9", changefreq: "monthly", lastmod: "2026-11-08" },
   { url: "/holiday-meal-planner/", priority: "0.9", changefreq: "monthly", lastmod: "2026-11-06" },
   { url: "/kitchen-measurement-converter/", priority: "0.9", changefreq: "monthly", lastmod: "2026-10-22" },
   { url: "/baking-pan-converter/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
