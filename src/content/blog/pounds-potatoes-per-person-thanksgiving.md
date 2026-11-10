@@ -29,7 +29,7 @@ Three numbers beat one:
 
 ## Six Pounds for Twelve, and What It Fills
 
-One pound of raw potatoes yields about two cups of finished mash, because the butter and cream add back roughly what the peel and steam took away. That ratio runs the whole table.
+One pound of raw potatoes yields about two cups of finished mash, because the butter and cream add back roughly what the peel and steam took away. That ratio runs the table.
 
 | Guests | Raw potatoes | Finished mash | Smallest pot |
 |---|---|---|---|
@@ -40,7 +40,7 @@ One pound of raw potatoes yields about two cups of finished mash, because the bu
 | 16 | 8 lb | 16 cups | 5 qt |
 | 20 | 10 lb | 20 cups | 6 qt |
 
-The last column is where twelve people stop being a math problem and start being a dish problem. Twelve cups is three quarts exactly, so a four-quart pot or slow cooker holds it with enough headroom to stir. Ladled into a 9x13 instead, twelve cups sits an inch and a half deep, which is why the potatoes at the end of the buffet are cold. Two smaller bowls beat one wide one.
+The last column is where twelve people stop being a math problem and become a dish problem. Twelve cups is three quarts exactly, so a four-quart pot or slow cooker holds it with enough headroom to stir. Ladled into a 9x13 instead, twelve cups sits an inch and a half deep, which is why the potatoes at the end of the buffet are cold. Two smaller bowls beat one wide one.
 
 ## Peel Loss Eats the Margin
 
@@ -53,9 +53,9 @@ A vegetable peeler takes 10 to 15 percent of the weight. A paring knife takes mo
 | Boiled, mashed, no dairy | about 1¾ cups |
 | With butter and cream | about 2 cups |
 
-A recipe that calls for **six pounds of peeled potatoes** wants seven pounds from the store. Buy six and you have 5.2 pounds in the pot, which is 10½ cups, which feeds ten.
+A recipe that calls for **six pounds of peeled potatoes** wants seven pounds from the store. Buy six and there are 5.2 pounds in the pot, about 10 cups of mash, which feeds ten.
 
-Weigh before peeling. Bag weight and recipe weight are different units even though both say pounds.
+Weigh before peeling. Bag weight and recipe weight are different units that both say pounds.
 
 ## The Bag Decides More Than the Math
 
@@ -65,9 +65,9 @@ Weigh before peeling. Bag weight and recipe weight are different units even thou
 | 8 lb | 20 to 24 medium | 16 people |
 | 10 lb | 25 to 30 medium | 20 people |
 
-Nobody sells a six-pound bag of russets, so twelve guests means a five plus a two, or a ten with four pounds left over. Take the ten. Raw potatoes keep for weeks in a cool dark cupboard and become Thursday's home fries. Mashed potatoes do not keep, so an overbuy before cooking costs nothing while an underbuy costs the meal.
+Nobody sells a six-pound bag of russets, so twelve guests means a five plus a two, or a ten with four pounds spare. Take the ten. Raw potatoes keep for weeks in a cool dark cupboard and become Thursday's home fries. Mashed potatoes do not keep, so an overbuy before cooking costs nothing while an underbuy costs the meal.
 
-Medium here means five to six ounces. A "large" potato in the produce aisle runs eight to ten ounces, so counting instead of weighing is how a six-pound plan turns into eight.
+Medium means five to six ounces. A "large" potato runs eight to ten ounces, so counting instead of weighing is how a six-pound plan turns into eight.
 
 ## Pot Size Is What Actually Goes Wrong
 
@@ -80,7 +80,7 @@ Diced raw potato takes up about two and a half cups per pound, and the water nee
 | 6 lb | 15 cups | 8 qt |
 | 10 lb | 25 cups | 12 qt |
 
-A six-quart pot holds five pounds comfortably and six pounds badly. The bad version is not a disaster, it is a splatter: the water barely covers the top layer, the pot comes back to a boil slowly, and the potatoes at the rim sit above the waterline and stay firm while the ones underneath go to mush. If six pounds must go into a six-quart pot, cut the chunks smaller and top up the water as they settle.
+A six-quart pot holds five pounds comfortably and six pounds badly. The bad version is a splatter: the water barely covers the top layer, the pot comes back to a boil slowly, and the potatoes at the rim sit above the waterline and stay firm while the ones underneath go to mush. If six pounds must go into a six-quart pot, cut the chunks smaller and top up the water as they settle.
 
 ## Dairy Scales With the Potatoes
 
@@ -88,10 +88,10 @@ Butter and cream follow the weight of the potatoes, not the number of guests. Th
 
 | Raw potatoes | Butter | Cream or half-and-half | Sour cream | Fine salt |
 |---|---|---|---|---|
-| 3 lb | 5 tbsp | ¾ cup | ¼ cup | 1 tsp |
+| 3 lb | 5 tbsp | ⅔ cup | ¼ cup | 1 tsp |
 | 5 lb | 8 tbsp (1 stick) | 1 cup | ½ cup | 1½ tsp |
 | 6 lb | 10 tbsp | 1¼ cups | ½ cup | 2 tsp |
-| 10 lb | 16 tbsp (2 sticks) | 2 cups | ¾ cup | 1 tbsp |
+| 10 lb | 16 tbsp (2 sticks) | 2 cups | 1 cup | 1 tbsp |
 
 Warm the dairy first. Cold cream drops the pot's temperature and makes the mash seize, so you mash longer to fix it, and that is what actually makes potatoes gluey. Heat it until hot to the touch, not boiling.
 
@@ -116,7 +116,7 @@ The guest count on your list is not the guest count at the table, and potatoes s
 - **Seconds are the norm, not the exception.** Mashed potatoes are the delivery system for gravy, and gravy is why the second scoop happens.
 - **If there are two starches on the table**, mashed potatoes and sweet potato casserole both, expect each to move at about 70 percent of its usual rate.
 
-A table of twelve with four children and two dieters still eats about eleven adult portions, because the seven who do take more than one scoop. That is the argument for the ¾-pound column.
+Twelve guests with four children and two dieters still eats about eleven portions: the children count as two, the dieters as zero, and the six who do eat average a portion and a half. That is the argument for the ¾-pound column.
 
 ## FAQ
 
