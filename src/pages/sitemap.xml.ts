@@ -20,7 +20,7 @@ const pages = [
   { url: "/", priority: "1.0", changefreq: "weekly", lastmod: DEFAULT_LASTMOD },
   ...blogPages,
   { url: "/blog/", priority: "0.9", changefreq: "weekly", lastmod: "2026-09-02" },
-  { url: "/recipe-servings-calculator/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
+  { url: "/recipe-servings-calculator/", priority: "0.9", changefreq: "monthly", lastmod: "2026-11-12" },
   { url: "/air-fryer-converter/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/coffee-ratio-calculator/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/sourdough-calculator/", priority: "0.9", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
