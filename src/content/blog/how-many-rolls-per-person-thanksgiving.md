@@ -31,7 +31,7 @@ If your rolls are the big ones, twelve of them feed twelve people. If they are t
 
 ## How Many Rolls Per Person, by Headcount
 
-The right-hand column assumes two-ounce rolls baked touching, which is what makes them pull apart instead of rolling off the plate.
+The count assumes two-ounce rolls baked touching, which is what makes them pull apart instead of rolling off the plate.
 
 | Guests | At 1.5 each | Buy at 2 each | Dozens | 9x13 pans |
 |---|---|---|---|---|
@@ -50,7 +50,7 @@ A 40-roll calculation is a 42-roll purchase, which is why the dozens column roun
 
 A table with dressing has two bread dishes competing for the same appetite.
 
-If your crowd takes a real scoop of stuffing, three-quarters of a cup is the number in [our stuffing math](/blog/stuffing-per-person-thanksgiving/), drop the rolls by a quarter and put the difference into a second pan of something people finish. If your family does turkey, potatoes, and rolls and calls that dinner, the full two per person is honest.
+If your crowd takes a real scoop of stuffing, three-quarters of a cup by [our stuffing math](/blog/stuffing-per-person-thanksgiving/), drop the rolls by a quarter and put the difference into a second pan of something people finish. If your family does turkey, potatoes, and rolls and calls that dinner, the full two per person is honest.
 
 ## Brown-and-Serve, Frozen Dough, or Scratch
 
@@ -94,7 +94,7 @@ Skip the brush if the package says the rolls are already glazed. They come out g
 
 ## Teenagers and the Second Pan
 
-Count anyone over 12 as two rolls, teenagers and anyone under 25 as three, and one and a half per child. The teenagers eat one standing at the counter before dinner and two at the table.
+Count adults at two rolls each, teenagers and anyone under 25 at three, and one and a half per child. The teenagers eat one standing at the counter before dinner and two at the table.
 
 That is where the planner's 1.5 comes from: a plate number, adequate for adults behaving themselves. A table with teenagers needs a pan bigger than the arithmetic.
 
@@ -102,7 +102,7 @@ That is where the planner's 1.5 comes from: a plate number, adequate for adults 
 
 Baked rolls go stale within a day and freeze for two months. A zip bag, the air pressed out, then 350°F for five minutes in foil brings them back.
 
-The reheat is where they fail. A roll microwaved for 30 seconds turns to rubber inside a minute and there is no fixing it afterward. Foil and a real oven, or split and toasted in a skillet with butter, which is the better use anyway: day-after turkey sandwich, cut side down.
+The reheat is where they fail. A roll microwaved for 30 seconds turns to rubber inside a minute and there is no fixing it afterward. Foil and a real oven, or split and toasted in a skillet with butter. The skillet is the better use anyway: day-after turkey sandwich, cut side down.
 
 ## FAQ
 
@@ -116,7 +116,7 @@ Yes. Bake them Wednesday, cool them completely uncovered so the crust does not s
 
 ### How many rolls for 50 people?
 
-One hundred, which is nine dozen. That is four 9x13 pans plus a half sheet, baked in relays of two pans at 18 minutes each, with the finished ones held in a cooler with the lid cracked so they stay crisp. Scale a scratch recipe written for two dozen with the [recipe servings calculator](/recipe-servings-calculator/).
+One hundred, which is nine dozen. That is four 9x13 pans and a small pan for the last four rolls, baked in relays of two pans at 18 minutes each, with the finished ones held in a cooler with the lid cracked so they stay crisp. Scale a scratch recipe written for two dozen with the [recipe servings calculator](/recipe-servings-calculator/).
 
 ## Try Our Free Tools
 
