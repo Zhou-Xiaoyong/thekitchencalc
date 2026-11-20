@@ -35,7 +35,7 @@ const pages = [
   { url: "/brine-calculator/", priority: "0.8", changefreq: "monthly", lastmod: "2026-11-07" },
   { url: "/sugar-salt-calculator/", priority: "0.8", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/food-safety-temperature-guide/", priority: "0.8", changefreq: "monthly", lastmod: "2026-11-09" },
-  { url: "/recipe-cost-calculator/", priority: "0.8", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
+  { url: "/recipe-cost-calculator/", priority: "0.8", changefreq: "monthly", lastmod: "2026-11-20" },
   { url: "/conversion-chart/", priority: "0.8", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/bac-calculator/", priority: "0.7", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
   { url: "/about/", priority: "0.5", changefreq: "monthly", lastmod: DEFAULT_LASTMOD },
